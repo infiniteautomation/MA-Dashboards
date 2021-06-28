@@ -1,0 +1,85 @@
+<form name="$ctrl.form" novalidate ma-validation-messages="$ctrl.validationMessages">
+    <div layout="column">
+
+        <md-input-container class="md-icon-float md-block">
+            <md-icon>vpn_key</md-icon>
+            <label ma-tr="systemSetup.password"></label>
+            <input name="password" type="password" ng-model="$ctrl.password" required md-no-asterisk
+                ng-change="$ctrl.resetServerErrors()" aria-label="{{'systemSetup.password'|maTr}}">
+            <div ng-messages="$ctrl.form.password.$error">
+                <div ng-message="required" ma-tr="validate.required"></div>
+                <div ng-message="validationMessage" ng-bind="$ctrl.form.password.validationMessage"></div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+            <md-icon>vpn_key</md-icon>
+            <label ma-tr="systemSetup.confirmPassword"></label>
+            <input name="confirmPassword" type="password" ng-model="$ctrl.confirmPassword" required md-no-asterisk
+                ng-change="$ctrl.resetServerErrors()" aria-label="{{'systemSetup.confirmPassword'|maTr}}" ng-pattern="$ctrl.regExpEscape($ctrl.password)">
+            <div ng-messages="$ctrl.form.confirmPassword.$error">
+                <div ng-message="required" ma-tr="validate.required"></div>
+                <div ng-message="pattern" ma-tr="validate.passwordsDoNotMatch"></div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+            <md-icon>language</md-icon>
+            <label ma-tr="systemSetup.systemLanguage"></label>
+            <ma-drop-down-button>
+                <span ng-if="$ctrl.settings.language != null">
+                    <span ng-bind="$ctrl.locales[$ctrl.settings.language].name"></span> &mdash; <span ng-bind="$ctrl.locales[$ctrl.settings.language].native"></span>
+                </span>
+                <em ng-if="$ctrl.settings.language === null" ma-tr="systemSetup.useServerLanguage"></em>
+                <ma-drop-down class="ma-locale-select ma-full-screen-centered" auto-focus="::false">
+                    <ma-option-list name="language"
+                        ng-model="$ctrl.settings.language"
+                        items="$ctrl.getLocales($filter)"
+                        ma-configure-input-container
+                        has-value="$value !== undefined">
+                        <ma-option ng-if="!$filter" ng-value="null" md-no-ink><em ma-tr="systemSetup.useServerLanguage"></em></ma-option>
+                        <ma-option ng-repeat="locale in $items track by locale.id" ng-value="locale.id" md-no-ink>
+                            <span md-highlight-text="$filter" md-highlight-flags="ig">{{locale.name}} &mdash; {{locale.native}}</span>
+                        </ma-option>
+                    </ma-option-list>
+                </ma-drop-down>
+            </ma-drop-down-button>
+            <div ng-messages="$ctrl.form.locale.$error">
+                <div ng-message="validationMessage" ng-bind="$ctrl.form.language.validationMessage"></div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+            <md-icon>access_time</md-icon>
+            <label ma-tr="systemSetup.systemTimezone"></label>
+            <ma-drop-down-button>
+                <span ng-if="$ctrl.settings.timezone != null" ng-bind="$ctrl.settings.timezone"></span>
+                <em ng-if="$ctrl.settings.timezone === null" ma-tr="systemSetup.useServerTimezone"></em>
+                <ma-drop-down class="ma-timezone-select ma-full-screen-centered" auto-focus="::false">
+                    <ma-option-list name="timezone"
+                        ng-model="$ctrl.settings.timezone"
+                        items="$ctrl.timezones | maFilter:$filter"
+                        ma-configure-input-container
+                        has-value="$value !== undefined">
+                        <ma-option ng-if="!$filter" ng-value="null" md-no-ink><em ma-tr="systemSetup.useServerTimezone"></em></ma-option>
+                        <ma-option ng-repeat="zone in $items" ng-value="zone" md-no-ink>
+                            <span md-highlight-text="$filter" md-highlight-flags="ig">{{zone}}</span>
+                        </ma-option>
+                    </ma-option-list>
+                </ma-drop-down>
+            </ma-drop-down-button>
+            <div ng-messages="$ctrl.form.timezone.$error">
+                <div ng-message="validationMessage" ng-bind="$ctrl.form.timezone.validationMessage"></div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row" layout-align="end center" class="ma-action-buttons">
+        <md-button type="submit" class="md-accent md-raised"
+            ng-disabled="$ctrl.disableButton"
+            ng-click="$ctrl.submit()"
+            ma-tr="common.save"
+            aria-label="{{'common.save'|maTr}}">
+        </md-button>
+    </div>
+</form>
