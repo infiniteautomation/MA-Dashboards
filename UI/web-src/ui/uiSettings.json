@@ -275,5 +275,6 @@
     "monthDay": "MMM D",
     "month": "MMM",
     "year": "YYYY"
-  }
+  },
+  "showUnacknowlegedEventsIcon": true
 }

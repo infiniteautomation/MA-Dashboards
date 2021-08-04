@@ -68,7 +68,7 @@
         <div flex class="md-toolbar-item ma-ui-tools" layout layout-align="end center">
             <ma-event-audio ng-if="User.current && !User.current.muted" audio-files="uiSettings.eventAudioFiles" read-aloud="uiSettings.eventReadAloud"></ma-event-audio>
             <ma-event-notify event-levels="uiSettings.eventNotify"></ma-event-notify>
-            <ma-ui-active-event-icons style="padding-right: 8px;" ng-if="$mdMedia('gt-xs')"></ma-ui-active-event-icons>
+            <ma-ui-active-event-icons style="padding-right: 8px;" ng-if="uiSettings.showUnacknowlegedEventsIcon && $mdMedia('gt-xs')"></ma-ui-active-event-icons>
 
             <div ng-if="stateParams.dateBar">
               <md-input-container class="date-preset">
