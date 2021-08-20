@@ -13,12 +13,12 @@
 	<name>Mango UI Modules</name>
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/infiniteautomation/ma-dashboards/issues</url>
+		<url>https://github.com/MangoAutomation/ma-dashboards/issues</url>
 	</issueManagement>
 	<scm>
-		<connection>scm:git:https://github.com/infiniteautomation/ma-dashboards.git</connection>
-		<developerConnection>scm:git:https://github.com/infiniteautomation/ma-dashboards.git</developerConnection>
-		<url>https://github.com/infiniteautomation/ma-dashboards</url>
+		<connection>scm:git:https://github.com/MangoAutomation/ma-dashboards.git</connection>
+		<developerConnection>scm:git:https://github.com/MangoAutomation/ma-dashboards.git</developerConnection>
+		<url>https://github.com/MangoAutomation/ma-dashboards</url>
 		<tag>HEAD</tag>
 	</scm>
 	<modules>
