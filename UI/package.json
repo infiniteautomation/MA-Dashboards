@@ -80,7 +80,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/infiniteautomation/ma-dashboards.git"
+    "url": "https://github.com/MangoAutomation/ma-dashboards.git"
   },
   "com_infiniteautomation": {
     "moduleName": "mangoUI"
