@@ -141,6 +141,16 @@ class UserEditorController {
             return this.maFilter(locales, filter, ['name', 'native', 'common']);
         });
     }
+
+    showPermissionInputs() {
+        if (this.user == null) {
+            return false;
+        }
+        if (this.user.isNew()) {
+            return this.User.current.hasSystemPermission('users.create');
+        }
+        return this.User.current.hasPermission(this.original.editPermission);
+    }
 }
 
 export default {

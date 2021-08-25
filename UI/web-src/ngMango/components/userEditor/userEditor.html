@@ -182,7 +182,7 @@
         </ma-duration-editor>
     </div>
 
-    <ma-permission-editor-container ng-if="$ctrl.User.current.hasPermission($ctrl.original.editPermission)">
+    <ma-permission-editor-container ng-if="$ctrl.showPermissionInputs()">
         <ma-permission-editor name="readPermission" ng-model="$ctrl.user.readPermission" ng-disabled="$ctrl.disabled">
             <span ma-tr="users.readPermission"></span>
         </ma-permission-editor>
