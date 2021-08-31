@@ -1,5 +1,6 @@
 *Version 4.2.0*
 * Upgraded for Mango 4.2.0
+* Fix for Non Admin User cannot Create new Users because of Missing permissions inputs
 
 *Version 4.1.1*
 * Add UI setting to optionally disable the unacknowledged alarms icon in the toolbar
