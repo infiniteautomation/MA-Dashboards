@@ -3,7 +3,6 @@
  * @author Mert Cingöz
  */
 
-import moment from 'moment-timezone';
 import componentTemplate from './systemSetup.html';
 
 class SystemSetupController {
@@ -24,7 +23,6 @@ class SystemSetupController {
         this.maLocales = maLocales;
         this.maFilter = $filter('maFilter');
 
-        this.timezones = moment.tz.names();
         this.locales = {};
         this.maLocales.get().then((locales) => {
             locales.forEach((locale) => {
@@ -34,8 +32,7 @@ class SystemSetupController {
         });
 
         this.settings = {
-            language: null,
-            timezone: null
+            language: null
         };
     }
 

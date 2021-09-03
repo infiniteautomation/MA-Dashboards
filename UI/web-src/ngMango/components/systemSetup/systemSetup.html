@@ -48,30 +48,6 @@
                 <div ng-message="validationMessage" ng-bind="$ctrl.form.language.validationMessage"></div>
             </div>
         </md-input-container>
-
-        <md-input-container class="md-icon-float md-block">
-            <md-icon>access_time</md-icon>
-            <label ma-tr="systemSetup.systemTimezone"></label>
-            <ma-drop-down-button>
-                <span ng-if="$ctrl.settings.timezone != null" ng-bind="$ctrl.settings.timezone"></span>
-                <em ng-if="$ctrl.settings.timezone === null" ma-tr="systemSetup.useServerTimezone"></em>
-                <ma-drop-down class="ma-timezone-select ma-full-screen-centered" auto-focus="::false">
-                    <ma-option-list name="timezone"
-                        ng-model="$ctrl.settings.timezone"
-                        items="$ctrl.timezones | maFilter:$filter"
-                        ma-configure-input-container
-                        has-value="$value !== undefined">
-                        <ma-option ng-if="!$filter" ng-value="null" md-no-ink><em ma-tr="systemSetup.useServerTimezone"></em></ma-option>
-                        <ma-option ng-repeat="zone in $items" ng-value="zone" md-no-ink>
-                            <span md-highlight-text="$filter" md-highlight-flags="ig">{{zone}}</span>
-                        </ma-option>
-                    </ma-option-list>
-                </ma-drop-down>
-            </ma-drop-down-button>
-            <div ng-messages="$ctrl.form.timezone.$error">
-                <div ng-message="validationMessage" ng-bind="$ctrl.form.timezone.validationMessage"></div>
-            </div>
-        </md-input-container>
     </div>
 
     <div layout="row" layout-align="end center" class="ma-action-buttons">

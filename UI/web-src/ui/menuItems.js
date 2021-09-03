@@ -724,22 +724,6 @@ export default [
         menuTr: 'systemSettings.languageSettings'
     },
     {
-        name: 'ui.settings.system.timezone',
-        params: {
-            helpPage: 'ui.help.timezone'
-        },
-        templatePromise: systemSettingsTemplate('timezone.html'),
-        url: '/timezone',
-        menuTr: 'systemSettings.timezoneSettings',
-        menuHidden: true
-    },
-    {
-        url: '/timezone',
-        name: 'ui.help.timezone',
-        templatePromise: helpTemplate('timezone.html'),
-        menuTr: 'systemSettings.timezoneSettings'
-    },
-    {
         name: 'ui.settings.system.systemAlarmLevels',
         params: {
             helpPage: 'ui.help.systemAlarmLevels'

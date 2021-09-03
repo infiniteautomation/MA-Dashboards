@@ -4,7 +4,6 @@
 
 import angular from 'angular';
 import systemSettingsPageTemplate from './systemSettingsPage.html';
-import moment from 'moment-timezone';
 
 const actions = {
     purgeUsingSettings: {
@@ -57,9 +56,7 @@ class SystemSettingsPageController {
         this.maDialogHelper = maDialogHelper;
         this.maServer = maServer;
         this.maUiServerInfo = maUiServerInfo;
-        
-        this.timezones = moment.tz.names();
-        this.timezones.unshift(null);
+
         maLocales.get().then((locales) => {
             locales.forEach((locale) => {
                 locale.id = locale.id.replace('-', '_');
