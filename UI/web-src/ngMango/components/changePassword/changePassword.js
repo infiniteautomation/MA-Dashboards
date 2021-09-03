@@ -5,9 +5,14 @@
 import changePasswordTemplate from './changePassword.html';
 
 class ChangePasswordController {
-    static get $$ngIsClass() { return true; }
-    static get $inject() { return ['maUser', 'maDialogHelper', 'maUtil', '$injector']; }
-    
+    static get $$ngIsClass() {
+        return true;
+    }
+
+    static get $inject() {
+        return ['maUser', 'maDialogHelper', 'maUtil', '$injector'];
+    }
+
     constructor(maUser, maDialogHelper, maUtil, $injector) {
         this.maUser = maUser;
         this.maDialogHelper = maDialogHelper;
@@ -16,7 +21,7 @@ class ChangePasswordController {
         this.$stateParams = $injector.has('$stateParams') && $injector.get('$stateParams');
         this.maUiLoginRedirector = $injector.has('maUiLoginRedirector') && $injector.get('maUiLoginRedirector');
     }
-    
+
     $onInit() {
         if (this.$stateParams) {
             if (this.$stateParams.credentialsExpired) {
@@ -30,7 +35,7 @@ class ChangePasswordController {
             }
         }
     }
-    
+
     resetServerErrors() {
         delete this.serverError;
         this.form.newPassword.$setValidity('passwordChangeError', true);
@@ -47,28 +52,26 @@ class ChangePasswordController {
         if (this.form.$invalid) return;
 
         this.disableButton = true;
-        
-        return this.maUser.login({
+        this.maUser.login({
             username: this.username,
             password: this.password,
             newPassword: this.newPassword
-        }).$promise.then(user => {
-            
+        }).$promise.then((user) => {
             this.maDialogHelper.toastOptions({
                 textTr: ['login.passwordChanged', this.username],
                 hideDelay: 10000
             });
 
             if (typeof this.onSuccess === 'function') {
-                this.onSuccess({$user: this.user, $state: this.$state});
+                this.onSuccess({ $user: this.user, $state: this.$state });
             } else if (this.maUiLoginRedirector) {
-                return this.maUiLoginRedirector.redirect(user);
+                this.maUiLoginRedirector.redirect(user);
             }
-        }, error => {
+        }, (error) => {
             this.disableButton = false;
-            
+
             this.serverError = error;
-            
+
             if (error.status === 401 && error.data && error.data.mangoStatusName === 'PASSWORD_CHANGE_FAILED') {
                 this.form.newPassword.$setValidity('passwordChangeError', false);
             } else if (error.status === 401 && error.data && error.data.mangoStatusName === 'BAD_CREDENTIALS') {
@@ -85,11 +88,15 @@ class ChangePasswordController {
                     classes: 'md-warn'
                 });
             }
-            
             if (typeof this.onError === 'function') {
-                this.onError({$username: this.username, $error: error, $state: this.$state});
+                this.onError({ $username: this.username, $error: error, $state: this.$state });
             }
         });
+    }
+
+    regExpEscape(s) {
+        if (!s) return null;
+        return this.maUtil.escapeRegExp(s);
     }
 }
 

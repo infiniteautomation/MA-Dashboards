@@ -148,6 +148,17 @@ export default [
         menuHidden: true
     },
     {
+        name: 'systemSetup',
+        url: '/system-setup',
+        menuHidden: true,
+        menuTr: 'header.systemSetup',
+        permission: ['superadmin'],
+        templatePromise() {
+            return import(/* webpackMode: "eager" */
+                    './views/systemSetup.html');
+        }
+    },
+    {
         name: 'ui',
         url: '?helpOpen',
         'abstract': true,
@@ -711,6 +722,22 @@ export default [
         name: 'ui.help.language',
         templatePromise: helpTemplate('language.html'),
         menuTr: 'systemSettings.languageSettings'
+    },
+    {
+        name: 'ui.settings.system.timezone',
+        params: {
+            helpPage: 'ui.help.timezone'
+        },
+        templatePromise: systemSettingsTemplate('timezone.html'),
+        url: '/timezone',
+        menuTr: 'systemSettings.timezoneSettings',
+        menuHidden: true
+    },
+    {
+        url: '/timezone',
+        name: 'ui.help.timezone',
+        templatePromise: helpTemplate('timezone.html'),
+        menuTr: 'systemSettings.timezoneSettings'
     },
     {
         name: 'ui.settings.system.systemAlarmLevels',

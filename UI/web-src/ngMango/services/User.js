@@ -306,6 +306,17 @@ function UserProvider(MA_DEFAULT_TIMEZONE, MA_DEFAULT_LOCALE) {
                         return updatedUser;
                     }
                 }
+            },
+            systemSetup: {
+                method: 'POST',
+                url: `${passwordResetUrl}/system-setup`,
+                interceptor: {
+                    response: function(data) {
+                        const updatedUser = data.resource;
+                        User.setCurrentUser(updatedUser.copy());
+                        return updatedUser;
+                    }
+                }
             }
         }, {
             idProperty: 'username',

@@ -1,0 +1,8 @@
+<div layout layout-wrap>
+    <ma-system-setting-editor flex="100" flex-gt-md="50" label-tr="systemSettings.systemTimezone" key="timezone" input-type="select" on-value-changed="value = $value">
+        <md-option ng-repeat="zone in $ctrl.timezones" ng-value="zone">
+            <em ng-if="!zone" ma-tr="systemSettings.timezone.useOsTimezone"></em>
+            <span ng-if="zone" ng-bind="zone"></span>
+        </md-option>
+    </ma-system-setting-editor>
+</div>

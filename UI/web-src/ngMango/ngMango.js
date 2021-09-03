@@ -200,6 +200,7 @@ import roleEditor from './components/roleEditor/roleEditor';
 import fileStoreEditor from './components/fileStoreEditor/fileStoreEditor';
 import dataPointEventCountsTable from './components/dataPointEventCountsTable/dataPointEventCountsTable';
 import pointValueImport from './components/pointValueImport/pointValueImport';
+import systemSetup from './components/systemSetup/systemSetup';
 
 import slideUp from './animations/slideUp';
 import angular from 'angular';
@@ -415,6 +416,7 @@ ngMango.component('maRoleEditor', roleEditor);
 ngMango.component('maFileStoreEditor', fileStoreEditor);
 ngMango.component('maPointEventCountsTable', dataPointEventCountsTable);
 ngMango.component('maPointValueImport', pointValueImport);
+ngMango.component('maSystemSetup', systemSetup);
 
 ngMango.animation('.ma-slide-up', slideUp);
 

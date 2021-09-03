@@ -7,24 +7,25 @@ import eulaPdf from './EULA.pdf';
 import './licensePage.css';
 
 class LicensePageController {
-    static get $$ngIsClass() { return true; }
-    static get $inject() { return ['$state', 'maSystemSettings', '$q', 'maDialogHelper', '$http']; }
+    static get $$ngIsClass() {
+        return true;
+    }
 
-    constructor($state, SystemSettings, $q, DialogHelper, $http) {
+    static get $inject() {
+        return ['$state', 'maSystemSettings', '$q', 'maDialogHelper', '$http', 'maUser', 'MA_DEVELOPMENT_CONFIG'];
+    }
+
+    constructor($state, SystemSettings, $q, DialogHelper, $http, User, developmentConfig) {
         this.$state = $state;
         this.$q = $q;
         this.DialogHelper = DialogHelper;
         this.$http = $http;
+        this.User = User;
+        this.developmentConfig = developmentConfig;
 
         this.eulaPdf = eulaPdf;
         this.upgradeChecksEnabled = new SystemSettings('upgradeChecksEnabled', 'BOOLEAN', true);
         this.usageTrackingEnabled = new SystemSettings('usageTrackingEnabled', 'BOOLEAN', true);
-    }
-
-    $onInit() {
-    }
-
-    $onChanges(changes) {
     }
 
     agreeToLicense(event) {
@@ -39,8 +40,13 @@ class LicensePageController {
         });
 
         this.$q.all([p1, p2, p3]).then(() => {
-            this.$state.go('ui.settings.home', {helpOpen: true});
-        }, error => {
+            const user = this.User.current;
+            if (!this.developmentConfig.enabled && user.created === user.lastPasswordChange) {
+                this.$state.go('systemSetup');
+            } else {
+                this.$state.go('ui.settings.home', { helpOpen: true });
+            }
+        }, (error) => {
             this.DialogHelper.httpErrorToast(error);
         });
     }
