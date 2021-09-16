@@ -43,6 +43,8 @@ class WatchListBuilderController {
             page: 1
         };
         this.selectedTab = 0;
+
+        this.sortAndLimitBound = (...args) => this.sortAndLimit(...args);
     }
 
     newWatchlist(name) {
