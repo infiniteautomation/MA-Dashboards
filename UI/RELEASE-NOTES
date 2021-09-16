@@ -1,3 +1,6 @@
+*Version 4.2.1*
+* Fix where pagination would not get triggered in watchlist builder selected points table
+
 *Version 4.2.0*
 * Upgraded for Mango 4.2.0
 * Fix for Non Admin User cannot Create new Users because of Missing permissions inputs
