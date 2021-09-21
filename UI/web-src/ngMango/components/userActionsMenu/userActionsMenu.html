@@ -13,7 +13,7 @@
             </md-button>
         </md-menu-item>
         <md-menu-item>
-            <md-button class="ma-no-padding-right" ng-click="$ctrl.resettingPassword = {}" ng-disabled="$ctrl.resettingPassword || !$ctrl.hasEditPermission">
+            <md-button class="ma-no-padding-right" ng-click="$ctrl.resettingPassword = {}" ng-disabled="$ctrl.resettingPassword || !$ctrl.hasEditPermission || $ctrl.isCurrentUser">
                 <div layout="row" flex>
                     <div flex ma-tr="header.resetPassword"></div>
                     <md-icon md-menu-align-target>settings_backup_restore</md-icon>
