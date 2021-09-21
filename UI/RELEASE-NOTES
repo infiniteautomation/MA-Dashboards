@@ -3,6 +3,8 @@
 
 *Version 4.2.1*
 * Fix where pagination would not get triggered in watchlist builder selected points table
+* Allow non-admin users to create reset-password token for users they had permission to edit
+* Fix for non-admin users cannot edit other users when Edit own user details system permission is not set
 
 *Version 4.2.0*
 * Upgraded for Mango 4.2.0
