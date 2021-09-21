@@ -4,23 +4,23 @@
         <md-tooltip><span ma-tr="ui.app.moreOptions"></span></md-tooltip>
     </md-button>
     <md-menu-content width="4" class="ma-no-padding" md-colors="::{background: 'background-hue-3'}">
-        <md-menu-item ng-if="$ctrl.User.current.hasRole('superadmin')">
-            <md-button class="ma-no-padding-right" ng-click="$ctrl.switchUser($event)" ng-disabled="$ctrl.switchingUser || $ctrl.User.current.id === $ctrl.user.id">
+        <md-menu-item ng-if="$ctrl.isSuperAdmin">
+            <md-button class="ma-no-padding-right" ng-click="$ctrl.switchUser($event)" ng-disabled="$ctrl.switchingUser || $ctrl.isCurrentUser">
                 <div layout="row" flex>
                     <div flex ma-tr="users.su"></div>
                     <md-icon md-menu-align-target>swap_horiz</md-icon>
                 </div>
             </md-button>
         </md-menu-item>
-        <md-menu-item ng-if="$ctrl.User.current.hasRole('superadmin')">
-            <md-button class="ma-no-padding-right" ng-click="$ctrl.resettingPassword = {}" ng-disabled="$ctrl.resettingPassword || $ctrl.User.current.id === $ctrl.user.id">
+        <md-menu-item>
+            <md-button class="ma-no-padding-right" ng-click="$ctrl.resettingPassword = {}" ng-disabled="$ctrl.resettingPassword || !$ctrl.hasEditPermission">
                 <div layout="row" flex>
                     <div flex ma-tr="header.resetPassword"></div>
                     <md-icon md-menu-align-target>settings_backup_restore</md-icon>
                 </div>
             </md-button>
         </md-menu-item>
-        <md-menu-item ng-if="$ctrl.User.current.hasRole('superadmin')">
+        <md-menu-item ng-if="$ctrl.isSuperAdmin">
             <md-button class="ma-no-padding-right" ng-click="$ctrl.sendEmail = {}" ng-disabled="$ctrl.sendingEmail">
                 <div layout="row" flex>
                     <div flex ma-tr="common.sendTestEmail"></div>
@@ -28,15 +28,15 @@
                 </div>
             </md-button>
         </md-menu-item>
-        <md-menu-item ng-if="$ctrl.User.current.hasSystemPermission('permissions.user.editSelf')">
-            <md-button class="ma-no-padding-right" ng-click="$ctrl.sendEmailVerification($event)" ng-disabled="$ctrl.sendingEmailVerification">
+        <md-menu-item>
+            <md-button class="ma-no-padding-right" ng-click="$ctrl.sendEmailVerification($event)" ng-disabled="$ctrl.sendingEmailVerification || !$ctrl.hasEditPermission">
                 <div layout="row" flex>
                     <div flex ma-tr="users.sendVerificationEmail"></div>
                     <md-icon md-menu-align-target>send</md-icon>
                 </div>
             </md-button>
         </md-menu-item>
-        <md-menu-item ng-if="$ctrl.onCopy && $ctrl.User.current.hasRole('superadmin')">
+        <md-menu-item ng-if="$ctrl.onCopy && $ctrl.isSuperAdmin">
             <md-button class="ma-no-padding-right" ng-click="$ctrl.copyUser($event)">
                 <div layout="row" flex>
                     <div flex ma-tr="common.copy"></div>

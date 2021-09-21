@@ -25,7 +25,7 @@ class UserEditorController {
         this.maDialogHelper = maDialogHelper;
         this.$scope = $scope;
         this.maUtil = maUtil;
-        
+
         this.maFilter = $filter('maFilter');
         this.formName = '';
         this.showStatus = true;
@@ -44,10 +44,29 @@ class UserEditorController {
 
     $onChanges(changes) {
         if (changes.disabledAttr) {
-            this.disabled = this.disabledAttr || !this.registerMode && !this.User.current.hasSystemPermission('permissions.user.editSelf');
+            this.setDisabled();
         }
     }
-    
+
+    setDisabled() {
+        if (this.registerMode || !this.original) {
+            this.disabled = this.disabledAttr;
+            return;
+        }
+
+        const currentUser = this.User.current;
+        let hasPermission = false;
+        if (this.original.isNew()) {
+            hasPermission = currentUser.hasSystemPermission('users.create');
+        } else {
+            hasPermission = currentUser.hasPermission(this.user.editPermission);
+            if (currentUser.id === this.original.id) {
+                hasPermission = hasPermission || currentUser.hasSystemPermission('permissions.user.editSelf');
+            }
+        }
+        this.disabled = this.disabledAttr || !hasPermission;
+    }
+
     render() {
         this.resetForm();
         const viewValue = this.ngModelCtrl.$viewValue;
@@ -59,20 +78,21 @@ class UserEditorController {
 
         // easy to use reference to the original user so we can access its permissions
         this.original = viewValue;
+        this.setDisabled();
     }
 
     resetForm() {
         this.password = '';
         this.confirmPassword = '';
-        
+
         delete this.validationMessages;
-        
+
         if (this.userForm) {
             this.userForm.$setPristine();
             this.userForm.$setUntouched();
         }
     }
-    
+
     save() {
         this.userForm.$setSubmitted();
         if (!this.userForm.$valid) {
@@ -88,19 +108,19 @@ class UserEditorController {
             if (error.status === 422 && error.data && error.data.result && error.data.result.messages) {
                 this.validationMessages = error.data.result.messages;
             }
-    
+
             this.maDialogHelper.errorToast(['ui.components.errorSavingUser', this.user.originalId || '-',
                 error.mangoStatusText]);
         }).finally(() => delete this.saving);
     }
-    
+
     revert() {
         this.render();
     }
-    
+
     remove(event) {
         this.deleting = true;
-        
+
         const confirm = this.$mdDialog.confirm()
             .title(this.Translate.trSync('ui.app.areYouSure'))
             .textContent(this.Translate.trSync('ui.components.confirmDeleteUser'))
@@ -109,7 +129,7 @@ class UserEditorController {
             .ok(this.Translate.trSync('common.ok'))
             .cancel(this.Translate.trSync('common.cancel'))
             .multiple(true);
-    
+
         this.$mdDialog.show(confirm).then(() => {
             const username = this.user.username;
             this.user.$delete().then(user => {
@@ -135,7 +155,7 @@ class UserEditorController {
             delete this.user.password;
         }
     }
-    
+
     getLocales(filter) {
         return this.maLocales.get().then(locales => {
             return this.maFilter(locales, filter, ['name', 'native', 'common']);
@@ -143,7 +163,7 @@ class UserEditorController {
     }
 
     showPermissionInputs() {
-        if (this.user == null) {
+        if (this.user == null || this.registerMode) {
             return false;
         }
         if (this.user.isNew()) {
