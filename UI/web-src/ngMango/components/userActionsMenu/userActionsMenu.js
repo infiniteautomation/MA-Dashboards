@@ -6,8 +6,11 @@ import componentTemplate from './userActionsMenu.html';
 
 class UserActionsMenuController {
     static get $$ngIsClass() { return true; }
-    static get $inject() { return ['maUser', '$injector', 'maDialogHelper', '$window']; }
-    
+
+    static get $inject() {
+        return ['maUser', '$injector', 'maDialogHelper', '$window'];
+    }
+
     constructor(User, $injector, maDialogHelper, $window) {
         this.User = User;
         this.maDialogHelper = maDialogHelper;
@@ -15,12 +18,22 @@ class UserActionsMenuController {
         this.$state = $injector.has('$state') && $injector.get('$state');
     }
 
+    $onInit() {
+        const currentUser = this.User.current;
+        this.isSuperAdmin = currentUser.hasRole('superadmin');
+        this.isCurrentUser = this.user.id === currentUser.id;
+        this.hasEditPermission = currentUser.hasPermission(this.user.editPermission);
+        if (this.isCurrentUser) {
+            this.hasEditPermission = this.hasEditPermission || currentUser.hasSystemPermission('permissions.user.editSelf');
+        }
+    }
+
     switchUser(event) {
         const username = this.user.username;
         this.switchingUser = true;
         this.User.switchUser({username}).$promise.then(response => {
             this.maDialogHelper.toast(['ui.components.switchedUser', username]);
-    
+
             if (this.$state) {
                 // reload the resolves and views of this state and its parents
                 this.$state.go('.', null, {reload: true});
@@ -33,7 +46,7 @@ class UserActionsMenuController {
             delete this.switchingUser;
         });
     }
-    
+
     sendEmailVerification(event) {
         this.sendingEmailVerification = true;
 
@@ -56,7 +69,7 @@ class UserActionsMenuController {
             delete this.sendingEmailVerification;
         });
     }
-    
+
     copyUser(event) {
         if (typeof this.onCopy === 'function') {
             const copy = this.user.copy(true);
