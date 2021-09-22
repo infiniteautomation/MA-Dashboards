@@ -48,25 +48,6 @@ class UserEditorController {
         }
     }
 
-    setDisabled() {
-        if (this.registerMode || !this.original) {
-            this.disabled = this.disabledAttr;
-            return;
-        }
-
-        const currentUser = this.User.current;
-        let hasPermission = false;
-        if (this.original.isNew()) {
-            hasPermission = currentUser.hasSystemPermission('users.create');
-        } else {
-            hasPermission = currentUser.hasPermission(this.user.editPermission);
-            if (currentUser.id === this.original.id) {
-                hasPermission = hasPermission || currentUser.hasSystemPermission('permissions.user.editSelf');
-            }
-        }
-        this.disabled = this.disabledAttr || !hasPermission;
-    }
-
     render() {
         this.resetForm();
         const viewValue = this.ngModelCtrl.$viewValue;
@@ -79,6 +60,11 @@ class UserEditorController {
         // easy to use reference to the original user so we can access its permissions
         this.original = viewValue;
         this.setDisabled();
+
+        // auto-fill organization input based on the organization of the creating user
+        if (this.user && this.user.isNew() && this.User.current) {
+            this.user.organization = this.User.current.organization;
+        }
     }
 
     resetForm() {
@@ -163,13 +149,30 @@ class UserEditorController {
     }
 
     showPermissionInputs() {
-        if (this.user == null || this.registerMode) {
+        if (this.registerMode || !this.original) {
             return false;
         }
-        if (this.user.isNew()) {
-            return this.User.current.hasSystemPermission('users.create');
+        return this.hasPermission();
+    }
+
+    setDisabled() {
+        if (this.registerMode || !this.original) {
+            this.disabled = this.disabledAttr;
+            return;
         }
-        return this.User.current.hasPermission(this.original.editPermission);
+        this.disabled = this.disabledAttr || !this.hasPermission();
+    }
+
+    hasPermission() {
+        const currentUser = this.User.current;
+        if (this.original.isNew()) {
+            return currentUser.hasSystemPermission('users.create');
+        }
+        let result = currentUser.hasPermission(this.original.editPermission);
+        if (currentUser.id === this.original.id) {
+            result = result || currentUser.hasSystemPermission('permissions.user.editSelf');
+        }
+        return result;
     }
 }
 
