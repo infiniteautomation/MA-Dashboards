@@ -34,6 +34,7 @@ import com.infiniteautomation.mango.spring.service.PermissionService;
 import com.infiniteautomation.ui.UICommon;
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.ICoreLicense;
+import com.serotonin.m2m2.db.dao.InstalledModulesDao;
 import com.serotonin.m2m2.db.dao.JsonDataDao;
 import com.serotonin.m2m2.db.dao.SystemSettingsDao;
 import com.serotonin.m2m2.module.Module;
@@ -70,16 +71,19 @@ public class BootstrapController {
     private final PermissionService permissionService;
     private final PageResolver pageResolver;
     private final OAuth2Information oAuth2Information;
+    private final InstalledModulesDao installedModulesDao;
 
     @Autowired
     public BootstrapController(JsonDataDao jsonDataDao,
                                @Qualifier(MangoRuntimeContextConfiguration.REST_OBJECT_MAPPER_NAME) ObjectMapper objectMapper,
                                ServletContext servletContext, PublicUrlService publicUrlService, Environment env,
-                               PermissionService permissionService, PageResolver pageResolver, OAuth2Information oAuth2Information) {
+                               PermissionService permissionService, PageResolver pageResolver, OAuth2Information oAuth2Information,
+                               InstalledModulesDao installedModulesDao) {
         this.jsonDataDao = jsonDataDao;
         this.permissionService = permissionService;
         this.pageResolver = pageResolver;
         this.oAuth2Information = oAuth2Information;
+        this.installedModulesDao = installedModulesDao;
         this.systemSettingsDao = SystemSettingsDao.instance;
         this.objectMapper = objectMapper;
         this.servletContext = servletContext;
@@ -165,7 +169,7 @@ public class BootstrapController {
 
         data.setServerTimezone(TimeZone.getDefault().getID());
         data.setServerLocale(Common.getLocale().toLanguageTag());
-        data.setLastUpgradeTime(Common.getLastUpgradeTime());
+        data.setLastUpgradeTime((int) (installedModulesDao.lastUpgradeTime().toEpochMilli() / 1000));
         data.setPublicRegistrationEnabled(systemSettingsDao.getBooleanValue(SystemSettingsDao.USERS_PUBLIC_REGISTRATION_ENABLED));
         data.setDevelopmentMode(devEnabled);
 
