@@ -84,7 +84,7 @@ public class BootstrapController {
         this.pageResolver = pageResolver;
         this.oAuth2Information = oAuth2Information;
         this.installedModulesDao = installedModulesDao;
-        this.systemSettingsDao = SystemSettingsDao.instance;
+        this.systemSettingsDao = SystemSettingsDao.getInstance();
         this.objectMapper = objectMapper;
         this.servletContext = servletContext;
         this.publicUrlService = publicUrlService;
