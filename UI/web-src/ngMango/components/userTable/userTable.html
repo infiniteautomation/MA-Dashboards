@@ -1,5 +1,4 @@
 <div flex="noshrink" layout="column" ng-form="userTable" ma-form-exclude>
-
     <div class="ma-virtual-repeat-table">
         <div class="ma-virtual-repeat-table-header">
             <div class="ma-virtual-repeat-table-row">
@@ -15,10 +14,8 @@
                                 md-colors="::{background: 'background-hue-2'}">
                                 <md-menu-item ng-if-start="$ctrl.selectMultiple">
                                     <md-button ng-disabled="true">
-                                        <span ma-tr="ui.app.xItemsSelectedLong"
-                                            ma-tr-args="[$ctrl.selectedItems.size]"></span>
-                                        <span>&nbsp;</span>
-                                        <span ma-tr="ui.app.outOf" ma-tr-args="[$ctrl.pages.$total]"></span>
+                                        <span ma-tr="ui.app.xItemsSelectedLongOutOf"
+                                            ma-tr-args="[$ctrl.selectedItems.size,$ctrl.pages.$total]"></span>
                                     </md-button>
                                 </md-menu-item>
 
@@ -123,8 +120,8 @@
             </div>
             <md-progress-linear ng-show="$ctrl.itemsPromise" md-mode="indeterminate"></md-progress-linear>
         </div>
-
-        <div ng-if="$ctrl.pages.$total === 0 && !$ctrl.itemsPromise" ma-tr="ui.components.noItemsToList"></div>
+        <div ng-if="$ctrl.pages.$total === 0 && !$ctrl.itemsPromise" class="ma-no-items-to-list"
+            ma-tr="ui.components.noItemsToList"></div>
         <div class="ma-virtual-repeat-table-body" md-virtual-repeat-container>
             <div class="ma-virtual-repeat-table-row ma-item-row" md-virtual-repeat="item in $ctrl" md-on-demand
                 ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.username)}"
@@ -144,8 +141,6 @@
                     </ma-user-actions-menu>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
