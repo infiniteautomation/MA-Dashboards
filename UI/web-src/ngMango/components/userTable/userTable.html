@@ -14,8 +14,7 @@
                                 md-colors="::{background: 'background-hue-2'}">
                                 <md-menu-item ng-if-start="$ctrl.selectMultiple">
                                     <md-button ng-disabled="true">
-                                        <span ma-tr="ui.app.xItemsSelectedLong"
-                                            ma-tr-args="[$ctrl.selectedItems.size]"></span>
+                                        <span ma-tr="ui.app.xItemsSelectedLongOutOf" ma-tr-args="[$ctrl.selectedItems.size,$ctrl.pages.$total]"></span>
                                     </md-button>
                                 </md-menu-item>
 
