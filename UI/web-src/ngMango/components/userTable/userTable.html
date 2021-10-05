@@ -12,7 +12,7 @@
                             <md-menu-content width="3" class="ma-user-table" md-colors="::{background: 'background-hue-2'}">
                                 <md-menu-item ng-if-start="$ctrl.selectMultiple">
                                     <md-button ng-disabled="true">
-                                        <span ma-tr="ui.app.xItemsSelectedLong" ma-tr-args="[$ctrl.selectedItems.size]"></span>
+                                        <span ma-tr="ui.app.xItemsSelectedLongOutOf" ma-tr-args="[$ctrl.selectedItems.size,$ctrl.pages.$total]"></span>
                                     </md-button>
                                 </md-menu-item>
 
@@ -56,7 +56,7 @@
                                         </md-checkbox>
                                     </md-button>
                                 </md-menu-item>
-                                
+
                                 <md-menu-item>
                                     <md-menu>
                                         <md-button ng-click="$mdMenu.open($event)"><span ma-tr="ui.app.selectColumns"></span></md-button>
@@ -108,11 +108,11 @@
                 <div class="ma-checkbox-column">
                     <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1" ng-checked="$ctrl.selectedItems.has(item.username)" md-no-ink="true"></md-checkbox>
                 </div>
-    
+
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
                     <span ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}" ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
                 </div>
-                
+
                 <div ng-if="$ctrl.showActions" class="ma-actions-column">
                     <ma-user-actions-menu user="item" on-copy="$ctrl.onCopy({$event: $event, $user: $user})"></ma-user-actions-menu>
                 </div>
