@@ -5,13 +5,11 @@
                 <div class="ma-checkbox-column">
                     <md-menu-bar>
                         <md-menu md-offset="-4 4">
-                            <md-button class="md-icon-button ma-small-button ma-no-margin"
-                                ng-click="$ctrl.openMenu($event, $mdMenu)" tabindex="2">
+                            <md-button class="md-icon-button ma-small-button ma-no-margin" ng-click="$ctrl.openMenu($event, $mdMenu)" tabindex="2">
                                 <md-icon md-menu-origin>more_vert</md-icon>
                                 <md-tooltip><span ma-tr="ui.app.moreOptions"></span></md-tooltip>
                             </md-button>
-                            <md-menu-content width="3" class="ma-user-table"
-                                md-colors="::{background: 'background-hue-2'}">
+                            <md-menu-content width="3" class="ma-user-table" md-colors="::{background: 'background-hue-2'}">
                                 <md-menu-item ng-if-start="$ctrl.selectMultiple">
                                     <md-button ng-disabled="true">
                                         <span ma-tr="ui.app.xItemsSelectedLongOutOf" ma-tr-args="[$ctrl.selectedItems.size,$ctrl.pages.$total]"></span>
@@ -52,10 +50,8 @@
                                 <md-menu-divider ng-if-end></md-menu-divider>
 
                                 <md-menu-item>
-                                    <md-button
-                                        ng-click="$ctrl.showFilters = !$ctrl.showFilters; $ctrl.showFiltersChanged()">
-                                        <md-checkbox ng-click="$event.stopPropagation()" ng-model="$ctrl.showFilters"
-                                            ng-change="$ctrl.showFiltersChanged()">
+                                    <md-button ng-click="$ctrl.showFilters = !$ctrl.showFilters; $ctrl.showFiltersChanged()">
+                                        <md-checkbox ng-click="$event.stopPropagation()" ng-model="$ctrl.showFilters" ng-change="$ctrl.showFiltersChanged()">
                                             <span ma-tr="ui.app.showFilters"></span>
                                         </md-checkbox>
                                     </md-button>
@@ -63,19 +59,15 @@
 
                                 <md-menu-item>
                                     <md-menu>
-                                        <md-button ng-click="$mdMenu.open($event)"><span
-                                                ma-tr="ui.app.selectColumns"></span></md-button>
-                                        <md-menu-content width="3" class="ma-user-table ma-checkbox-menu"
-                                            md-colors="::{background: 'background-hue-2'}">
+                                        <md-button ng-click="$mdMenu.open($event)"><span ma-tr="ui.app.selectColumns"></span></md-button>
+                                        <md-menu-content width="3" class="ma-user-table ma-checkbox-menu" md-colors="::{background: 'background-hue-2'}">
                                             <md-menu-item ng-repeat="column in $ctrl.columns track by column.name">
                                                 <md-button ng-init="model = $ctrl.getSelectedColumnsModel(column)"
-                                                    ng-click="model.value = !model.value; $ctrl.selectedColumnsChanged()"
-                                                    md-prevent-menu-close
-                                                    ng-disabled="model.value && $ctrl.selectedColumns.length === 1">
-                                                    <md-checkbox ng-click="$event.stopPropagation()"
-                                                        md-prevent-menu-close md-no-ink="true" ng-model="model.value"
-                                                        ng-change="$ctrl.selectedColumnsChanged()"
+                                                        ng-click="model.value = !model.value; $ctrl.selectedColumnsChanged()" md-prevent-menu-close
                                                         ng-disabled="model.value && $ctrl.selectedColumns.length === 1">
+                                                    <md-checkbox ng-click="$event.stopPropagation()" md-prevent-menu-close md-no-ink="true"
+                                                            ng-model="model.value" ng-change="$ctrl.selectedColumnsChanged()"
+                                                            ng-disabled="model.value && $ctrl.selectedColumns.length === 1">
                                                         <span ma-tr="{{column.label}}"></span>
                                                     </md-checkbox>
                                                 </md-button>
@@ -88,56 +80,41 @@
                     </md-menu-bar>
 
                 </div>
-                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
-                    ng-click="column.sortable && $ctrl.sortBy(column)" tabindex="1">
+                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name" ng-click="column.sortable && $ctrl.sortBy(column)" tabindex="1">
                     <span ma-tr="{{column.label}}"></span>
-                    <md-icon class="ma-sort-icon ma-disable-animate"
-                        ng-if="column.sortable && $ctrl.sort[0].columnName === column.name"
-                        ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
+                    <md-icon class="ma-sort-icon ma-disable-animate" ng-if="column.sortable && $ctrl.sort[0].columnName === column.name" ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
                 </div>
-                <div ng-if="$ctrl.showActions" class="ma-actions-column">
-                    <!-- Spacer for action column -->
-                </div>
+                <div ng-if="$ctrl.showActions" class="ma-actions-column"><!-- Spacer for action column --></div>
             </div>
             <div class="ma-virtual-repeat-table-row" ng-if="$ctrl.showFilters" class="ma-filter-header">
-                <div class="ma-checkbox-column">
-                    <!-- Spacer for checkbox column -->
-                </div>
+                <div class="ma-checkbox-column"><!-- Spacer for checkbox column --></div>
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
                     <md-input-container md-no-float="true" ng-if="column.filterable">
-                        <input ng-model="column.filter" ng-model-options="{debounce: 1000}"
-                            ng-change="$ctrl.filterChanged()" ma-tr="ui.app.filter">
-                        <md-button ng-show="!!column.filter" class="ma-input-button md-icon-button"
-                            ng-click="column.filter = null; $ctrl.filterChanged()">
+                        <input ng-model="column.filter" ng-model-options="{debounce: 1000}" ng-change="$ctrl.filterChanged()" ma-tr="ui.app.filter">
+                        <md-button ng-show="!!column.filter" class="ma-input-button md-icon-button" ng-click="column.filter = null; $ctrl.filterChanged()">
                             <md-icon>clear</md-icon>
                         </md-button>
                     </md-input-container>
                 </div>
-                <div ng-if="$ctrl.showActions" class="ma-actions-column">
-                    <!-- Spacer for action column -->
-                </div>
+                <div ng-if="$ctrl.showActions" class="ma-actions-column"><!-- Spacer for action column --></div>
             </div>
             <md-progress-linear ng-show="$ctrl.itemsPromise" md-mode="indeterminate"></md-progress-linear>
         </div>
-        <div ng-if="$ctrl.pages.$total === 0 && !$ctrl.itemsPromise" class="ma-no-items-to-list"
-            ma-tr="ui.components.noItemsToList"></div>
+        <div ng-if="$ctrl.pages.$total === 0 && !$ctrl.itemsPromise" class="ma-no-items-to-list" ma-tr="ui.components.noItemsToList"></div>
         <div class="ma-virtual-repeat-table-body" md-virtual-repeat-container>
             <div class="ma-virtual-repeat-table-row ma-item-row" md-virtual-repeat="item in $ctrl" md-on-demand
-                ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.username)}"
-                ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
+                    ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.username)}"
+                    ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
                 <div class="ma-checkbox-column">
-                    <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1"
-                        ng-checked="$ctrl.selectedItems.has(item.username)" md-no-ink="true"></md-checkbox>
+                    <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1" ng-checked="$ctrl.selectedItems.has(item.username)" md-no-ink="true"></md-checkbox>
                 </div>
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
-                    <span ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
-                        ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
+                    <span ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}" ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
                 </div>
 
                 <div ng-if="$ctrl.showActions" class="ma-actions-column">
-                    <ma-user-actions-menu user="item" on-copy="$ctrl.onCopy({$event: $event, $user: $user})">
-                    </ma-user-actions-menu>
+                    <ma-user-actions-menu user="item" on-copy="$ctrl.onCopy({$event: $event, $user: $user})"></ma-user-actions-menu>
                 </div>
             </div>
         </div>
