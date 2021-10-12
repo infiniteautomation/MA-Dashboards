@@ -11,11 +11,6 @@ const actions = {
         descriptionTr: 'ui.app.purgeUsingSettings',
         resultsTr: 'ui.app.purgeSuccess'
     },
-    purgeAllPointValues: {
-        confirmTr: 'systemSettings.purgeDataConfirm',
-        descriptionTr: 'ui.app.pointValuePurge',
-        resultsTr: 'ui.app.purgeSuccessPointValues'
-    },
     purgeAllEvents: {
         confirmTr: 'systemSettings.purgeAllEventsConfirm',
         descriptionTr: 'ui.app.eventPurge',
