@@ -1,6 +1,7 @@
 *Version 4.3.0*
 * Upgraded for Mango 4.3.0
 * Show user count in users page
+* Fix mailing lists not removed from the list when deleted
 
 *Version 4.2.1*
 * Fix where pagination would not get triggered in watchlist builder selected points table
