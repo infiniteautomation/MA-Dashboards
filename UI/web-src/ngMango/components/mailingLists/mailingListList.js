@@ -14,22 +14,23 @@ import componentTemplate from './mailingListList.html';
 const $inject = Object.freeze(['$scope', 'maMailingList', 'maDialogHelper']);
 class MailingListsListController {
     static get $inject() { return $inject; }
+
     static get $$ngIsClass() { return true; }
-    
+
     constructor($scope, maMailingList, maDialogHelper) {
         this.$scope = $scope;
         this.maMailingList = maMailingList;
         this.maDialogHelper = maDialogHelper;
     }
-    
+
     $onInit() {
         this.ngModelCtrl.$render = () => this.render();
         this.getLists();
 
-        this.maMailingList.subscribe((event, item, originalXid) => {
+        this.maMailingList.subscribe((event, item, attributes) => {
             if (!this.lists) return;
 
-            const index = this.lists.findIndex(list => list.id === item.id);
+            const index = this.lists.findIndex((list) => list.id === attributes.itemId);
             if (index >= 0) {
                 if (event.name === 'update' || event.name === 'create' || event.name === 'rtDataSaved') {
                     this.lists[index] = item;
@@ -41,22 +42,20 @@ class MailingListsListController {
             }
 
             this.new = true;
-
         }, this.$scope, ['create', 'update', 'delete', 'rtDataSaved']);
-
     }
-    
+
     $onChanges(changes) {
     }
-    
+
     setViewValue() {
         this.ngModelCtrl.$setViewValue(this.selectedList);
     }
-    
+
     render() {
         this.selectedList = this.ngModelCtrl.$viewValue;
     }
-    
+
     newList() {
         this.new = true;
         this.selectedList = new this.maMailingList();
@@ -71,13 +70,12 @@ class MailingListsListController {
 
     getLists() {
         this.maMailingList.list().then(
-            lists => {
+            (lists) => {
                 this.lists = lists;
                 this.newList();
             }
         );
     }
-
 }
 
 export default {
