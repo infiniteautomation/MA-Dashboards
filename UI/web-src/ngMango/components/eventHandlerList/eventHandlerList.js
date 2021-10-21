@@ -28,7 +28,12 @@ class EventHandlerListController {
         this.maEventHandler.subscribe({
             scope: this.$scope,
             handler: (event, item, attributes) => {
-                attributes.updateArray(this.eventHandlers, item => !this.eventType || item.hasEventType(this.eventType.typeId));
+                attributes.updateArray(this.eventHandlers, (eh) => {
+                    if (!this.eventType) return true;
+                    const found = eh || this.eventHandlers.find((i) => i.id === attributes.itemId);
+                    if (found) return found.hasEventType(this.eventType.typeId);
+                    return false;
+                });
             }
         });
     }
@@ -41,10 +46,10 @@ class EventHandlerListController {
 
     doQuery() {
         const queryBuilder = this.maEventHandler.buildQuery(); // TODO this is a unbounded query
-        return queryBuilder.query().then(eventHandlers => {
+        return queryBuilder.query().then((eventHandlers) => {
             if (this.eventType) {
                 const eventTypeId = this.eventType.typeId;
-                this.eventHandlers = eventHandlers.filter(eh => eh.hasEventType(eventTypeId));
+                this.eventHandlers = eventHandlers.filter((eh) => eh.hasEventType(eventTypeId));
             } else {
                 this.eventHandlers = eventHandlers;
             }

@@ -14,24 +14,24 @@ import './eventDetectorSelect.css';
 
 class EventDetectorSelectController {
     static get $$ngIsClass() { return true; }
+
     static get $inject() { return ['maEventDetector', '$scope']; }
-    
+
     constructor(EventDetector, $scope) {
         this.EventDetector = EventDetector;
         this.$scope = $scope;
-        
+
         this.newValue = {};
     }
-    
+
     $onInit() {
         this.ngModelCtrl.$render = () => this.render();
 
         this.doQuery();
-        
-        this.EventDetector.subscribe((event, item, originalXid) => {
-            if (!this.eventDetectors) return;
 
-            const index = this.eventDetectors.findIndex(eventDetector => eventDetector.id === item.id);
+        this.EventDetector.subscribe((event, item, attributes) => {
+            if (!this.eventDetectors) return;
+            const index = this.eventDetectors.findIndex((ed) => ed.id === attributes.itemId);
             if (index >= 0) {
                 if (event.name === 'update' || event.name === 'create') {
                     this.eventDetectors[index] = item;
@@ -41,45 +41,44 @@ class EventDetectorSelectController {
             } else if (event.name === 'update' || event.name === 'create') {
                 this.eventDetectors.push(item);
             }
-
         }, this.$scope, ['create', 'update', 'delete']);
     }
-    
+
     $onChanges(changes) {
         if (changes.dataPoint && !changes.dataPoint.isFirstChange()) {
             this.doQuery();
         }
     }
-    
+
     doQuery() {
         const query = this.EventDetector.buildQuery();
-        
+
         if (this.dataPoint) {
             query.eq('sourceTypeName', 'DATA_POINT');
             query.eq('dataPointId', this.dataPoint.id);
         }
-        
-        query.query().then(eventDetectors => {
+
+        query.query().then((eventDetectors) => {
             this.eventDetectors = eventDetectors;
-            
+
             if (typeof this.onQuery === 'function') {
-                this.onQuery({$items: this.eventDetectors});
+                this.onQuery({ $items: this.eventDetectors });
             }
         });
     }
-    
+
     setViewValue() {
         this.ngModelCtrl.$setViewValue(this.selected);
     }
-    
+
     render() {
         this.selected = this.ngModelCtrl.$viewValue;
-        
+
         if (this.selected === null) {
             this.newEventDetector();
         }
     }
-    
+
     selectEventDetector() {
         if (this.selected === this.newValue) {
             this.newEventDetector();
@@ -87,7 +86,7 @@ class EventDetectorSelectController {
             this.setViewValue();
         }
     }
-    
+
     newEventDetector(event) {
         if (this.dataPoint) {
             this.selected = this.EventDetector.forDataPoint(this.dataPoint);
