@@ -6,7 +6,6 @@ import angular from 'angular';
 
 publisherProvider.$inject = [];
 function publisherProvider() {
-    
     const publishTypeCodes = [
         {
             value: 'ALL',
@@ -25,24 +24,23 @@ function publisherProvider() {
             translationKey: 'publisherEdit.publishType.none'
         }
     ];
-    
+
     const publisherTypes = [];
     const publisherTypesByName = Object.create(null);
-    
-    this.registerPublisherType = function(type) {
-        const existing = publisherTypes.find(t => t.type === type.type);
+
+    this.registerPublisherType = function (type) {
+        const existing = publisherTypes.find((t) => t.type === type.type);
         if (existing) {
             console.error('Tried to register publisher type twice', type);
             return;
         }
         publisherTypes.push(type);
     };
-    
+
     this.$get = publisherFactory;
-    
+
     publisherFactory.$inject = ['maRestResource', '$templateCache', 'maUtil', '$injector'];
     function publisherFactory(RestResource, $templateCache, Util, $injector) {
-
         const publisherBaseUrl = '/rest/latest/publishers';
         const publisherWebSocketUrl = '/rest/latest/websocket/publishers';
         const publisherXidPrefix = 'PUB_';
@@ -64,15 +62,14 @@ function publisherProvider() {
         };
 
         class Publisher extends RestResource {
-            
-            constructor(properties) {
+            constructor (properties) {
                 if (!properties && publisherTypes.length) {
                     const type = publisherTypes[0];
                     properties = angular.copy(type.defaultPublisher) || {};
                     properties.modelType = type.type;
                 }
                 super(properties);
-                
+
                 if (!this.points) {
                     this.points = [];
                 }
@@ -84,62 +81,65 @@ function publisherProvider() {
             static get defaultProperties() {
                 return defaultProperties;
             }
-            
+
             static get baseUrl() {
                 return publisherBaseUrl;
             }
-            
+
             static get webSocketUrl() {
                 return publisherWebSocketUrl;
             }
-            
+
             static get xidPrefix() {
                 return publisherXidPrefix;
             }
-            
+
             static get types() {
                 return publisherTypes;
             }
-            
+
             static get typesByName() {
                 return publisherTypesByName;
             }
-            
+
             static get publishTypeCodes() {
                 return publishTypeCodes;
             }
 
             enable(enabled = true, restart = false) {
                 this.$enableToggling = true;
-                
-                return this.constructor.http({
-                    url: this.constructor.baseUrl + '/enable-disable/' + this.constructor.encodeUriSegment(this.getOriginalId()),
-                    method: 'PUT',
-                    params: {
-                        enabled: !!enabled,
-                        restart
-                    }
-                }).then(() => {
-                    this.enabled = enabled;
-                }).finally(() => {
-                    delete this.$enableToggling;
-                });
+
+                return this.constructor
+                    .http({
+                        url: `${this.constructor.baseUrl}/enable-disable/${this.constructor.encodeUriSegment(this.getOriginalId())}`,
+                        method: 'PUT',
+                        params: {
+                            enabled: !!enabled,
+                            restart
+                        }
+                    })
+                    .then(() => {
+                        this.enabled = enabled;
+                    })
+                    .finally(() => {
+                        delete this.$enableToggling;
+                    });
             }
-            
+
             get isEnabled() {
                 return this.enabled;
             }
-            
+
             set isEnabled(value) {
                 this.enable(value);
             }
-            
+
             changeType(type = this.modelType) {
                 const newPublisher = this.constructor.typesByName[type].createPublisher();
-                
+
                 // copy only a select set of properties over
-                Object.keys(defaultProperties).forEach(k => newPublisher[k] = this[k]);
-                
+                Object.keys(defaultProperties).forEach((k) => (newPublisher[k] = this[k]));
+
                 return newPublisher;
             }
 
@@ -153,7 +153,7 @@ function publisherProvider() {
         }
 
         class PublisherType {
-            constructor(defaults = {}) {
+            constructor (defaults = {}) {
                 Object.assign(this, defaults);
 
                 // put the templates in the template cache so we can ng-include them
@@ -161,9 +161,9 @@ function publisherProvider() {
                     this.templateUrl = `publisherEditor.${this.type}.html`;
                     $templateCache.put(this.templateUrl, this.template);
                 }
-                
+
                 if (Array.isArray(this.pointProperties)) {
-                    this.pointProperties.forEach(pp => {
+                    this.pointProperties.forEach((pp) => {
                         if (!pp.editorTemplate) {
                             pp.editorTemplate = `<md-input-container flex>
                                 <input ng-model="publisherPoint[pointProperty.name]" ng-required="pointProperty.required">
@@ -173,18 +173,18 @@ function publisherProvider() {
                         $templateCache.put(pp.editorTemplateUrl, pp.editorTemplate);
                     });
                 }
-                
+
                 if (typeof this.initialize === 'function') {
                     this.initialize($injector);
                 }
             }
-            
+
             createPublisher() {
                 const publisher = new Publisher(angular.copy(this.defaultPublisher));
                 publisher.modelType = this.type;
                 return publisher;
             }
-            
+
             createPublisherPoint(point, publisher) {
                 return angular.copy(this.defaultPublisherPoint || {});
             }
@@ -193,9 +193,9 @@ function publisherProvider() {
         publisherTypes.forEach((type, i) => {
             publisherTypes[i] = Object.freeze(new PublisherType(type));
         });
-        
+
         Util.createMapObject(publisherTypes, 'type', publisherTypesByName);
-        
+
         Object.freeze(publisherTypes);
         Object.freeze(publisherTypesByName);
 

@@ -4,6 +4,8 @@
 
 import './ngMangoFilters';
 
+import angular from 'angular';
+import rqlQuery from 'rql/query';
 import Point from './services/Point';
 import UserProvider from './services/User';
 import PointEventManagerFactory from './services/PointEventManager';
@@ -73,8 +75,6 @@ import EventTarget from './classes/EventTarget';
 import MultiMap from './classes/MultiMap';
 import TableController from './classes/TableController';
 
-import angular from 'angular';
-import rqlQuery from 'rql/query';
 import 'angular-resource';
 import 'angular-sanitize';
 import 'angular-local-storage';
@@ -82,7 +82,7 @@ import 'angular-cookies';
 
 // rql library doesn't encode null correctly (it encodes as string:null)
 const oldEncodeValue = rqlQuery.encodeValue;
-rqlQuery.encodeValue = function(val) {
+rqlQuery.encodeValue = function (val) {
     if (val === null) return 'null';
     return oldEncodeValue.apply(this, arguments);
 };
@@ -96,8 +96,15 @@ rqlQuery.encodeValue = function(val) {
  * The ngMangoServices module handles loading of services and providers that make API calls to the mango backend.
  *
  *
-**/
-const ngMangoServices = angular.module('ngMangoServices', ['ngMangoFilters', 'ngResource', 'ngSanitize', 'LocalStorageModule', 'ngLocale', 'ngCookies']);
+ * */
+const ngMangoServices = angular.module('ngMangoServices', [
+    'ngMangoFilters',
+    'ngResource',
+    'ngSanitize',
+    'LocalStorageModule',
+    'ngLocale',
+    'ngCookies'
+]);
 
 ngMangoServices.provider('maPoint', Point);
 ngMangoServices.provider('maUser', UserProvider);
@@ -195,28 +202,28 @@ ngMangoServices.constant('MA_DATE_FORMATS', {
 });
 
 ngMangoServices.constant('MA_ROLLUP_TYPES', [
-    {type: 'POINT_DEFAULT', nonNumeric: true, label: 'Point default', translation: 'common.rollup.pointDefault', nonAssignable: true},
-    {type: 'NONE', nonNumeric: true, label: 'None', translation: 'common.rollup.none'},
-    {type: 'SIMPLIFY', nonNumeric: false, label: 'Simplify', translation: 'ui.app.simplify', nonAssignable: true},
-    {type: 'AVERAGE', nonNumeric: false, label: 'Average', translation: 'common.rollup.average'},
-    {type: 'DELTA', nonNumeric: false, label: 'Delta', translation: 'common.rollup.delta'},
-    {type: 'MINIMUM', nonNumeric: false, label: 'Minimum', translation: 'common.rollup.minimum'},
-    {type: 'MAXIMUM', nonNumeric: false, label: 'Maximum', translation: 'common.rollup.maximum'},
-    {type: 'ACCUMULATOR', nonNumeric: false, label: 'Accumulator', translation: 'common.rollup.accumulator'},
-    {type: 'SUM', nonNumeric: false, label: 'Sum', translation: 'common.rollup.sum'},
-    {type: 'START', nonNumeric: true, label: 'Start', translation: 'common.rollup.start'},
-    {type: 'FIRST', nonNumeric: true, label: 'First', translation: 'common.rollup.first'},
-    {type: 'LAST', nonNumeric: true, label: 'Last', translation: 'common.rollup.last'},
-    {type: 'COUNT', nonNumeric: true, label: 'Count', translation: 'common.rollup.count'},
-    {type: 'INTEGRAL', nonNumeric: false, label: 'Integral', translation: 'common.rollup.integral'}
-    //{name: 'FFT', nonNumeric: false}
+    { type: 'POINT_DEFAULT', nonNumeric: true, label: 'Point default', translation: 'common.rollup.pointDefault', nonAssignable: true },
+    { type: 'NONE', nonNumeric: true, label: 'None', translation: 'common.rollup.none' },
+    { type: 'SIMPLIFY', nonNumeric: false, label: 'Simplify', translation: 'ui.app.simplify', nonAssignable: true },
+    { type: 'AVERAGE', nonNumeric: false, label: 'Average', translation: 'common.rollup.average' },
+    { type: 'DELTA', nonNumeric: false, label: 'Delta', translation: 'common.rollup.delta' },
+    { type: 'MINIMUM', nonNumeric: false, label: 'Minimum', translation: 'common.rollup.minimum' },
+    { type: 'MAXIMUM', nonNumeric: false, label: 'Maximum', translation: 'common.rollup.maximum' },
+    { type: 'ACCUMULATOR', nonNumeric: false, label: 'Accumulator', translation: 'common.rollup.accumulator' },
+    { type: 'SUM', nonNumeric: false, label: 'Sum', translation: 'common.rollup.sum' },
+    { type: 'START', nonNumeric: true, label: 'Start', translation: 'common.rollup.start' },
+    { type: 'FIRST', nonNumeric: true, label: 'First', translation: 'common.rollup.first' },
+    { type: 'LAST', nonNumeric: true, label: 'Last', translation: 'common.rollup.last' },
+    { type: 'COUNT', nonNumeric: true, label: 'Count', translation: 'common.rollup.count' },
+    { type: 'INTEGRAL', nonNumeric: false, label: 'Integral', translation: 'common.rollup.integral' }
+    // {name: 'FFT', nonNumeric: false}
 ]);
 
 // These are Java SimpleDateFormat format strings and are only used on the Watchlist download page
 ngMangoServices.constant('MA_DATE_TIME_FORMATS', [
     {
         translation: 'ui.app.timeFormat.iso',
-        format: 'yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX'
+        format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
     },
     {
         translation: 'ui.app.timeFormat.excelCompatible',
@@ -233,27 +240,27 @@ ngMangoServices.constant('MA_DATE_TIME_FORMATS', [
 ]);
 
 ngMangoServices.constant('MA_TIME_PERIOD_TYPES', [
-    {type: 'MILLISECONDS', label: 'Milliseconds', translation: 'dateAndTime.milliseconds', perTranslation: 'dateAndTime.millisecond.per'},
-    {type: 'SECONDS', label: 'Seconds', translation: 'dateAndTime.seconds', perTranslation: 'dateAndTime.second.per'},
-    {type: 'MINUTES', label: 'Minutes', translation: 'dateAndTime.minutes', perTranslation: 'dateAndTime.minute.per'},
-    {type: 'HOURS', label: 'Hours', translation: 'dateAndTime.hours', perTranslation: 'dateAndTime.hour.per'},
-    {type: 'DAYS', label: 'Days', translation: 'dateAndTime.days', perTranslation: 'dateAndTime.day.per', showByDefault: true},
-    {type: 'WEEKS', label: 'Weeks', translation: 'dateAndTime.weeks', perTranslation: 'dateAndTime.week.per', showByDefault: true},
-    {type: 'MONTHS', label: 'Months', translation: 'dateAndTime.months', perTranslation: 'dateAndTime.month.per', showByDefault: true},
-    {type: 'YEARS', label: 'Years', translation: 'dateAndTime.years', perTranslation: 'dateAndTime.year.per', showByDefault: true}
+    { type: 'MILLISECONDS', label: 'Milliseconds', translation: 'dateAndTime.milliseconds', perTranslation: 'dateAndTime.millisecond.per' },
+    { type: 'SECONDS', label: 'Seconds', translation: 'dateAndTime.seconds', perTranslation: 'dateAndTime.second.per' },
+    { type: 'MINUTES', label: 'Minutes', translation: 'dateAndTime.minutes', perTranslation: 'dateAndTime.minute.per' },
+    { type: 'HOURS', label: 'Hours', translation: 'dateAndTime.hours', perTranslation: 'dateAndTime.hour.per' },
+    { type: 'DAYS', label: 'Days', translation: 'dateAndTime.days', perTranslation: 'dateAndTime.day.per', showByDefault: true },
+    { type: 'WEEKS', label: 'Weeks', translation: 'dateAndTime.weeks', perTranslation: 'dateAndTime.week.per', showByDefault: true },
+    { type: 'MONTHS', label: 'Months', translation: 'dateAndTime.months', perTranslation: 'dateAndTime.month.per', showByDefault: true },
+    { type: 'YEARS', label: 'Years', translation: 'dateAndTime.years', perTranslation: 'dateAndTime.year.per', showByDefault: true }
 ]);
 
 ngMangoServices.constant('MA_CHART_TYPES', [
-    {type: 'line', apiType: 'LINE', label: 'Line', translation: 'ui.app.line'},
-    {type: 'smoothedLine', apiType: 'SPLINE', label: 'Smoothed', translation: 'ui.app.smooth'},
-    {type: 'step', apiType: 'STEP', label: 'Step', translation: 'ui.app.step', nonNumeric: true},
-    {type: 'column', apiType: 'BAR', label: 'Bar', translation: 'ui.app.bar'}
+    { type: 'line', apiType: 'LINE', label: 'Line', translation: 'ui.app.line' },
+    { type: 'smoothedLine', apiType: 'SPLINE', label: 'Smoothed', translation: 'ui.app.smooth' },
+    { type: 'step', apiType: 'STEP', label: 'Step', translation: 'ui.app.step', nonNumeric: true },
+    { type: 'column', apiType: 'BAR', label: 'Bar', translation: 'ui.app.bar' }
 ]);
 
 ngMangoServices.constant('MA_SIMPLIFY_TYPES', [
-    {type: 'NONE', translation: 'pointEdit.simplify.none', dataTypes: new Set(['BINARY', 'ALPHANUMERIC', 'MULTISTATE', 'NUMERIC', 'IMAGE'])},
-    {type: 'TARGET', translation: 'pointEdit.simplify.target', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY'])},
-    {type: 'TOLERANCE', translation: 'pointEdit.simplify.tolerance', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY'])}
+    { type: 'NONE', translation: 'pointEdit.simplify.none', dataTypes: new Set(['BINARY', 'ALPHANUMERIC', 'MULTISTATE', 'NUMERIC', 'IMAGE']) },
+    { type: 'TARGET', translation: 'pointEdit.simplify.target', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY']) },
+    { type: 'TOLERANCE', translation: 'pointEdit.simplify.tolerance', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY']) }
 ]);
 
 ngMangoServices.constant('MA_LIFECYCLE_STATES', {
@@ -271,22 +278,26 @@ ngMangoServices.constant('MA_DEFAULT_TIMEZONE', '');
 ngMangoServices.constant('MA_DEFAULT_LOCALE', '');
 
 // development mode settings
-ngMangoServices.constant('MA_DEVELOPMENT_CONFIG', {enabled: false});
+ngMangoServices.constant('MA_DEVELOPMENT_CONFIG', { enabled: false });
 
-ngMangoServices.config(['localStorageServiceProvider', '$httpProvider', '$provide',
-        function(localStorageServiceProvider, $httpProvider, $provide) {
-    localStorageServiceProvider
-        .setPrefix('ngMangoServices')
-        .setStorageCookieDomain(window.location.hostname === 'localhost' ? '' : window.location.host)
-        .setNotify(false, false);
+ngMangoServices.config([
+    'localStorageServiceProvider',
+    '$httpProvider',
+    '$provide',
+    function (localStorageServiceProvider, $httpProvider, $provide) {
+        localStorageServiceProvider
+            .setPrefix('ngMangoServices')
+            .setStorageCookieDomain(window.location.hostname === 'localhost' ? '' : window.location.host)
+            .setNotify(false, false);
 
-    $httpProvider.defaults.paramSerializer = 'maRqlParamSerializer';
-    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-    $httpProvider.interceptors.push('maHttpInterceptor');
+        $httpProvider.defaults.paramSerializer = 'maRqlParamSerializer';
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        $httpProvider.interceptors.push('maHttpInterceptor');
 
-    $provide.decorator('$q', qDecorator);
-    $provide.decorator('$resource', resourceDecorator);
-    $provide.decorator('$rootScope', scopeDecorator);
-}]);
+        $provide.decorator('$q', qDecorator);
+        $provide.decorator('$resource', resourceDecorator);
+        $provide.decorator('$rootScope', scopeDecorator);
+    }
+]);
 
 export default ngMangoServices;
