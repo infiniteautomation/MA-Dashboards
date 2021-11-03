@@ -157,7 +157,7 @@ ngMangoServices.provider('$exceptionHandler', maExceptionHandler);
 ngMangoServices.factory('maMultipleValues', multipleValuesFactory);
 ngMangoServices.factory('maSerialPort', serialPort);
 ngMangoServices.provider('maPublisher', Publisher);
-ngMangoServices.provider('maPublisherPoints', publisherPoints);
+ngMangoServices.factory('maPublisherPoints', publisherPoints);
 ngMangoServices.factory('maLogFile', logFileFactory);
 ngMangoServices.factory('maScript', scriptFactory);
 ngMangoServices.factory('maDiscardCheck', discardCheckFactory);
