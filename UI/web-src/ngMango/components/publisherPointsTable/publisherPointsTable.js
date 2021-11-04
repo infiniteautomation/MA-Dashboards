@@ -7,9 +7,10 @@ import publisherPointsTable from './publisherPointsTable.html';
 import './publisherPointsTable.css';
 
 const DEFAULT_COLUMNS = [
+    { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
     { name: 'dataPointXid', label: 'ui.app.xidShort', selectedByDefault: true },
-    { name: 'deviceName', label: 'common.deviceName', selectedByDefault: true },
-    { name: 'name', label: 'common.name', selectedByDefault: true }
+    { name: 'name', label: 'common.name', selectedByDefault: true },
+    { name: 'enabled', label: 'common.name', selectedByDefault: true }
 ];
 
 class PublisherPointsTableController extends TableController {
