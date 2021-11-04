@@ -37,8 +37,10 @@ class PublisherPointsTableController extends TableController {
         if ((changes.localStorageKey && changes.localStorageKey.currentValue) || (changes.defaultSort && changes.defaultSort.currentValue)) {
             this.loadSettings();
         }
-        if (changes.refreshTable && changes.refreshTable.currentValue) {
-            this.filterChanged();
+        if (this.selectedColumns && changes.refreshTable && changes.refreshTable.currentValue) {
+            if (this.selectedColumns) {
+                this.filterChanged();
+            }
         }
     }
 
