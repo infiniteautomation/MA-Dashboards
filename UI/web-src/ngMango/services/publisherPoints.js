@@ -9,7 +9,7 @@ function publisherPointsFactory(RestResource) {
         static get defaultProperties() {
             return {
                 name: null,
-                enabled: null,
+                enabled: true,
                 dataPointXid: '',
                 publisherXid: '',
                 modelType: ''

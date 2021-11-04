@@ -39,8 +39,8 @@ function publisherProvider() {
 
     this.$get = publisherFactory;
 
-    publisherFactory.$inject = ['maRestResource', '$templateCache', 'maUtil', '$injector'];
-    function publisherFactory(RestResource, $templateCache, Util, $injector) {
+    publisherFactory.$inject = ['maRestResource', '$templateCache', 'maUtil', '$injector', 'maPublisherPoints'];
+    function publisherFactory(RestResource, $templateCache, Util, $injector, PublisherPoints) {
         const publisherBaseUrl = '/rest/latest/publishers-without-points';
         const publisherWebSocketUrl = '/rest/latest/websocket/publishers-without-points';
         const publisherXidPrefix = 'PUB_';
@@ -146,9 +146,8 @@ function publisherProvider() {
             createPublisherPoint(point) {
                 const type = this.constructor.typesByName[this.modelType];
                 const publisherPoint = type.createPublisherPoint(point, this);
-                publisherPoint.dataPointXid = point.xid;
                 publisherPoint.modelType = type.type;
-                return publisherPoint;
+                return new PublisherPoints({ ...publisherPoint });
             }
         }
 
@@ -186,7 +185,11 @@ function publisherProvider() {
             }
 
             createPublisherPoint(point, publisher) {
-                return angular.copy(this.defaultPublisherPoint || {});
+                return {
+                    name: point.name,
+                    dataPointXid: point.xid,
+                    publisherXid: publisher.xid
+                };
             }
         }
 

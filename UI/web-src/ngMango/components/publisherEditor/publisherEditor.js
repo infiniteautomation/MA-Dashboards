@@ -201,6 +201,7 @@ class PublisherEditorController {
     }
 
     pointsToPublisherPoints(points) {
+        console.log('1');
         if (Array.isArray(points)) {
             // map of XID to existing publisher points
             const xidToPublisherPoint = this.maUtil.createMapObject(this.publisher.points, 'dataPointXid');
@@ -218,13 +219,16 @@ class PublisherEditorController {
         }
     }
 
+    // TODO: Figure out if this method should be removed
     publisherPointsToPoints(publisherPoints) {
+        console.log('2');
         if (Array.isArray(publisherPoints)) {
             return publisherPoints.map((publisherPoint) => this.points.get(publisherPoint) || new this.maPoint({ xid: publisherPoint.dataPointXid }));
         }
     }
 
     pointsChanged() {
+        console.log(this.publisher.points);
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
     }
