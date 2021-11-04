@@ -7,7 +7,7 @@ import publisherPointsTable from './publisherPointsTable.html';
 import './publisherPointsTable.css';
 
 const DEFAULT_COLUMNS = [
-    { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
+    { name: 'dataPointXid', label: 'ui.app.xidShort', selectedByDefault: true },
     { name: 'deviceName', label: 'common.deviceName', selectedByDefault: true },
     { name: 'name', label: 'common.name', selectedByDefault: true }
 ];
@@ -26,7 +26,8 @@ class PublisherPointsTableController extends TableController {
             resourceService: maPublisherPoints,
             localStorageKey: 'publisherPointsTable',
             defaultColumns: DEFAULT_COLUMNS,
-            disableSortById: true
+            disableSortById: true,
+            selectMultiple: true
         });
 
         this.maDataPointTags = maDataPointTags;
@@ -71,13 +72,24 @@ class PublisherPointsTableController extends TableController {
     }
 
     doQuery(queryBuilder, opts) {
-        return queryBuilder.query({ to: this.to, from: this.from }, opts);
+        if (typeof this.exposedDoQuery === 'function') {
+            return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });
+        }
+        return super.doQuery(queryBuilder, opts);
     }
 
     customizeQuery(queryBuilder) {
-        if (typeof this.userCustomize === 'function') {
-            this.userCustomize({ $queryBuilder: queryBuilder });
+        if (typeof this.userCustomizeQuery === 'function') {
+            this.userCustomizeQuery({ $queryBuilder: queryBuilder });
         }
+    }
+
+    rowFilter(rowItem) {
+        if (typeof this.customRowFilter === 'function' && rowItem != null) {
+            const item = this.customRowFilter({ $item: rowItem });
+            return item.rowFilter;
+        }
+        return true;
     }
 }
 
@@ -92,8 +104,9 @@ export default {
         defaultColumns: '<?',
         defaultSort: '<?',
         refreshTable: '<?',
-        to: '<?',
-        from: '<?',
-        userCustomize: '&?customizeQuery'
+        userCustomizeQuery: '&?customizeQuery',
+        exposedDoQuery: '&?doQuery',
+        customRowFilter: '&?rowFilter',
+        publisherType: '<'
     }
 };

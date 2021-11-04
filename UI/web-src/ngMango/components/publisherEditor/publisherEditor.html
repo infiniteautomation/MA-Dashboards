@@ -189,7 +189,11 @@
                         </ma-drop-down-button>
                     </md-input-container>
 
-                    <ma-publisher-points-table ng-model="$ctrl.publisher.points"></ma-publisher-points-table>
+                    <ma-publisher-points-table ng-model="$ctrl.publisher.points"
+                        do-query="$ctrl.getPoints($queryBuilder, $opts)"
+                        customize-query="$ctrl.editPointQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
+                        publisher-type="$ctrl.publisherType">
+                    </ma-publisher-points-table>
 
                     <div class="ma-virtual-repeat-table ma-publisher-points-table"
                         ng-class="'ma-publisher-points-table-' + $ctrl.publisherType.type">

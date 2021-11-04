@@ -93,6 +93,11 @@ class PublisherEditorController {
             this.publisherType = null;
         }
 
+        // If publisher is new do not requery points table
+        if (this.publisher && !this.publisher.isNew()) {
+            this.refreshTable = {};
+        }
+
         if (this.publisher && this.publisher.isNew()) {
             this.activeTab = 0;
         }
@@ -177,6 +182,22 @@ class PublisherEditorController {
     typeChanged() {
         this.publisher = this.publisher.changeType();
         this.publisherType = this.publisherTypesByName[this.publisher.modelType];
+    }
+
+    getPoints(queryBuilder, opts) {
+        return queryBuilder.query(opts).then((points) => {
+            console.log(points);
+            if (this.publisher) {
+                this.publisher.points = points;
+            }
+            return points;
+        });
+    }
+
+    editPointQuery(queryBuilder) {
+        if (this.publisher) {
+            queryBuilder.eq('publisherXid', this.publisher.xid);
+        }
     }
 
     pointsToPublisherPoints(points) {
