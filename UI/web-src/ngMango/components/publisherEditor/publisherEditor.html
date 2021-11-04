@@ -178,7 +178,7 @@
                     <md-input-container class="ma-publisher-points-selector">
                         <ma-drop-down-button>
                             <span ma-tr="ui.publisher.pointsSelected"
-                                ma-tr-args="[$ctrl.publisher.points.length]"></span>
+                                ma-tr-args="[$ctrl.publisher.points.$total]"></span>
                             <ma-drop-down create-on-init="false" class="ma-slide-down">
                                 <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
                                     ng-model="$ctrl.publisher.points" ng-change="$ctrl.pointsChanged()"
@@ -195,7 +195,7 @@
                         publisher-type="$ctrl.publisherType">
                     </ma-publisher-points-table>
 
-                    <div class="ma-virtual-repeat-table ma-publisher-points-table"
+                    <!-- <div class="ma-virtual-repeat-table ma-publisher-points-table"
                         ng-class="'ma-publisher-points-table-' + $ctrl.publisherType.type">
                         <div class="ma-virtual-repeat-table-header">
                             <div class="ma-virtual-repeat-table-row">
@@ -232,7 +232,7 @@
                                     ng-include="pointProperty.editorTemplateUrl"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </md-tab-body>
         </md-tab>
