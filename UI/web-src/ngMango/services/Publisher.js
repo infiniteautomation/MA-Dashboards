@@ -41,8 +41,8 @@ function publisherProvider() {
 
     publisherFactory.$inject = ['maRestResource', '$templateCache', 'maUtil', '$injector'];
     function publisherFactory(RestResource, $templateCache, Util, $injector) {
-        const publisherBaseUrl = '/rest/latest/publishers';
-        const publisherWebSocketUrl = '/rest/latest/websocket/publishers';
+        const publisherBaseUrl = '/rest/latest/publishers-without-points';
+        const publisherWebSocketUrl = '/rest/latest/websocket/publishers-without-points';
         const publisherXidPrefix = 'PUB_';
 
         // rest of the defaults are set by first registered type
