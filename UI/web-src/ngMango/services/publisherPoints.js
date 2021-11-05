@@ -3,8 +3,8 @@
  * @author Pier Puccini
  */
 
-publisherPointsFactory.$inject = ['maRestResource'];
-function publisherPointsFactory(RestResource) {
+publisherPointsFactory.$inject = ['maRestResource', 'maTemporaryRestResource'];
+function publisherPointsFactory(RestResource, TemporaryRestResource) {
     class PublisherPoints extends RestResource {
         static get defaultProperties() {
             return {
@@ -28,6 +28,17 @@ function publisherPointsFactory(RestResource) {
             return 'PP_';
         }
     }
+    class BulkPublishedPointTemporaryResource extends TemporaryRestResource {
+        static get baseUrl() {
+            return '/rest/latest/published-points/bulk';
+        }
+
+        static get resourceType() {
+            return 'BULK_PUBLISHED_POINT';
+        }
+    }
+
+    PublisherPoints.Bulk = BulkPublishedPointTemporaryResource;
 
     return PublisherPoints;
 }

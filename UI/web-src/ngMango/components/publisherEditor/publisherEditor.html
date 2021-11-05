@@ -210,6 +210,29 @@
     <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage" role="alert"
         class="ma-error-text"></div>
 
+    <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
+        <div layout layout-align="center">
+            <em>
+                <span ng-bind="$ctrl.bulkTask.progress || 0"></span>% (<span ma-tr="ui.app.pointXofX"
+                    ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
+            </em>
+        </div>
+
+        <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
+
+        <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()">
+            <md-icon>cancel</md-icon>
+            <span ma-tr="ui.app.cancelBulkEdit"></span>
+        </md-button>
+    </div>
+
+    <div ng-if="$ctrl.errorMessages.length" class="md-padding">
+        <em class="ma-error-text">
+            <span ng-repeat="msg in $ctrl.errorMessages"><span ng-bind="msg"></span><span ng-if="!$last">,
+                </span></span>
+        </em>
+    </div>
+
     <div class="md-padding ma-action-buttons">
         <md-button class="md-raised md-primary" ng-click="$ctrl.saveItem($event)" ng-disabled="!$ctrl.form">
             <md-icon>save</md-icon>

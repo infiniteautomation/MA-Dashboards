@@ -45,35 +45,6 @@ class PublisherPointsTableController extends TableController {
         }
     }
 
-    loadSettings() {
-        super.loadSettings();
-    }
-
-    loadColumns() {
-        return super
-            .loadColumns()
-            .then(() => this.maDataPointTags.keys())
-            .then((keys) => {
-                const filters = this.settings.filters || {};
-                this.tagColumns = keys
-                    .filter((k) => !['device', 'name'].includes(k))
-                    .map((k, i) => {
-                        const name = `tags.${k}`;
-                        return this.createColumn({
-                            tagKey: k,
-                            name,
-                            label: 'ui.app.tag',
-                            labelArgs: [k],
-                            filter: filters[name] || null,
-                            order: 500 + i,
-                            dateFormat: this.dateFormat
-                        });
-                    });
-                this.nonTagColumns = this.columns;
-                this.columns = this.columns.concat(this.tagColumns);
-            });
-    }
-
     doQuery(queryBuilder, opts) {
         if (typeof this.exposedDoQuery === 'function') {
             return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });

@@ -47,29 +47,6 @@
                                         </md-menu-content>
                                     </md-menu>
                                 </md-menu-item>
-
-                                <md-menu-item>
-                                    <md-menu>
-                                        <md-button ng-click="$mdMenu.open($event)"><span
-                                                ma-tr="ui.app.selectTags"></span></md-button>
-                                        <md-menu-content width="3" class="ma-data-point-selector"
-                                            md-colors="::{background: 'background-hue-2'}">
-                                            <md-menu-item ng-repeat="column in $ctrl.tagColumns track by column.name">
-                                                <md-button ng-init="model = $ctrl.getSelectedColumnsModel(column)"
-                                                    ng-click="model.value = !model.value; $ctrl.selectedColumnsChanged()"
-                                                    md-prevent-menu-close
-                                                    ng-disabled="model.value && $ctrl.selectedColumns.length === 1">
-                                                    <md-checkbox ng-click="$event.stopPropagation()"
-                                                        md-prevent-menu-close md-no-ink="true" ng-model="model.value"
-                                                        ng-change="$ctrl.selectedColumnsChanged()"
-                                                        ng-disabled="model.value && $ctrl.selectedColumns.length === 1">
-                                                        <span ng-bind="column.tagKey"></span>
-                                                    </md-checkbox>
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                                </md-menu-item>
                             </md-menu-content>
                         </md-menu>
                     </md-menu-bar>

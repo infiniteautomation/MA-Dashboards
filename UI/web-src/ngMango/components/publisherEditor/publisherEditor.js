@@ -13,16 +13,51 @@ import './publisherEditor.css';
  * @description Editor for a publisher, allows creating, updating or deleting
  */
 
+/**
+ * Stores a map of validation property keys that come back from the API and what they actually map to in the model.
+ */
+const VALIDATION_MESSAGE_PROPERTY_MAP = {
+    purgeType: 'purgePeriod.type',
+    purgePeriod: 'purgePeriod.periods'
+};
 class PublisherEditorController {
     static get $$ngIsClass() {
         return true;
     }
 
     static get $inject() {
-        return ['maPublisher', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate', '$attrs', '$parse', 'maEvents', 'maPoint', 'maUtil'];
+        return [
+            'maPublisher',
+            '$q',
+            'maDialogHelper',
+            '$scope',
+            '$window',
+            'maTranslate',
+            '$attrs',
+            '$parse',
+            'maEvents',
+            'maPoint',
+            'maUtil',
+            'maPublisherPoints',
+            'maDialogHelper'
+        ];
     }
 
-    constructor (maPublisher, $q, maDialogHelper, $scope, $window, maTranslate, $attrs, $parse, Events, maPoint, maUtil) {
+    constructor (
+        maPublisher,
+        $q,
+        maDialogHelper,
+        $scope,
+        $window,
+        maTranslate,
+        $attrs,
+        $parse,
+        Events,
+        maPoint,
+        maUtil,
+        PublisherPoints,
+        DialogHelper
+    ) {
         this.maPublisher = maPublisher;
         this.$q = $q;
         this.maDialogHelper = maDialogHelper;
@@ -31,6 +66,8 @@ class PublisherEditorController {
         this.maTranslate = maTranslate;
         this.maUtil = maUtil;
         this.maPoint = maPoint;
+        this.PublisherPoints = PublisherPoints;
+        this.DialogHelper = DialogHelper;
 
         this.eventLevels = Events.levels;
         this.publishTypeCodes = maPublisher.publishTypeCodes;
@@ -128,6 +165,8 @@ class PublisherEditorController {
 
         this.validationMessages = [];
 
+        this.savePoints(event);
+
         this.publisher.save().then(
             (item) => {
                 this.setViewValue();
@@ -190,7 +229,8 @@ class PublisherEditorController {
         return queryBuilder.query(opts).then((points) => {
             console.log(points);
             if (this.publisher) {
-                this.publishedPoints = points;
+                this.publishedPoints = [...points];
+                this.publishedPoints.$total = points.$total;
             }
             if (this.pointsToPublish.length > 0) {
                 points.unshift(...this.pointsToPublish);
@@ -229,6 +269,141 @@ class PublisherEditorController {
         this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
+    }
+
+    savePoints(event) {
+        console.log('pointsToPublish', this.pointsToPublish);
+
+        const allPointsToPublish = [...this.pointsToPublish];
+
+        this.bulkTask = new this.PublisherPoints.Bulk({
+            action: null,
+            requests: allPointsToPublish.map((pPoint) => {
+                const request = {
+                    xid: pPoint.originalId,
+                    body: pPoint
+                };
+
+                request.action = pPoint.action || pPoint.isNew() ? 'CREATE' : 'UPDATE';
+
+                return request;
+            })
+        });
+
+        return this.bulkTask
+            .start(this.$scope)
+            .then(
+                (resource) => {
+                    this.saveMultipleComplete(resource, allPointsToPublish);
+                },
+                (error) => {
+                    this.notifyBulkEditError(error);
+                },
+                (resource) => {
+                    // progress
+                }
+            )
+            .finally(() => {
+                delete this.bulkTask;
+            });
+    }
+
+    saveMultipleComplete(resource, savedPoints) {
+        const { hasError } = resource.result;
+        const { responses } = resource.result;
+
+        responses.forEach((response, i) => {
+            const point = savedPoints[i];
+            if (response.body && ['CREATE', 'UPDATE'].includes(response.action)) {
+                angular.copy(response.body, point);
+            }
+        });
+
+        if (hasError) {
+            const validationMessages = [];
+
+            responses.forEach((response, i) => {
+                const message = response.error && response.error.localizedMessage;
+                if (message && !this.errorMessages.includes(message)) {
+                    this.errorMessages.push(message);
+                }
+
+                if (response.httpStatus === 422) {
+                    const { messages } = response.error.result;
+                    messages.forEach((m) => {
+                        const validationMessage = `${m.level}: ${m.message}`;
+                        if (!m.property && !this.errorMessages.includes(validationMessage)) {
+                            this.errorMessages.push(validationMessage);
+                        }
+
+                        const found = validationMessages.find((m2) => m.level === m2.level && m.property === m2.property && m.message === m2.message);
+
+                        if (!found) {
+                            validationMessages.push(m);
+                        }
+                    });
+                }
+            });
+            this.validationMessages = this.fixValidationMessages(validationMessages);
+        } else {
+            this.setViewValue(savedPoints);
+            this.render();
+        }
+
+        this.notifyBulkEditComplete(resource);
+    }
+
+    notifyBulkEditComplete(resource) {
+        const numErrors = resource.result.responses.reduce((accum, response) => (response.error ? accum + 1 : accum), 0);
+
+        const toastOptions = {
+            textTr: [null, resource.position, resource.maximum, numErrors],
+            hideDelay: 10000,
+            classes: 'md-warn'
+        };
+
+        switch (resource.status) {
+            case 'CANCELLED':
+                toastOptions.textTr[0] = 'ui.app.bulkEditCancelled';
+                break;
+            case 'TIMED_OUT':
+                toastOptions.textTr[0] = 'ui.app.bulkEditTimedOut';
+                break;
+            case 'ERROR':
+                toastOptions.textTr[0] = 'ui.app.bulkEditError';
+                toastOptions.textTr.push(resource.error.localizedMessage);
+                break;
+            case 'SUCCESS':
+                if (!numErrors) {
+                    toastOptions.textTr = ['ui.app.bulkEditSuccess', resource.position];
+                    delete toastOptions.classes;
+                } else {
+                    toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
+                }
+                break;
+            default:
+                break;
+        }
+
+        this.DialogHelper.toastOptions(toastOptions);
+    }
+
+    notifyBulkEditError(error) {
+        this.DialogHelper.toastOptions({
+            textTr: ['ui.app.errorStartingBulkEdit', error.mangoStatusText],
+            hideDelay: 10000,
+            classes: 'md-warn'
+        });
+    }
+
+    fixValidationMessages(validationMessages) {
+        validationMessages.forEach((vm) => {
+            const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property];
+            if (newKey) {
+                vm.property = newKey;
+            }
+        });
+        return validationMessages;
     }
 }
 
