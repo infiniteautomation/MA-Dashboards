@@ -42,6 +42,7 @@ class PublisherEditorController {
             this.dynamicHeight = $parse($attrs.dynamicHeight)($scope.$parent);
         }
 
+        this.pointsToPublish = [];
         this.publishedPoints = [];
         this.points = new WeakMap();
     }
@@ -191,6 +192,10 @@ class PublisherEditorController {
             if (this.publisher) {
                 this.publishedPoints = points;
             }
+            if (this.pointsToPublish.length > 0) {
+                points.unshift(...this.pointsToPublish);
+                points.$total += this.pointsToPublish.length;
+            }
             return points;
         });
     }
@@ -221,6 +226,7 @@ class PublisherEditorController {
 
     pointsChanged() {
         console.log(this.pointsToPublish);
+        this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
     }
