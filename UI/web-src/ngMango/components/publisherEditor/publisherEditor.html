@@ -178,11 +178,10 @@
                     <md-input-container class="ma-publisher-points-selector">
                         <ma-drop-down-button>
                             <span ma-tr="ui.publisher.pointsSelected"
-                                ma-tr-args="[$ctrl.publisher.points.$total]"></span>
+                                ma-tr-args="[$ctrl.publishedPoints.$total]"></span>
                             <ma-drop-down create-on-init="false" class="ma-slide-down">
                                 <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
-                                    ng-model="$ctrl.publisher.points" ng-change="$ctrl.pointsChanged()"
-                                    ma-format-value="$ctrl.publisherPointsToPoints($value)"
+                                    ng-model="$ctrl.pointsToPublish" ng-change="$ctrl.pointsChanged()"
                                     ma-parse-value="$ctrl.pointsToPublisherPoints($value)">
                                 </ma-data-point-selector>
                             </ma-drop-down>
@@ -194,45 +193,6 @@
                         customize-query="$ctrl.editPointQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
                         publisher-type="$ctrl.publisherType">
                     </ma-publisher-points-table>
-
-                    <!-- <div class="ma-virtual-repeat-table ma-publisher-points-table"
-                        ng-class="'ma-publisher-points-table-' + $ctrl.publisherType.type">
-                        <div class="ma-virtual-repeat-table-header">
-                            <div class="ma-virtual-repeat-table-row">
-                                <div class="ma-buttons-column"></div>
-                                <div ma-tr="ui.app.xid"></div>
-                                <div ma-tr="common.deviceName"></div>
-                                <div ma-tr="common.name"></div>
-                                <div ma-tr="ui.app.tags"></div>
-                                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
-                                    ma-tr="{{pointProperty.translationKey}}"
-                                    ng-class="'ma-publisher-point-' + pointProperty.name"></div>
-                            </div>
-                        </div>
-
-                        <div ng-if="!$ctrl.publisher.points.length" class="ma-no-items-to-list"
-                            ma-tr="ui.publisher.noPointsSelected"></div>
-
-                        <div ng-if="$ctrl.publisher.points.length" class="ma-virtual-repeat-table-body"
-                            md-virtual-repeat-container>
-                            <div class="ma-virtual-repeat-table-row" md-virtual-repeat="publisherPoint in $ctrl"
-                                md-on-demand>
-                                <div class="ma-buttons-column">
-                                    <md-button class="md-icon-button ma-small-button"
-                                        ng-click="$ctrl.removePoint($index)">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </div>
-                                <div ng-bind="publisherPoint.dataPointXid"></div>
-                                <div ng-bind="$ctrl.getPoint(publisherPoint).deviceName"></div>
-                                <div ng-bind="$ctrl.getPoint(publisherPoint).name"></div>
-                                <div ng-bind="$ctrl.getPoint(publisherPoint).formatTags()"></div>
-                                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
-                                    layout ng-class="'ma-publisher-point-' + pointProperty.name"
-                                    ng-include="pointProperty.editorTemplateUrl"></div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </md-tab-body>
         </md-tab>

@@ -42,6 +42,7 @@ class PublisherEditorController {
             this.dynamicHeight = $parse($attrs.dynamicHeight)($scope.$parent);
         }
 
+        this.publishedPoints = [];
         this.points = new WeakMap();
     }
 
@@ -188,7 +189,7 @@ class PublisherEditorController {
         return queryBuilder.query(opts).then((points) => {
             console.log(points);
             if (this.publisher) {
-                this.publisher.points = points;
+                this.publishedPoints = points;
             }
             return points;
         });
@@ -201,12 +202,11 @@ class PublisherEditorController {
     }
 
     pointsToPublisherPoints(points) {
-        console.log('1');
         if (Array.isArray(points)) {
             // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject(this.publisher.points, 'dataPointXid');
+            const xidToPublisherPoint = this.maUtil.createMapObject(this.pointsToPublish, 'dataPointXid');
 
-            this.publisher.points = points.map((point) => {
+            this.pointsToPublish = points.map((point) => {
                 let publisherPoint = xidToPublisherPoint[point.xid];
                 if (!publisherPoint) {
                     publisherPoint = this.publisher.createPublisherPoint(point);
@@ -215,66 +215,14 @@ class PublisherEditorController {
                 return publisherPoint;
             });
 
-            return this.publisher.points;
-        }
-    }
-
-    // TODO: Figure out if this method should be removed
-    publisherPointsToPoints(publisherPoints) {
-        console.log('2');
-        if (Array.isArray(publisherPoints)) {
-            return publisherPoints.map((publisherPoint) => this.points.get(publisherPoint) || new this.maPoint({ xid: publisherPoint.dataPointXid }));
+            return this.pointsToPublish;
         }
     }
 
     pointsChanged() {
-        console.log(this.publisher.points);
+        console.log(this.pointsToPublish);
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
-    }
-
-    removePoint(index) {
-        this.publisher.points.splice(index, 1);
-        this.publisher.points = this.publisher.points.slice();
-        this.form.$setDirty();
-    }
-
-    /**
-     * md-virtual-repeat with md-on-demand interface
-     */
-    getItemAtIndex(index) {
-        const publisherPoint = this.publisher.points[index];
-        if (publisherPoint) {
-            this.loadPoint(publisherPoint);
-        }
-        return publisherPoint;
-    }
-
-    /**
-     * md-virtual-repeat with md-on-demand interface
-     */
-    getLength() {
-        return this.publisher.points.length;
-    }
-
-    loadPoint(publisherPoint) {
-        if (!this.points.has(publisherPoint)) {
-            const point = new this.maPoint({ xid: publisherPoint.dataPointXid });
-            // retrieve the point from the REST API, updates its own fields
-            point.$get();
-            this.points.set(publisherPoint, point);
-        }
-    }
-
-    /**
-     * Retrieves the DataPoint from the published point
-     * Note: used from Publisher modules, do not remove.
-     *
-     * @param publisherPoint
-     * @returns {maPoint}
-     */
-    getPoint(publisherPoint) {
-        return this.points.get(publisherPoint);
     }
 }
 
