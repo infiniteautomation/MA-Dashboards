@@ -43,7 +43,7 @@ class PublisherEditorController {
         ];
     }
 
-    constructor (
+    constructor(
         maPublisher,
         $q,
         maDialogHelper,
@@ -109,7 +109,7 @@ class PublisherEditorController {
         });
     }
 
-    $onChanges(changes) { }
+    $onChanges(changes) {}
 
     render(confirmDiscard = false) {
         if (confirmDiscard && !this.confirmDiscard('modelChange')) {
@@ -276,18 +276,24 @@ class PublisherEditorController {
 
         const allPointsToPublish = [...this.pointsToPublish];
 
+        const requests = allPointsToPublish.map((pPoint) => {
+            const request = {
+                xid: pPoint.originalId,
+                body: pPoint
+            };
+
+            request.action = pPoint.action || pPoint.isNew() ? 'CREATE' : 'UPDATE';
+
+            return request;
+        });
+
+        console.log('requests', requests);
+
+        if (requests.length <= 0) return null;
+
         this.bulkTask = new this.PublisherPoints.Bulk({
             action: null,
-            requests: allPointsToPublish.map((pPoint) => {
-                const request = {
-                    xid: pPoint.originalId,
-                    body: pPoint
-                };
-
-                request.action = pPoint.action || pPoint.isNew() ? 'CREATE' : 'UPDATE';
-
-                return request;
-            })
+            requests
         });
 
         return this.bulkTask
@@ -346,6 +352,7 @@ class PublisherEditorController {
             });
             this.validationMessages = this.fixValidationMessages(validationMessages);
         } else {
+            this.pointsToPublish = [];
             this.setViewValue(savedPoints);
             this.render();
         }
