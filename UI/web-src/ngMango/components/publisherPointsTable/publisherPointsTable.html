@@ -85,16 +85,19 @@
                 ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}">
                 <!-- ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})" -->
                 <div class="ma-buttons-column">
-                    <md-button class="md-icon-button ma-small-button" ng-click="$ctrl.removePoint($index)">
+                    <md-button class="md-icon-button ma-small-button"
+                        ng-click="$ctrl.removePoint({$event , $item, $index, $tableCtrl: $ctrl})">
                         <md-icon>delete</md-icon>
                     </md-button>
                 </div>
 
-                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
-                    ng-class="{'ma-message-column': column.name == 'message', 'ma-active-status-column': column.name == 'latestActive'}">
-                    <span ng-if="column.name !== 'value' && column.name !== 'message' && column.name !== 'latestActive'"
+                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
+                    <span ng-if="column.name !== 'enabled'"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
+
+                    <md-checkbox class="ma-pp-enabled-cell" ng-if="column.name === 'enabled'" ng-model="item.enabled"
+                        ng-change="$ctrl.disablePoint({$event, item})"></md-checkbox>
                 </div>
 
                 <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name" layout

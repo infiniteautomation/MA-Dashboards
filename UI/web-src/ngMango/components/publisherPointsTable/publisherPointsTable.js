@@ -58,6 +58,14 @@ class PublisherPointsTableController extends TableController {
         }
     }
 
+    removePoint(props) {
+        console.log('remove p', props);
+    }
+
+    disablePoint(props) {
+        console.log('props', props);
+    }
+
     rowFilter(rowItem) {
         if (typeof this.customRowFilter === 'function' && rowItem != null) {
             const item = this.customRowFilter({ $item: rowItem });
