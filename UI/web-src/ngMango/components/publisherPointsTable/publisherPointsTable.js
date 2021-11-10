@@ -58,12 +58,22 @@ class PublisherPointsTableController extends TableController {
         }
     }
 
-    removePoint(props) {
-        console.log('remove p', props);
+    removePoint({ item, $index }) {
+        const pageNumber = $index - ($index % this.pageSize);
+        const page = this.pages.get(pageNumber);
+        const pointToDeleteIndex = page.items.findIndex((p) => p.originalId === item.originalId);
+        page.items.splice(pointToDeleteIndex, 1);
+
+        const point = item;
+        point.action = 'DELETE';
+        this.modifiedPoint({ $point: point });
     }
 
-    disablePoint(props) {
-        console.log('props', props);
+    disablePoint({ item }) {
+        console.log('props', item);
+        const point = item;
+        point.action = 'UPDATE';
+        this.modifiedPoint({ $point: point });
     }
 
     rowFilter(rowItem) {
@@ -89,6 +99,7 @@ export default {
         userCustomizeQuery: '&?customizeQuery',
         exposedDoQuery: '&?doQuery',
         customRowFilter: '&?rowFilter',
-        publisherType: '<'
+        publisherType: '<',
+        modifiedPoint: '&'
     }
 };

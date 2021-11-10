@@ -43,7 +43,7 @@ class PublisherEditorController {
         ];
     }
 
-    constructor(
+    constructor (
         maPublisher,
         $q,
         maDialogHelper,
@@ -109,7 +109,7 @@ class PublisherEditorController {
         });
     }
 
-    $onChanges(changes) {}
+    $onChanges(changes) { }
 
     render(confirmDiscard = false) {
         if (confirmDiscard && !this.confirmDiscard('modelChange')) {
@@ -269,6 +269,10 @@ class PublisherEditorController {
         this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
+    }
+
+    buildPointsToSave(point) {
+        console.log('modifiedPoint', point);
     }
 
     savePoints(event) {

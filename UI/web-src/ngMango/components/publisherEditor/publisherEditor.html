@@ -191,7 +191,7 @@
                     <ma-publisher-points-table ng-model="$ctrl.publisher.points"
                         do-query="$ctrl.getPoints($queryBuilder, $opts)"
                         customize-query="$ctrl.editPointQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
-                        publisher-type="$ctrl.publisherType">
+                        publisher-type="$ctrl.publisherType" modified-point="$ctrl.buildPointsToSave($point)">
                     </ma-publisher-points-table>
                 </div>
             </md-tab-body>
