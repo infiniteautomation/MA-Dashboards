@@ -278,17 +278,21 @@ class PublisherEditorController {
     }
 
     savePoints(event) {
+        this.errorMessages = [];
         console.log('pointsToPublish', this.pointsToPublish);
 
         const allPointsToPublish = [...this.pointsToPublish];
 
         const requests = allPointsToPublish.map((pPoint) => {
             const request = {
-                xid: pPoint.originalId,
+                xid: pPoint.getOriginalId(),
                 body: pPoint
             };
 
-            request.action = pPoint.action || pPoint.isNew() ? 'CREATE' : 'UPDATE';
+            request.action = pPoint.action;
+            if (!pPoint.action) {
+                request.action = pPoint.isNew() ? 'CREATE' : 'UPDATE';
+            }
 
             return request;
         });
@@ -390,6 +394,8 @@ class PublisherEditorController {
                 if (!numErrors) {
                     toastOptions.textTr = ['ui.app.bulkEditSuccess', resource.position];
                     delete toastOptions.classes;
+                    this.errorMessages = [];
+                    this.validationMessages = [];
                 } else {
                     toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
                 }
