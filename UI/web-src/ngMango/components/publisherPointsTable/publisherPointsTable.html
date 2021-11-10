@@ -2,7 +2,7 @@
     <div class="ma-virtual-repeat-table">
         <div class="ma-virtual-repeat-table-header">
             <div class="ma-virtual-repeat-table-row">
-                <div class="ma-checkbox-column">
+                <div class="ma-actions-column">
                     <md-menu-bar>
                         <md-menu md-offset="-4 4">
                             <md-button class="md-icon-button ma-small-button ma-no-margin"
@@ -84,20 +84,32 @@
             <div class="ma-virtual-repeat-table-row ma-item-row" md-virtual-repeat="item in $ctrl" md-on-demand
                 ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}">
                 <!-- ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})" -->
-                <div class="ma-buttons-column">
-                    <md-button class="md-icon-button ma-small-button"
+                <div class="ma-actions-column">
+                    <md-button class="md-icon-button ma-small-button md-warn"
                         ng-click="$ctrl.removePoint({$event , item, $index})">
                         <md-icon>delete</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button ma-small-button" ng-if="!item.isEditMode"
+                        ng-click="item.isEditMode = !item.isEditMode;">
+                        <md-icon>edit</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button ma-small-button md-primary" ng-if="item.isEditMode"
+                        ng-click="$ctrl.updatePoint({item})">
+                        <md-icon>save</md-icon>
                     </md-button>
                 </div>
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
-                    <span ng-if="column.name !== 'enabled'"
+                    <span ng-if="column.name !== 'enabled' && !item.isEditMode"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
 
+                    <md-input-container flex ng-if="column.name !== 'enabled' && item.isEditMode">
+                        <input ng-model="item[column.name]">
+                    </md-input-container>
+
                     <md-checkbox class="ma-pp-enabled-cell" ng-if="column.name === 'enabled'" ng-model="item.enabled"
-                        ng-change="$ctrl.disablePoint({$event, item})"></md-checkbox>
+                        ng-change="$ctrl.updatePoint({$event, item})"></md-checkbox>
                 </div>
 
                 <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name" layout

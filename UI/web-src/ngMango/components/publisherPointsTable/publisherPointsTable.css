@@ -37,6 +37,17 @@ ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column md-checkb
     margin: 0;
 }
 
+ma-publisher-points-table .ma-virtual-repeat-table .ma-actions-column {
+    flex: 0 0 96px;
+    display: flex;
+    justify-content: center;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-actions-column md-checkbox {
+    width: 20px;
+    margin: 0;
+}
+
 ma-publisher-points-table .ma-data-point-row {
     user-select: none;
 }

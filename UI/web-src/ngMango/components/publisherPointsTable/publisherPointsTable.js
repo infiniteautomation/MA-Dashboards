@@ -69,7 +69,10 @@ class PublisherPointsTableController extends TableController {
         this.modifiedPoint({ $point: point });
     }
 
-    disablePoint({ item }) {
+    updatePoint({ item }) {
+        if (item.isEditMode) {
+            item.isEditMode = false;
+        }
         const point = item;
         point.action = 'UPDATE';
         this.modifiedPoint({ $point: point });
