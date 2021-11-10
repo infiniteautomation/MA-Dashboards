@@ -70,7 +70,6 @@ class PublisherPointsTableController extends TableController {
     }
 
     disablePoint({ item }) {
-        console.log('props', item);
         const point = item;
         point.action = 'UPDATE';
         this.modifiedPoint({ $point: point });

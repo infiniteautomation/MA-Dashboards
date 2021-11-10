@@ -272,7 +272,9 @@ class PublisherEditorController {
     }
 
     buildPointsToSave(point) {
+        this.form.$setDirty();
         console.log('modifiedPoint', point);
+        this.pointsToPublish.push(point);
     }
 
     savePoints(event) {
