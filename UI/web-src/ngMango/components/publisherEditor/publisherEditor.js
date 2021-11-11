@@ -79,9 +79,8 @@ class PublisherEditorController {
             this.dynamicHeight = $parse($attrs.dynamicHeight)($scope.$parent);
         }
 
-        this.pointsToPublish = [];
+        this.pointsToPublish = new Map();
         this.publishedPoints = [];
-        this.points = new WeakMap();
     }
 
     $onInit() {
@@ -227,14 +226,15 @@ class PublisherEditorController {
 
     getPoints(queryBuilder, opts) {
         return queryBuilder.query(opts).then((points) => {
-            console.log(points);
+            console.log('points query', points);
             if (this.publisher) {
                 this.publishedPoints = [...points];
                 this.publishedPoints.$total = points.$total;
             }
-            if (this.pointsToPublish.length > 0) {
-                points.unshift(...this.pointsToPublish);
-                points.$total += this.pointsToPublish.length;
+            const publishedPointsArry = [...this.pointsToPublish.values()]
+            if (publishedPointsArry.length > 0) {
+                points.unshift(...publishedPointsArry);
+                points.$total += publishedPointsArry.length;
             }
             return points;
         });
@@ -248,38 +248,39 @@ class PublisherEditorController {
 
     pointsToPublisherPoints(points) {
         if (Array.isArray(points)) {
+            let publishedPointsArry = [...this.pointsToPublish.values()];
             // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject(this.pointsToPublish, 'dataPointXid');
+            const xidToPublisherPoint = this.maUtil.createMapObject(publishedPointsArry, 'dataPointXid');
 
-            this.pointsToPublish = points.map((point) => {
+            points.forEach((point) => {
                 let publisherPoint = xidToPublisherPoint[point.xid];
                 if (!publisherPoint) {
                     publisherPoint = this.publisher.createPublisherPoint(point);
                 }
-                this.points.set(point, publisherPoint);
-                return publisherPoint;
+                this.pointsToPublish.set(publisherPoint.getOriginalId() || publisherPoint.xid, publisherPoint);
             });
 
-            return this.pointsToPublish;
+            publishedPointsArry = [...this.pointsToPublish.values()];
+            this.pointsToPublish.set('$total', publishedPointsArry.length)
+            return publishedPointsArry;
         }
     }
 
     pointsChanged() {
-        console.log(this.pointsToPublish);
         this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
     }
 
-    buildPointsToSave(point) {
+    buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
-        this.pointsToPublish.push(point);
+        this.pointsToPublish.set(publishedPoint.getOriginalId() || publishedPoint.xid, publishedPoint);
     }
 
     savePoints(event) {
         this.errorMessages = [];
 
-        const allPointsToPublish = [...this.pointsToPublish];
+        const allPointsToPublish = [...this.pointsToPublish.values()];
 
         const requests = allPointsToPublish.map((pPoint) => {
             const request = {
@@ -360,7 +361,7 @@ class PublisherEditorController {
             });
             this.validationMessages = this.fixValidationMessages(validationMessages);
         } else {
-            this.pointsToPublish = [];
+            this.pointsToPublish = new Map();
             this.setViewValue(savedPoints);
             this.render();
         }
