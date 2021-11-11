@@ -56,7 +56,8 @@ ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox {
     pointer-events: none;
 }
 
-ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox.ma-pp-enabled-cell {
+ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox.ma-pp-enabled-cell,
+ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-readOnly > md-checkbox {
     pointer-events: unset;
     margin: unset;
 }

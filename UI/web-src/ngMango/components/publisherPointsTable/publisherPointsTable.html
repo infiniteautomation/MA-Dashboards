@@ -59,6 +59,9 @@
                         ng-if="column.sortable && $ctrl.sort[0].columnName === column.name"
                         ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
                 </div>
+                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
+                    ma-tr="{{pointProperty.translationKey}}" class="{{'ma-publisher-point-' + pointProperty.name}}">
+                </div>
             </div>
             <div class="ma-virtual-repeat-table-row" ng-if="$ctrl.showFilters" class="ma-filter-header">
                 <div class="ma-buttons-column"></div>
@@ -71,9 +74,6 @@
                             <md-icon>clear</md-icon>
                         </md-button>
                     </md-input-container>
-                </div>
-                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
-                    ma-tr="{{pointProperty.translationKey}}" ng-class="'ma-publisher-point-' + pointProperty.name">
                 </div>
             </div>
             <md-progress-linear ng-show="$ctrl.itemsPromise" md-mode="indeterminate"></md-progress-linear>
