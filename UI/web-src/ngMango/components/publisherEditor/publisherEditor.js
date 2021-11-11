@@ -231,10 +231,10 @@ class PublisherEditorController {
                 this.publishedPoints = [...points];
                 this.publishedPoints.$total = points.$total;
             }
-            const publishedPointsArry = [...this.pointsToPublish.values()]
-            if (publishedPointsArry.length > 0) {
-                points.unshift(...publishedPointsArry);
-                points.$total += publishedPointsArry.length;
+            const publishedPointsArr = [...this.pointsToPublish.values()]
+            if (publishedPointsArr.length > 0) {
+                points.unshift(...publishedPointsArr);
+                points.$total += publishedPointsArr.length;
             }
             return points;
         });
@@ -248,9 +248,8 @@ class PublisherEditorController {
 
     pointsToPublisherPoints(points) {
         if (Array.isArray(points)) {
-            let publishedPointsArry = [...this.pointsToPublish.values()];
             // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject(publishedPointsArry, 'dataPointXid');
+            const xidToPublisherPoint = this.maUtil.createMapObject([...this.pointsToPublish.values()], 'dataPointXid');
 
             points.forEach((point) => {
                 let publisherPoint = xidToPublisherPoint[point.xid];
@@ -260,9 +259,7 @@ class PublisherEditorController {
                 this.pointsToPublish.set(publisherPoint.getOriginalId() || publisherPoint.xid, publisherPoint);
             });
 
-            publishedPointsArry = [...this.pointsToPublish.values()];
-            this.pointsToPublish.set('$total', publishedPointsArry.length)
-            return publishedPointsArry;
+            return [...this.pointsToPublish.values()]
         }
     }
 
@@ -284,7 +281,7 @@ class PublisherEditorController {
 
         const requests = allPointsToPublish.map((pPoint) => {
             const request = {
-                xid: pPoint.getOriginalId(),
+                xid: pPoint.getOriginalId() || pPoint.xid,
                 body: pPoint
             };
 
