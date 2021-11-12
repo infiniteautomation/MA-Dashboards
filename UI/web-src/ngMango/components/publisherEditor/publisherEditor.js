@@ -248,6 +248,12 @@ class PublisherEditorController {
         }
     }
 
+    // TODO: Remove this method as queries for each single point
+    publisherPointsToPoints(publishedPoints) {
+        console.log('publishedPoints', publishedPoints);
+        return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
+    }
+
     pointsToPublisherPoints(points) {
         if (Array.isArray(points)) {
             // map of XID to existing publisher points
