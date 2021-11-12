@@ -177,8 +177,7 @@
                 <div class="md-padding">
                     <md-input-container class="ma-publisher-points-selector">
                         <ma-drop-down-button>
-                            <span ma-tr="ui.publisher.pointsSelected"
-                                ma-tr-args="[$ctrl.publishedPoints.$total]"></span>
+                            <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.publishedPointsCount]"></span>
                             <ma-drop-down create-on-init="false" class="ma-slide-down"
                                 on-close="$ctrl.pointSelectorClosed()">
                                 <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"

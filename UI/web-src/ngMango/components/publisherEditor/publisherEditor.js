@@ -81,7 +81,7 @@ class PublisherEditorController {
         }
 
         this.pointsToPublish = new Map();
-        this.publishedPoints = [];
+        this.publishedPoints = new Map();
     }
 
     $onInit() {
@@ -227,10 +227,13 @@ class PublisherEditorController {
 
     getPoints(queryBuilder, opts) {
         return queryBuilder.query(opts).then((points) => {
+            this.publishedPointsCount = points.$total;
             console.log('points query', points);
             if (this.publisher) {
-                this.publishedPoints = [...points];
-                this.publishedPoints.$total = points.$total;
+                this.publishedPoints.clear();
+                points.forEach((p) => {
+                    this.publishedPoints.set(p.dataPointXid, p);
+                });
             }
 
             const publishedPointsArr = [...this.pointsToPublish.values()];
@@ -250,7 +253,7 @@ class PublisherEditorController {
 
     // TODO: Remove this method as queries for each single point
     publisherPointsToPoints(publishedPoints) {
-        // console.log('publishedPoints', publishedPoints);
+        console.log('publishedPoints', publishedPoints);
         // return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
     }
 
