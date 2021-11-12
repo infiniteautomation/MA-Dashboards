@@ -250,8 +250,8 @@ class PublisherEditorController {
 
     // TODO: Remove this method as queries for each single point
     publisherPointsToPoints(publishedPoints) {
-        console.log('publishedPoints', publishedPoints);
-        return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
+        // console.log('publishedPoints', publishedPoints);
+        // return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
     }
 
     pointsToPublisherPoints(points) {
@@ -267,12 +267,16 @@ class PublisherEditorController {
                 this.pointsToPublish.set(publisherPoint.getOriginalId() || publisherPoint.xid, publisherPoint);
             });
 
+            console.log('point map all', this.pointsToPublish);
             return [...this.pointsToPublish.values()];
         }
     }
 
-    pointsChanged() {
+    pointSelectorClosed() {
         this.refreshTable = {};
+    }
+
+    pointsChanged() {
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
     }
@@ -280,6 +284,7 @@ class PublisherEditorController {
     buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
         this.pointsToPublish.set(publishedPoint.getOriginalId() || publishedPoint.xid, publishedPoint);
+        console.log('point map single', this.pointsToPublish);
     }
 
     savePoints(event) {

@@ -179,7 +179,8 @@
                         <ma-drop-down-button>
                             <span ma-tr="ui.publisher.pointsSelected"
                                 ma-tr-args="[$ctrl.publishedPoints.$total]"></span>
-                            <ma-drop-down create-on-init="false" class="ma-slide-down">
+                            <ma-drop-down create-on-init="false" class="ma-slide-down"
+                                on-close="$ctrl.pointSelectorClosed()">
                                 <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
                                     ng-model="$ctrl.pointsToPublishArr" ng-change="$ctrl.pointsChanged()"
                                     ma-parse-value="$ctrl.pointsToPublisherPoints($value)"
