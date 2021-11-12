@@ -133,7 +133,7 @@ class PublisherEditorController {
         }
 
         // If publisher is new do not requery points table
-        if (this.publisher && !this.publisher.isNew()) {
+        if (this.publisher && this.publisher.isNew()) {
             this.refreshTable = {};
         }
 
@@ -232,7 +232,7 @@ class PublisherEditorController {
                 this.publishedPoints = [...points];
                 this.publishedPoints.$total = points.$total;
             }
-            console.log('point map 2', this.pointsToPublish);
+
             const publishedPointsArr = [...this.pointsToPublish.values()];
             if (publishedPointsArr.length > 0) {
                 points.unshift(...publishedPointsArr);
@@ -266,7 +266,6 @@ class PublisherEditorController {
     }
 
     pointsChanged() {
-        console.log('point map', this.pointsToPublish);
         this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
@@ -275,7 +274,6 @@ class PublisherEditorController {
     buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
         this.pointsToPublish.set(publishedPoint.getOriginalId() || publishedPoint.xid, publishedPoint);
-        console.log('point map', this.pointsToPublish);
     }
 
     savePoints(event) {
