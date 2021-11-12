@@ -100,11 +100,11 @@
                 </div>
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
-                    <span ng-if="column.name !== 'enabled' && !item.isEditMode"
+                    <span ng-if="column.name !== 'enabled' && (!column.editable && item.isEditMode || !item.isEditMode)"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
 
-                    <md-input-container flex ng-if="column.name !== 'enabled' && item.isEditMode">
+                    <md-input-container flex ng-if="column.name !== 'enabled' && item.isEditMode && column.editable">
                         <input ng-model="item[column.name]">
                     </md-input-container>
 
