@@ -264,7 +264,7 @@ class PublisherEditorController {
                 if (!publisherPoint) {
                     publisherPoint = this.publisher.createPublisherPoint(point);
                 }
-                this.pointsToPublish.set(publisherPoint.getOriginalId() || publisherPoint.xid, publisherPoint);
+                this.pointsToPublish.set(publisherPoint.dataPointXid, publisherPoint);
             });
 
             console.log('point map all', this.pointsToPublish);
@@ -283,7 +283,7 @@ class PublisherEditorController {
 
     buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
-        this.pointsToPublish.set(publishedPoint.getOriginalId() || publishedPoint.xid, publishedPoint);
+        this.pointsToPublish.set(publishedPoint.dataPointXid, publishedPoint);
         console.log('point map single', this.pointsToPublish);
     }
 
