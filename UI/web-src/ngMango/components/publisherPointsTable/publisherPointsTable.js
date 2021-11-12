@@ -61,7 +61,7 @@ class PublisherPointsTableController extends TableController {
     removePoint({ item, $index }) {
         const pageNumber = $index - ($index % this.pageSize);
         const page = this.pages.get(pageNumber);
-        const pointToDeleteIndex = page.items.findIndex((p) => p.originalId === item.originalId);
+        const pointToDeleteIndex = page.items.findIndex((p) => p.dataPointXid === item.dataPointXid);
         page.items.splice(pointToDeleteIndex, 1);
 
         const point = item;
