@@ -188,6 +188,8 @@
                         </ma-drop-down-button>
                     </md-input-container>
 
+                    <md-progress-linear ng-if="$ctrl.bulkTask" md-mode="determinate" ng-value="$ctrl.bulkTask.progress">
+                    </md-progress-linear>
                     <ma-publisher-points-table ng-model="$ctrl.publisher.points"
                         do-query="$ctrl.getPoints($queryBuilder, $opts)"
                         customize-query="$ctrl.editPointQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
@@ -228,8 +230,11 @@
 
     <div ng-if="$ctrl.errorMessages.length" class="md-padding">
         <em class="ma-error-text">
-            <span ng-repeat="msg in $ctrl.errorMessages"><span ng-bind="msg"></span><span ng-if="!$last">,
-                </span></span>
+            <span ng-repeat="msg in $ctrl.errorMessages">
+                <span ng-bind="msg"></span>
+                <span ng-if="!$last">,</span>
+                <br>
+            </span>
         </em>
     </div>
 

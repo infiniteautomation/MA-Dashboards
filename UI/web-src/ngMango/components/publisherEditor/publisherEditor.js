@@ -18,7 +18,8 @@ import './publisherEditor.css';
  */
 const VALIDATION_MESSAGE_PROPERTY_MAP = {
     purgeType: 'purgePeriod.type',
-    purgePeriod: 'purgePeriod.periods'
+    purgePeriod: 'purgePeriod.periods',
+    name: 'common.name'
 };
 class PublisherEditorController {
     static get $$ngIsClass() {
@@ -231,7 +232,8 @@ class PublisherEditorController {
                 this.publishedPoints = [...points];
                 this.publishedPoints.$total = points.$total;
             }
-            const publishedPointsArr = [...this.pointsToPublish.values()]
+            console.log('point map 2', this.pointsToPublish);
+            const publishedPointsArr = [...this.pointsToPublish.values()];
             if (publishedPointsArr.length > 0) {
                 points.unshift(...publishedPointsArr);
                 points.$total += publishedPointsArr.length;
@@ -259,11 +261,12 @@ class PublisherEditorController {
                 this.pointsToPublish.set(publisherPoint.getOriginalId() || publisherPoint.xid, publisherPoint);
             });
 
-            return [...this.pointsToPublish.values()]
+            return [...this.pointsToPublish.values()];
         }
     }
 
     pointsChanged() {
+        console.log('point map', this.pointsToPublish);
         this.refreshTable = {};
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
@@ -272,6 +275,7 @@ class PublisherEditorController {
     buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
         this.pointsToPublish.set(publishedPoint.getOriginalId() || publishedPoint.xid, publishedPoint);
+        console.log('point map', this.pointsToPublish);
     }
 
     savePoints(event) {
@@ -285,9 +289,10 @@ class PublisherEditorController {
                 body: pPoint
             };
 
-            request.action = pPoint.action;
-            if (!pPoint.action) {
-                request.action = pPoint.isNew() ? 'CREATE' : 'UPDATE';
+            if (pPoint.isNew()) {
+                request.action = 'CREATE';
+            } else {
+                request.action = pPoint.action || 'UPDATE';
             }
 
             return request;
@@ -343,15 +348,15 @@ class PublisherEditorController {
                 if (response.httpStatus === 422) {
                     const { messages } = response.error.result;
                     messages.forEach((m) => {
-                        const validationMessage = `${m.level}: ${m.message}`;
-                        if (!m.property && !this.errorMessages.includes(validationMessage)) {
+                        const validationMessage = `${m.level}: ${response.xid} - ${m.message} ${m.property}`;
+                        if (!this.errorMessages.includes(validationMessage)) {
                             this.errorMessages.push(validationMessage);
                         }
 
                         const found = validationMessages.find((m2) => m.level === m2.level && m.property === m2.property && m.message === m2.message);
 
                         if (!found) {
-                            validationMessages.push(m);
+                            validationMessages.push({ ...m, xid: response.xid });
                         }
                     });
                 }
