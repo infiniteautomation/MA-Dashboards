@@ -164,8 +164,13 @@ function publisherProvider() {
                 if (Array.isArray(this.pointProperties)) {
                     this.pointProperties.forEach((pp) => {
                         if (!pp.editorTemplate) {
-                            pp.editorTemplate = `<md-input-container flex>
-                                <input ng-model="publisherPoint[pointProperty.name]" ng-required="pointProperty.required">
+                            pp.editorTemplate =
+                                `<span ng-if="!item.isEditMode" 
+                                       ng-class="{'ma-empty-null': item[pointProperty.name] == null}"
+                                       ng-bind="item[pointProperty.name] | maDisplayNull">
+                            </span>
+                            <md-input-container ng-if="item.isEditMode" flex>
+                                <input ng-model="item[pointProperty.name]" ng-required="pointProperty.required">
                             </md-input-container>`;
                         }
                         pp.editorTemplateUrl = `publisherEditor.${this.type}.${pp.name}.html`;
