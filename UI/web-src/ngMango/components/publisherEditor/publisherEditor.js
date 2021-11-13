@@ -288,7 +288,11 @@ class PublisherEditorController {
 
     buildPointsToSave(publishedPoint) {
         this.form.$setDirty();
-        this.pointsToPublish.set(publishedPoint.dataPointXid, publishedPoint);
+        if (publishedPoint.action === 'DELETE' && publishedPoint.isNew() && this.pointsToPublish.has(publishedPoint.dataPointXid)) {
+            this.pointsToPublish.delete(publishedPoint.dataPointXid);
+        } else {
+            this.pointsToPublish.set(publishedPoint.dataPointXid, publishedPoint);
+        }
         console.log('point map single', this.pointsToPublish);
     }
 
