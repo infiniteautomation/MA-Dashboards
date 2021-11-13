@@ -246,6 +246,7 @@ class PublisherEditorController {
         });
     }
 
+    // TODO: Cancel query if pub xid is null
     editPointQuery(queryBuilder) {
         if (this.publisher) {
             queryBuilder.eq('publisherXid', this.publisher.xid);
