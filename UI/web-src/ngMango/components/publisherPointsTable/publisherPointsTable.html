@@ -89,22 +89,14 @@
                         ng-click="$ctrl.removePoint({$event , item, $index})">
                         <md-icon>highlight_off</md-icon>
                     </md-button>
-                    <md-button class="md-icon-button ma-small-button" ng-if="!item.isEditMode"
-                        ng-click="item.isEditMode = !item.isEditMode;">
-                        <md-icon>edit</md-icon>
-                    </md-button>
-                    <md-button class="md-icon-button ma-small-button md-primary" ng-if="item.isEditMode"
-                        ng-click="$ctrl.updatePoint({item})">
-                        <md-icon>save</md-icon>
-                    </md-button>
                 </div>
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
-                    <span ng-if="column.name !== 'enabled' && (!column.editable && item.isEditMode || !item.isEditMode)"
+                    <span ng-if="column.name !== 'enabled' && !column.editable"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
 
-                    <md-input-container flex ng-if="column.name !== 'enabled' && item.isEditMode && column.editable">
+                    <md-input-container flex ng-if="column.name !== 'enabled' && column.editable">
                         <input ng-model="item[column.name]">
                     </md-input-container>
 
