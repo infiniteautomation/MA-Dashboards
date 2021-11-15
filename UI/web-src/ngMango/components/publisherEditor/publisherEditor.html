@@ -169,7 +169,7 @@
             </md-tab-body>
         </md-tab>
 
-        <md-tab>
+        <md-tab md-on-select="$ctrl.hideActionButtons = false" md-on-deselect="$ctrl.hideActionButtons = true">
             <md-tab-label>
                 <span ma-tr="publisherEdit.points"></span>
             </md-tab-label>
@@ -196,6 +196,14 @@
                         customize-query="$ctrl.editPointQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
                         publisher-type="$ctrl.publisherType" modified-point="$ctrl.buildPointsToSave($point)">
                     </ma-publisher-points-table>
+                </div>
+
+                <div class="md-padding ma-action-buttons">
+                    <md-button class="md-raised md-primary" ng-click="$ctrl.savePoints($event)"
+                        ng-disabled="!$ctrl.form">
+                        <md-icon>save</md-icon>
+                        <span ma-tr="ui.app.startBulkEdit"></span>
+                    </md-button>
                 </div>
             </md-tab-body>
         </md-tab>
@@ -239,7 +247,7 @@
         </em>
     </div>
 
-    <div class="md-padding ma-action-buttons">
+    <div class="md-padding ma-action-buttons" ng-if="$ctrl.hideActionButtons">
         <md-button class="md-raised md-primary" ng-click="$ctrl.saveItem($event)" ng-disabled="!$ctrl.form">
             <md-icon>save</md-icon>
             <span ma-tr="common.save"></span>

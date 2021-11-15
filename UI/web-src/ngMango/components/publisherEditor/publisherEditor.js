@@ -75,6 +75,8 @@ class PublisherEditorController {
         this.publisherTypes = maPublisher.types;
         this.publisherTypesByName = maPublisher.typesByName;
 
+        this.hideActionButtons = true;
+
         this.dynamicHeight = true;
         if ($attrs.hasOwnProperty('dynamicHeight')) {
             this.dynamicHeight = $parse($attrs.dynamicHeight)($scope.$parent);
@@ -165,8 +167,6 @@ class PublisherEditorController {
         }
 
         this.validationMessages = [];
-
-        this.savePoints(event);
 
         this.publisher.save().then(
             (item) => {
@@ -297,6 +297,7 @@ class PublisherEditorController {
     }
 
     savePoints(event) {
+        this.validationMessages = [];
         this.errorMessages = [];
 
         const allPointsToPublish = [...this.pointsToPublish.values()];
