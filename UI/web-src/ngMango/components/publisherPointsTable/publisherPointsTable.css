@@ -26,13 +26,15 @@ ma-publisher-points-table .ma-virtual-repeat-table-header md-input-container {
     padding: 0;
 }
 
-ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column {
+ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column,
+ma-publisher-points-table .ma-virtual-repeat-table .ma-publisher-point-readOnly {
     flex: 0 0 32px;
     display: flex;
     justify-content: center;
 }
 
-ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column md-checkbox {
+ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column md-checkbox,
+ma-publisher-points-table .ma-virtual-repeat-table .ma-publisher-point-includeTimestamp md-checkbox {
     width: 20px;
     margin: 0;
 }
