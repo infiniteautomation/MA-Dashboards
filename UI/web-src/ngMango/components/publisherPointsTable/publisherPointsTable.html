@@ -85,9 +85,9 @@
                 ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}">
                 <!-- ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})" -->
                 <div class="ma-actions-column">
-                    <md-button class="md-icon-button ma-small-button md-warn"
+                    <md-button class="md-icon-button ma-small-button"
                         ng-click="$ctrl.removePoint({$event , item, $index})">
-                        <md-icon>delete</md-icon>
+                        <md-icon>highlight_off</md-icon>
                     </md-button>
                     <md-button class="md-icon-button ma-small-button" ng-if="!item.isEditMode"
                         ng-click="item.isEditMode = !item.isEditMode;">
