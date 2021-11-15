@@ -165,11 +165,8 @@ function publisherProvider() {
                     this.pointProperties.forEach((pp) => {
                         if (!pp.editorTemplate) {
                             pp.editorTemplate =
-                                `<span ng-if="!item.isEditMode" 
-                                       ng-class="{'ma-empty-null': item[pointProperty.name] == null}"
-                                       ng-bind="item[pointProperty.name] | maDisplayNull">
-                            </span>
-                            <md-input-container ng-if="item.isEditMode" flex>
+                                `
+                            <md-input-container flex>
                                 <input ng-model="item[pointProperty.name]" ng-required="pointProperty.required">
                             </md-input-container>`;
                         }
