@@ -26,8 +26,7 @@ ma-publisher-points-table .ma-virtual-repeat-table-header md-input-container {
     padding: 0;
 }
 
-ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column,
-ma-publisher-points-table .ma-virtual-repeat-table .ma-publisher-point-readOnly {
+ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column {
     flex: 0 0 32px;
     display: flex;
     justify-content: center;
@@ -59,8 +58,8 @@ ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox {
 }
 
 ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox.ma-pp-enabled-cell,
-ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-readOnly > md-checkbox,
-ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-includeTimestamp > md-checkbox {
+ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-readOnly > span > md-checkbox,
+ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-includeTimestamp > span > md-checkbox {
     pointer-events: unset;
     margin: unset;
 }

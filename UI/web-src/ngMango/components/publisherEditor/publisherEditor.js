@@ -129,7 +129,6 @@ class PublisherEditorController {
                 this.publisher = new this.maPublisher(viewValue);
             }
             this.publisherType = this.publisherTypesByName[this.publisher.modelType];
-            console.log(this.publisherType);
         } else {
             this.publisher = null;
             this.publisherType = null;

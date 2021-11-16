@@ -53,15 +53,15 @@
 
                 </div>
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
-                    ng-click="column.sortable && $ctrl.sortBy(column)" tabindex="1">
+                    ng-click="column.sortable && $ctrl.sortBy(column)" tabindex="1" class="{{column.class}}">
                     <span ma-tr="{{column.label}}" ma-tr-args="column.labelArgs"></span>
                     <md-icon class="ma-sort-icon ma-disable-animate"
                         ng-if="column.sortable && $ctrl.sort[0].columnName === column.name"
                         ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
                 </div>
-                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
+                <!-- <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name"
                     ma-tr="{{pointProperty.translationKey}}" class="{{'ma-publisher-point-' + pointProperty.name}}">
-                </div>
+                </div> -->
             </div>
             <div class="ma-virtual-repeat-table-row" ng-if="$ctrl.showFilters" class="ma-filter-header">
                 <div class="ma-buttons-column"></div>
@@ -91,22 +91,28 @@
                     </md-button>
                 </div>
 
-                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
-                    <span ng-if="column.name !== 'enabled' && !column.editable"
+                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
+                    class="{{column.class}}">
+                    <span ng-if="column.name !== 'enabled' && !column.editorTemplateUrl && !column.editable"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
 
-                    <md-input-container flex ng-if="column.name !== 'enabled' && column.editable">
+                    <md-input-container flex
+                        ng-if="column.name !== 'enabled' && !column.editorTemplateUrl && column.editable">
                         <input ng-model="item[column.name]">
                     </md-input-container>
 
-                    <md-checkbox class="ma-pp-enabled-cell" ng-if="column.name === 'enabled'" ng-model="item.enabled"
+                    <md-checkbox class="ma-pp-enabled-cell"
+                        ng-if="column.name === 'enabled' && !column.editorTemplateUrl" ng-model="item.enabled"
                         ng-change="$ctrl.updatePoint({$event, item})"></md-checkbox>
+
+                    <span ng-if="column.name !== 'enabled' && column.editorTemplateUrl"
+                        ng-include="column.editorTemplateUrl"></span>
                 </div>
 
-                <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name" layout
+                <!-- <div ng-repeat="pointProperty in $ctrl.publisherType.pointProperties track by pointProperty.name" layout
                     ng-class="'ma-publisher-point-' + pointProperty.name" ng-include="pointProperty.editorTemplateUrl">
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

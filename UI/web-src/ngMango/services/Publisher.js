@@ -164,8 +164,7 @@ function publisherProvider() {
                 if (Array.isArray(this.pointProperties)) {
                     this.pointProperties.forEach((pp) => {
                         if (!pp.editorTemplate) {
-                            pp.editorTemplate =
-                                `
+                            pp.editorTemplate = `
                             <md-input-container flex>
                                 <input ng-model="item[pointProperty.name]" ng-required="pointProperty.required">
                             </md-input-container>`;
