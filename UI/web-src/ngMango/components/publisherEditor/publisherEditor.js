@@ -129,6 +129,24 @@ class PublisherEditorController {
                 this.publisher = new this.maPublisher(viewValue);
             }
             this.publisherType = this.publisherTypesByName[this.publisher.modelType];
+
+            const builtColumns = this.publisherType.pointProperties.map((props) => ({
+                name: props.name,
+                label: props.translationKey,
+                selectedByDefault: true,
+                editable: true,
+                editorTemplateUrl: props.editorTemplateUrl,
+                class: `ma-publisher-point-${props.name}`,
+                sortable: false,
+                filterable: false
+            }));
+
+            this.publishedPointsColumns = [
+                { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
+                { name: 'dataPointXid', label: 'ui.components.dataPointXid', selectedByDefault: true },
+                { name: 'name', label: 'common.name', selectedByDefault: true, editable: true },
+                ...builtColumns
+            ];
         } else {
             this.publisher = null;
             this.publisherType = null;

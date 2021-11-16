@@ -43,7 +43,7 @@ class PublisherPointsTableController extends TableController {
                 this.filterChanged();
             }
         }
-        if (changes.publisherType && changes.publisherType.currentValue) {
+        if (changes.defaultColumns && changes.defaultColumns.currentValue) {
             this.$q.resolve(this.loadColumns()).then(() => {
                 this.selectColumns();
             });
@@ -55,23 +55,8 @@ class PublisherPointsTableController extends TableController {
     }
 
     loadColumns() {
-        console.log('pub type', this.publisherType);
-        if (this.publisherType) {
-            const builtColumns = this.publisherType.pointProperties.map((props) => ({
-                name: props.name,
-                label: props.translationKey,
-                selectedByDefault: true,
-                editable: true,
-                editorTemplateUrl: props.editorTemplateUrl,
-                class: `ma-publisher-point-${props.name}`,
-                sortable: false,
-                filterable: false
-            }));
-            this.defaultColumns = [...DEFAULT_COLUMNS, ...builtColumns];
-        }
         return super.loadColumns().then(() => {
             this.nonTagColumns = this.columns;
-            console.log(this.nonTagColumns);
         });
     }
 
