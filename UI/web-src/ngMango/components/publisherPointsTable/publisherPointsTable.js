@@ -20,23 +20,23 @@ const VALIDATION_MESSAGE_PROPERTY_MAP = {
 };
 class PublisherPointsTableController extends TableController {
     static get $inject() {
-        return ['$scope', '$element', '$injector', 'maPublisherPoints', 'maDataPointTags'];
+        return ['$scope', '$element', '$injector', 'maPublisherPoints', 'maDialogHelper'];
     }
 
-    constructor($scope, $element, $injector, PublisherPoints, maDataPointTags) {
+    constructor($scope, $element, $injector, maPublisherPoints, maDialogHelper) {
         super({
             $scope,
             $element,
             $injector,
 
-            resourceService: PublisherPoints,
+            resourceService: maPublisherPoints,
             localStorageKey: 'publisherPointsTable',
             defaultColumns: DEFAULT_COLUMNS,
             disableSortById: true,
             selectMultiple: true
         });
 
-        this.maDataPointTags = maDataPointTags;
+        this.DialogHelper = maDialogHelper;
         this.pointsToPublish = new Map();
     }
 
@@ -120,6 +120,14 @@ class PublisherPointsTableController extends TableController {
         }
     }
 
+    rowFilter(rowItem) {
+        if (typeof this.customRowFilter === 'function' && rowItem != null) {
+            const item = this.customRowFilter({ $item: rowItem });
+            return item.rowFilter;
+        }
+        return true;
+    }
+
     removePoint({ item, $index }) {
         const pageNumber = $index - ($index % this.pageSize);
         const page = this.pages.get(pageNumber);
@@ -128,21 +136,13 @@ class PublisherPointsTableController extends TableController {
 
         const point = item;
         point.action = 'DELETE';
-        this.modifiedPoint({ $point: point });
+        this.buildPointsToSave(point);
     }
 
     updatePoint({ item }) {
         const point = item;
         point.action = 'UPDATE';
-        this.modifiedPoint({ $point: point });
-    }
-
-    rowFilter(rowItem) {
-        if (typeof this.customRowFilter === 'function' && rowItem != null) {
-            const item = this.customRowFilter({ $item: rowItem });
-            return item.rowFilter;
-        }
-        return true;
+        this.buildPointsToSave(point);
     }
 
     // TODO: Remove this method as queries for each single point
@@ -213,7 +213,7 @@ class PublisherPointsTableController extends TableController {
 
         if (requests.length <= 0) return null;
 
-        this.bulkTask = new this.PublisherPoints.Bulk({
+        this.bulkTask = new this.resourceService.Bulk({
             action: null,
             requests
         });

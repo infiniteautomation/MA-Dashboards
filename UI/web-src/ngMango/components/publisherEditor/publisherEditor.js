@@ -13,52 +13,16 @@ import './publisherEditor.css';
  * @description Editor for a publisher, allows creating, updating or deleting
  */
 
-/**
- * Stores a map of validation property keys that come back from the API and what they actually map to in the model.
- */
-const VALIDATION_MESSAGE_PROPERTY_MAP = {
-    purgeType: 'purgePeriod.type',
-    purgePeriod: 'purgePeriod.periods',
-    name: 'common.name'
-};
 class PublisherEditorController {
     static get $$ngIsClass() {
         return true;
     }
 
     static get $inject() {
-        return [
-            'maPublisher',
-            '$q',
-            'maDialogHelper',
-            '$scope',
-            '$window',
-            'maTranslate',
-            '$attrs',
-            '$parse',
-            'maEvents',
-            'maPoint',
-            'maUtil',
-            'maPublisherPoints',
-            'maDialogHelper'
-        ];
+        return ['maPublisher', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate', '$attrs', '$parse', 'maEvents', 'maPoint', 'maUtil'];
     }
 
-    constructor(
-        maPublisher,
-        $q,
-        maDialogHelper,
-        $scope,
-        $window,
-        maTranslate,
-        $attrs,
-        $parse,
-        Events,
-        maPoint,
-        maUtil,
-        PublisherPoints,
-        DialogHelper
-    ) {
+    constructor(maPublisher, $q, maDialogHelper, $scope, $window, maTranslate, $attrs, $parse, Events, maPoint, maUtil) {
         this.maPublisher = maPublisher;
         this.$q = $q;
         this.maDialogHelper = maDialogHelper;
@@ -67,8 +31,6 @@ class PublisherEditorController {
         this.maTranslate = maTranslate;
         this.maUtil = maUtil;
         this.maPoint = maPoint;
-        this.PublisherPoints = PublisherPoints;
-        this.DialogHelper = DialogHelper;
 
         this.eventLevels = Events.levels;
         this.publishTypeCodes = maPublisher.publishTypeCodes;
