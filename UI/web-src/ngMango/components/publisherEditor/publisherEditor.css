@@ -6,19 +6,3 @@ ma-publisher-editor md-tab-content:not(.md-active) * {
 ma-data-point-selector.ma-publisher-editor {
 	height: 400px;
 }
-
-ma-publisher-editor .ma-virtual-repeat-table {
-	margin-top: 16px;
-	min-height: 400px
-}
-
-ma-publisher-editor .ma-virtual-repeat-table .ma-buttons-column {
-	flex: 0 0 48px;
-	display: flex;
-	justify-content: center;
-}
-
-ma-publisher-editor .ma-publisher-points-selector {
-    display: block;
-    margin-top: 0;
-}

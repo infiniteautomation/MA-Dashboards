@@ -5,6 +5,11 @@ ma-publisher-points-table {
     flex-direction: column;
 }
 
+ma-publisher-points-table .ma-publisher-points-selector {
+    display: block;
+    margin-top: 0;
+}
+
 ma-publisher-points-table .ma-virtual-repeat-table-container {
     flex: 1 0 auto;
     display: flex;
