@@ -130,7 +130,7 @@ class PublisherEditorController {
             }
             this.publisherType = this.publisherTypesByName[this.publisher.modelType];
 
-            const builtColumns = this.publisherType.pointProperties.map((props) => ({
+            const builtColumns = (this.publisherType.pointProperties || []).map((props) => ({
                 name: props.name,
                 label: props.translationKey,
                 selectedByDefault: true,
