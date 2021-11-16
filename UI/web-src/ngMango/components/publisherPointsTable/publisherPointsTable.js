@@ -18,7 +18,7 @@ class PublisherPointsTableController extends TableController {
         return ['$scope', '$element', '$injector', 'maPublisherPoints', 'maDataPointTags'];
     }
 
-    constructor ($scope, $element, $injector, maPublisherPoints, maDataPointTags) {
+    constructor($scope, $element, $injector, maPublisherPoints, maDataPointTags) {
         super({
             $scope,
             $element,

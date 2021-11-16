@@ -44,7 +44,7 @@ class PublisherEditorController {
         ];
     }
 
-    constructor (
+    constructor(
         maPublisher,
         $q,
         maDialogHelper,
