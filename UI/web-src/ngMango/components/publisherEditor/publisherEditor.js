@@ -232,7 +232,7 @@ class PublisherEditorController {
             if (this.publisher) {
                 this.publishedPoints.clear();
                 points.forEach((p) => {
-                    this.publishedPoints.set(p.dataPointXid, p);
+                    this.publishedPoints.set(p.xid, p);
                 });
             }
 
@@ -268,7 +268,7 @@ class PublisherEditorController {
                 if (!publisherPoint) {
                     publisherPoint = this.publisher.createPublisherPoint(point);
                 }
-                this.pointsToPublish.set(publisherPoint.dataPointXid, publisherPoint);
+                this.pointsToPublish.set(publisherPoint.xid, publisherPoint);
             });
 
             console.log('point map all', this.pointsToPublish);
@@ -290,7 +290,7 @@ class PublisherEditorController {
         if (publishedPoint.action === 'DELETE' && publishedPoint.isNew() && this.pointsToPublish.has(publishedPoint.dataPointXid)) {
             this.pointsToPublish.delete(publishedPoint.dataPointXid);
         } else {
-            this.pointsToPublish.set(publishedPoint.dataPointXid, publishedPoint);
+            this.pointsToPublish.set(publishedPoint.xid, publishedPoint);
         }
         console.log('point map single', this.pointsToPublish);
     }
