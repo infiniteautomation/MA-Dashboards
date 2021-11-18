@@ -1,5 +1,5 @@
 <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
-    <md-input-container class="ma-publisher-points-selector">
+    <!-- <md-input-container class="ma-publisher-points-selector">
         <ma-drop-down-button>
             <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.publishedPointsCount]"></span>
             <ma-drop-down create-on-init="false" class="ma-slide-down" on-close="$ctrl.pointSelectorClosed()">
@@ -10,13 +10,13 @@
                 </ma-data-point-selector>
             </ma-drop-down>
         </ma-drop-down-button>
-    </md-input-container>
+    </md-input-container> -->
 
     <div ng-form="publisherPointsTable" ma-form-exclude class="ma-virtual-repeat-table-container">
         <div class="ma-virtual-repeat-table">
             <div class="ma-virtual-repeat-table-header">
                 <div class="ma-virtual-repeat-table-row">
-                    <div class="ma-actions-column">
+                    <div class="ma-checkbox-column">
                         <md-menu-bar>
                             <md-menu md-offset="-4 4">
                                 <md-button class="md-icon-button ma-small-button ma-no-margin"
@@ -26,6 +26,46 @@
                                 </md-button>
                                 <md-menu-content width="3" class="ma-data-point-selector"
                                     md-colors="::{background: 'background-hue-2'}">
+                                    <md-menu-item ng-if-start="$ctrl.selectMultiple">
+                                        <md-button ng-disabled="true">
+                                            <span ma-tr="ui.app.xPointsSelectedLong"
+                                                ma-tr-args="[$ctrl.selectedItems.size]"></span>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-divider></md-menu-divider>
+
+                                    <md-menu-item>
+                                        <md-button ng-click="$ctrl.selectAll()">
+                                            <div layout="row" flex>
+                                                <md-icon md-menu-align-target>check_box</md-icon>
+                                                <div flex ma-tr="ui.app.selectAll"></div>
+                                            </div>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-item>
+                                        <md-button ng-click="$ctrl.deselectAll()">
+                                            <div layout="row" flex>
+                                                <md-icon md-menu-align-target>check_box_outline_blank</md-icon>
+                                                <div flex ma-tr="ui.app.deselectAll"></div>
+                                            </div>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-divider ng-if-end></md-menu-divider>
+
+                                    <md-menu-item ng-if-start="$ctrl.showClear">
+                                        <md-button ng-click="$ctrl.clearSelection()">
+                                            <div layout="row" flex>
+                                                <md-icon md-menu-align-target>clear</md-icon>
+                                                <div flex ma-tr="ui.app.clearSelection"></div>
+                                            </div>
+                                        </md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-divider ng-if-end></md-menu-divider>
+
                                     <md-menu-item>
                                         <md-button
                                             ng-click="$ctrl.showFilters = !$ctrl.showFilters; $ctrl.showFiltersChanged()">
@@ -77,7 +117,9 @@
                     </div>
                 </div>
                 <div class="ma-virtual-repeat-table-row" ng-if="$ctrl.showFilters" class="ma-filter-header">
-                    <div class="ma-buttons-column"></div>
+                    <div class="ma-checkbox-column">
+                        <!-- Spacer for checkbox column -->
+                    </div>
                     <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
                         <md-input-container md-no-float="true" ng-if="column.filterable">
                             <input ng-model="column.filter" ng-model-options="{debounce: 1000}"
@@ -95,13 +137,11 @@
                 ma-tr="ui.publisher.noPointsSelected"></div>
             <div class="ma-virtual-repeat-table-body" md-virtual-repeat-container>
                 <div class="ma-virtual-repeat-table-row ma-item-row" md-virtual-repeat="item in $ctrl" md-on-demand
-                    ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}">
-                    <!-- ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})" -->
-                    <div class="ma-actions-column">
-                        <md-button class="md-icon-button ma-small-button"
-                            ng-click="$ctrl.removePoint({$event , item, $index})">
-                            <md-icon>highlight_off</md-icon>
-                        </md-button>
+                    ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}"
+                    ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
+                    <div class="ma-checkbox-column">
+                        <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1"
+                            ng-checked="$ctrl.selectedItems.has(item.xid)" md-no-ink="true"></md-checkbox>
                     </div>
 
                     <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"

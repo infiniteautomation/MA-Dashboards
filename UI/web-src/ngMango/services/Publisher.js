@@ -62,7 +62,7 @@ function publisherProvider() {
         };
 
         class Publisher extends RestResource {
-            constructor (properties) {
+            constructor(properties) {
                 if (!properties && publisherTypes.length) {
                     const type = publisherTypes[0];
                     properties = angular.copy(type.defaultPublisher) || {};
@@ -152,7 +152,7 @@ function publisherProvider() {
         }
 
         class PublisherType {
-            constructor (defaults = {}) {
+            constructor(defaults = {}) {
                 Object.assign(this, defaults);
 
                 // put the templates in the template cache so we can ng-include them

@@ -7,9 +7,9 @@ import publisherPointsTable from './publisherPointsTable.html';
 import './publisherPointsTable.css';
 
 const DEFAULT_COLUMNS = [
-    { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
-    { name: 'dataPointXid', label: 'ui.components.dataPointXid', selectedByDefault: true },
-    { name: 'name', label: 'common.name', selectedByDefault: true, editable: true }
+    // { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
+    // { name: 'dataPointXid', label: 'ui.components.dataPointXid', selectedByDefault: true },
+    // { name: 'name', label: 'common.name', selectedByDefault: true, editable: true }
     // { name: 'enabled', label: 'common.enabled', selectedByDefault: true }
 ];
 
@@ -20,16 +20,16 @@ const VALIDATION_MESSAGE_PROPERTY_MAP = {
 };
 class PublisherPointsTableController extends TableController {
     static get $inject() {
-        return ['$scope', '$element', '$injector', 'maPublisherPoints', 'maDialogHelper'];
+        return ['$scope', '$element', '$injector', 'maDialogHelper'];
     }
 
-    constructor($scope, $element, $injector, maPublisherPoints, maDialogHelper) {
+    constructor($scope, $element, $injector, maDialogHelper) {
         super({
             $scope,
             $element,
             $injector,
 
-            resourceService: maPublisherPoints,
+            resourceService: {},
             localStorageKey: 'publisherPointsTable',
             defaultColumns: DEFAULT_COLUMNS,
             disableSortById: true,
@@ -49,16 +49,14 @@ class PublisherPointsTableController extends TableController {
                 this.reloadTable();
             }
         }
-        if (changes.publisherContainer && changes.publisherContainer.currentValue) {
-            const { publisher, type } = this.publisherContainer;
-            this.publisher = publisher;
-            this.publisherType = type;
-
-            this.buildColumns(type);
-
+        if (changes.customColumns && changes.customColumns.currentValue) {
+            this.defaultColumns = this.customColumns;
             this.$q.resolve(this.loadColumns()).then(() => {
                 this.selectColumns();
             });
+        }
+        if (changes.resourceService && changes.resourceService.currentValue) {
+            this.idProperty = this.resourceService.idProperty;
         }
     }
 
@@ -66,21 +64,6 @@ class PublisherPointsTableController extends TableController {
         if (this.selectedColumns) {
             this.filterChanged();
         }
-    }
-
-    buildColumns(publisherType) {
-        const builtColumns = (publisherType.pointProperties || []).map((props) => ({
-            name: props.name,
-            label: props.translationKey,
-            selectedByDefault: true,
-            editable: true,
-            editorTemplateUrl: props.editorTemplateUrl,
-            class: `ma-publisher-point-${props.name}`,
-            sortable: false,
-            filterable: false
-        }));
-
-        this.defaultColumns = [...DEFAULT_COLUMNS, ...builtColumns];
     }
 
     loadSettings() {
@@ -98,25 +81,23 @@ class PublisherPointsTableController extends TableController {
             return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });
         }
 
-        return super.doQuery(queryBuilder, opts).then((points) => {
-            this.publishedPointsCount = points.$total;
-            console.log('points query', points);
+        return super.doQuery(queryBuilder, opts);
+        // .then((points) => {
+        //     this.publishedPointsCount = points.$total;
+        //     console.log('points query', points);
 
-            const publishedPointsArr = [...this.pointsToPublish.values()];
-            if (publishedPointsArr.length > 0) {
-                points.unshift(...publishedPointsArr);
-                points.$total += publishedPointsArr.length;
-            }
-            return points;
-        });
+        //     const publishedPointsArr = [...this.pointsToPublish.values()];
+        //     if (publishedPointsArr.length > 0) {
+        //         points.unshift(...publishedPointsArr);
+        //         points.$total += publishedPointsArr.length;
+        //     }
+        //     return points;
+        // });
     }
 
-    // TODO: Cancel query if pub xid is null
     customizeQuery(queryBuilder) {
         if (typeof this.userCustomizeQuery === 'function') {
             this.userCustomizeQuery({ $queryBuilder: queryBuilder });
-        } else if (this.publisher) {
-            queryBuilder.eq('publisherXid', this.publisher.xid);
         }
     }
 
@@ -345,8 +326,10 @@ export default {
         ngModelCtrl: 'ngModel'
     },
     bindings: {
+        resourceService: '<',
         localStorageKey: '<?',
-        defaultColumns: '<?',
+        customColumns: '<?',
+        showClear: '<?',
         defaultSort: '<?',
         refreshTable: '<?',
         userCustomizeQuery: '&?customizeQuery',
