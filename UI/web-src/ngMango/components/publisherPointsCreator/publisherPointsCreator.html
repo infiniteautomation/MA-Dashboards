@@ -16,13 +16,11 @@
             <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
                 <md-input-container class="ma-publisher-points-selector">
                     <ma-drop-down-button>
-                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.pointsToPublishArr.length]"></span>
+                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.points.length]"></span>
                         <ma-drop-down create-on-init="false" class="ma-slide-down"
                             on-close="$ctrl.pointSelectorClosed()">
                             <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
-                                ng-model="$ctrl.pointsToPublishArr" ng-change="$ctrl.pointsChanged()"
-                                ma-parse-value="$ctrl.pointsToPublisherPoints($value)"
-                                ma-format-value="$ctrl.publisherPointsToPoints($value)">
+                                ng-model="$ctrl.points" ng-change="$ctrl.pointsChanged()">
                             </ma-data-point-selector>
                         </ma-drop-down>
                     </ma-drop-down-button>
@@ -35,15 +33,15 @@
                                 <th md-column ng-repeat="column in $ctrl.columns" ma-tr="{{column.label}}"
                                     md-order-by="{{$ctrl.getOrderBy($index)}}"></th>
                             </thead>
-                            <tbody md-body ng-if="$ctrl.pointsToPublishArr.length === 0">
+                            <tbody md-body ng-if="$ctrl.pointsToPublish.length === 0">
                                 <tr md-row>
                                     <td md-cell colspan="$ctrl.columns.length" class="ma-no-items-to-list"
                                         ma-tr="ui.publisher.noPointsSelected"></td>
                                 </tr>
                             </tbody>
-                            <tbody md-body ng-if="$ctrl.pointsToPublishArr.length > 0">
+                            <tbody md-body ng-if="$ctrl.pointsToPublish.length > 0">
                                 <tr md-row
-                                    ng-repeat="item in $ctrl.pointsToPublishArr | orderBy: myOrder | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
+                                    ng-repeat="item in $ctrl.pointsToPublish | orderBy: myOrder | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
                                     <td md-cell ng-repeat="column in $ctrl.columns">
                                         <span ng-if="!column.editorTemplateUrl && !column.editable"
                                             ng-class="{'ma-empty-null': item[column.name] == null}"

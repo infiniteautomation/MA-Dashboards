@@ -26,8 +26,7 @@ class PublisherPointsCreatorController {
 
         this.showDialog = false;
 
-        this.pointsToPublish = new Map();
-        this.pointsToPublishArr = [...this.pointsToPublish.values()];
+        this.clearDialog();
     }
 
     $onChanges(changes) {
@@ -37,43 +36,24 @@ class PublisherPointsCreatorController {
     }
 
     dialogHidden() {
-        this.pointsToPublish = new Map();
+        this.clearDialog();
         this.showDialog = false;
         this.dialog.hide();
     }
 
     dialogCancelled() {
-        this.pointsToPublish = new Map();
+        this.clearDialog();
         this.showDialog = false;
         this.dialog.hide();
     }
 
+    clearDialog() {
+        this.points = [];
+        this.pointsToPublish = [];
+    }
+
     getOrderBy(index) {
         // return this.tableBody[index];
-    }
-
-    // TODO: Remove this method as queries for each single point
-    publisherPointsToPoints(publishedPoints) {
-        console.log('publishedPoints', publishedPoints);
-        // return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
-    }
-
-    pointsToPublisherPoints(points) {
-        if (Array.isArray(points)) {
-            // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject([...this.pointsToPublish.values()], 'dataPointXid');
-
-            points.forEach((point) => {
-                let publisherPoint = xidToPublisherPoint[point.xid];
-                if (!publisherPoint) {
-                    publisherPoint = this.publisher.createPublisherPoint(point);
-                }
-                this.pointsToPublish.set(publisherPoint.xid, publisherPoint);
-            });
-
-            console.log('point map all', this.pointsToPublish);
-            return [...this.pointsToPublish.values()];
-        }
     }
 
     pointSelectorClosed() {
@@ -83,6 +63,19 @@ class PublisherPointsCreatorController {
     pointsChanged() {
         // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
         this.form.$setDirty();
+
+        if (Array.isArray(this.points)) {
+            // map of XID to existing publisher points
+            const xidToPublisherPoint = this.maUtil.createMapObject([...this.pointsToPublish.values()], 'dataPointXid');
+
+            this.pointsToPublish = this.points.map((point) => {
+                let publisherPoint = xidToPublisherPoint[point.xid];
+                if (!publisherPoint) {
+                    publisherPoint = this.publisher.createPublisherPoint(point);
+                }
+                return publisherPoint;
+            });
+        }
     }
 }
 
