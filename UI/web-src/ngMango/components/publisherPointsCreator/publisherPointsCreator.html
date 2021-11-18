@@ -1,0 +1,64 @@
+<ma-dialog show-dialog="$ctrl.showDialog" on-hide="$ctrl.dialogHidden()" on-cancel="$ctrl.dialogCancelled()">
+    <md-dialog flex-xs="100">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ma-tr="ui.app.addPoints"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="$dialog.cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div ng-init="$ctrl.dialog = $dialog"></div>
+
+        <md-dialog-content ng-if="$ctrl.showDialog" layout="column" flex layout-padding>
+            <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
+                <md-input-container class="ma-publisher-points-selector">
+                    <ma-drop-down-button>
+                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.publishedPointsCount]"></span>
+                        <ma-drop-down create-on-init="false" class="ma-slide-down"
+                            on-close="$ctrl.pointSelectorClosed()">
+                            <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
+                                ng-model="$ctrl.pointsToPublishArr" ng-change="$ctrl.pointsChanged()"
+                                ma-parse-value="$ctrl.pointsToPublisherPoints($value)"
+                                ma-format-value="$ctrl.publisherPointsToPoints($value)">
+                            </ma-data-point-selector>
+                        </ma-drop-down>
+                    </ma-drop-down-button>
+                </md-input-container>
+
+                <!-- TODO: Add table -->
+
+                <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage"
+                    role="alert" class="ma-error-text"></div>
+
+                <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
+                    <div layout layout-align="center">
+                        <em>
+                            <span ng-bind="$ctrl.bulkTask.progress || 0"></span>% (<span ma-tr="ui.app.pointXofX"
+                                ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
+                        </em>
+                    </div>
+
+                    <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
+
+                    <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()">
+                        <md-icon>cancel</md-icon>
+                        <span ma-tr="ui.app.cancelBulkEdit"></span>
+                    </md-button>
+                </div>
+
+                <div ng-if="$ctrl.errorMessages.length" class="md-padding">
+                    <em class="ma-error-text">
+                        <span ng-repeat="msg in $ctrl.errorMessages">
+                            <span ng-bind="msg"></span>
+                            <span ng-if="!$last">,</span>
+                            <br>
+                        </span>
+                    </em>
+                </div>
+            </div>
+        </md-dialog-content>
+    </md-dialog>
+</ma-dialog>
