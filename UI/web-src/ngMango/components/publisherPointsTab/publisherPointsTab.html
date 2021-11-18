@@ -9,10 +9,9 @@
     </md-button>
 </div>
 
-<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" ng-change="$ctrl.removePoints()"
-    resource-service="$ctrl.PublisherPoints" custom-columns="$ctrl.customColumns"
-    customize-query="$ctrl.customizeQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
-    publisher="$ctrl.publisherInfo">
+<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
+    custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
+    refresh-table="$ctrl.refreshTable" publisher="$ctrl.publisherInfo">
 </ma-publisher-points-table>
 
 <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
@@ -31,6 +30,6 @@
     </md-button>
 </div>
 
-<ma-publisher-points-creator publisher="$ctrl.publisher" trigger-dialog="$ctrl.showDialog"
-    columns="$ctrl.customColumns">
+<ma-publisher-points-creator publisher="$ctrl.publisher" trigger-dialog="$ctrl.showDialog" columns="$ctrl.customColumns"
+    refresh-table="$ctrl.refreshTable = {}">
 </ma-publisher-points-creator>
