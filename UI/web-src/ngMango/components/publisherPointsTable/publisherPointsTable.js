@@ -30,8 +30,6 @@ class PublisherPointsTableController extends TableController {
             disableSortById: true,
             selectMultiple: true
         });
-
-        this.pointsToPublish = new Map();
     }
 
     $onChanges(changes) {
@@ -76,17 +74,6 @@ class PublisherPointsTableController extends TableController {
         }
 
         return super.doQuery(queryBuilder, opts);
-        // .then((points) => {
-        //     this.publishedPointsCount = points.$total;
-        //     console.log('points query', points);
-
-        //     const publishedPointsArr = [...this.pointsToPublish.values()];
-        //     if (publishedPointsArr.length > 0) {
-        //         points.unshift(...publishedPointsArr);
-        //         points.$total += publishedPointsArr.length;
-        //     }
-        //     return points;
-        // });
     }
 
     customizeQuery(queryBuilder) {
@@ -101,56 +88,6 @@ class PublisherPointsTableController extends TableController {
             return item.rowFilter;
         }
         return true;
-    }
-
-    removePoint({ item, $index }) {
-        const pageNumber = $index - ($index % this.pageSize);
-        const page = this.pages.get(pageNumber);
-        const pointToDeleteIndex = page.items.findIndex((p) => p.dataPointXid === item.dataPointXid);
-        page.items.splice(pointToDeleteIndex, 1);
-
-        const point = item;
-        point.action = 'DELETE';
-        this.buildPointsToSave(point);
-    }
-
-    updatePoint({ item }) {
-        const point = item;
-        point.action = 'UPDATE';
-        this.buildPointsToSave(point);
-    }
-
-    // TODO: Remove this method as queries for each single point
-    publisherPointsToPoints(publishedPoints) {
-        console.log('publishedPoints', publishedPoints);
-        // return publishedPoints.map((publisherPoint) => new this.maPoint({ xid: publisherPoint.dataPointXid }));
-    }
-
-    pointsToPublisherPoints(points) {
-        if (Array.isArray(points)) {
-            // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject([...this.pointsToPublish.values()], 'dataPointXid');
-
-            points.forEach((point) => {
-                let publisherPoint = xidToPublisherPoint[point.xid];
-                if (!publisherPoint) {
-                    publisherPoint = this.publisher.createPublisherPoint(point);
-                }
-                this.pointsToPublish.set(publisherPoint.xid, publisherPoint);
-            });
-
-            console.log('point map all', this.pointsToPublish);
-            return [...this.pointsToPublish.values()];
-        }
-    }
-
-    pointSelectorClosed() {
-        this.reloadTable();
-    }
-
-    pointsChanged() {
-        // ma-data-point-selector is not part of the form as it is in a drop down dialog, have to manually set the form dirty
-        this.form.$setDirty();
     }
 }
 
