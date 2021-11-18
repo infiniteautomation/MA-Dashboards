@@ -1,5 +1,5 @@
 <ma-dialog show-dialog="$ctrl.showDialog" on-hide="$ctrl.dialogHidden()" on-cancel="$ctrl.dialogCancelled()">
-    <md-dialog flex-xs="100">
+    <md-dialog flex="75" flex-xs="100">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2 ma-tr="ui.app.addPoints"></h2>
@@ -16,7 +16,7 @@
             <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
                 <md-input-container class="ma-publisher-points-selector">
                     <ma-drop-down-button>
-                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.publishedPointsCount]"></span>
+                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.pointsToPublishArr.length]"></span>
                         <ma-drop-down create-on-init="false" class="ma-slide-down"
                             on-close="$ctrl.pointSelectorClosed()">
                             <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
@@ -36,7 +36,10 @@
                                     md-order-by="{{$ctrl.getOrderBy($index)}}"></th>
                             </thead>
                             <tbody md-body ng-if="$ctrl.pointsToPublishArr.length === 0">
-                                <tr ma-tr="ui.publisher.noPointsSelected"></tr>
+                                <tr md-row>
+                                    <td md-cell colspan="$ctrl.columns.length" class="ma-no-items-to-list"
+                                        ma-tr="ui.publisher.noPointsSelected"></td>
+                                </tr>
                             </tbody>
                             <tbody md-body ng-if="$ctrl.pointsToPublishArr.length > 0">
                                 <tr md-row
@@ -61,6 +64,13 @@
                     <md-table-pagination md-limit="$ctrl.tableOptions.limit" md-limit-options="[5, 10, 15,20, 50, 100]"
                         md-page="$ctrl.tableOptions.page" md-total="{{$ctrl.tableOptions.total}}">
                     </md-table-pagination>
+
+                    <div>
+                        <md-button class="md-raised md-primary" ng-click="$ctrl.showDialog = {}">
+                            <md-icon>add</md-icon>
+                            <span ma-tr="ui.app.addPointsToPublisher"></span>
+                        </md-button>
+                    </div>
                 </div>
 
                 <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage"

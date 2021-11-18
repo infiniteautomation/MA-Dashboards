@@ -12,22 +12,11 @@ class PublisherPointsCreatorController {
     }
 
     static get $inject() {
-        return [];
+        return ['maUtil'];
     }
 
-    constructor() {
-        this.pointsToPublish = new Map();
-        // .then((points) => {
-        //     this.publishedPointsCount = points.$total;
-        //     console.log('points query', points);
-
-        //     const publishedPointsArr = [...this.pointsToPublish.values()];
-        //     if (publishedPointsArr.length > 0) {
-        //         points.unshift(...publishedPointsArr);
-        //         points.$total += publishedPointsArr.length;
-        //     }
-        //     return points;
-        // });
+    constructor(maUtil) {
+        this.maUtil = maUtil;
 
         this.tableOptions = {
             limit: 15,
@@ -36,6 +25,9 @@ class PublisherPointsCreatorController {
         };
 
         this.showDialog = false;
+
+        this.pointsToPublish = new Map();
+        this.pointsToPublishArr = [...this.pointsToPublish.values()];
     }
 
     $onChanges(changes) {
@@ -45,13 +37,13 @@ class PublisherPointsCreatorController {
     }
 
     dialogHidden() {
-        // this.revertItem();
+        this.pointsToPublish = new Map();
         this.showDialog = false;
         this.dialog.hide();
     }
 
     dialogCancelled() {
-        // this.revertItem();
+        this.pointsToPublish = new Map();
         this.showDialog = false;
         this.dialog.hide();
     }
@@ -85,7 +77,7 @@ class PublisherPointsCreatorController {
     }
 
     pointSelectorClosed() {
-        this.reloadTable();
+        // this.reloadTable();
     }
 
     pointsChanged() {
@@ -98,6 +90,7 @@ export default {
     template,
     controller: PublisherPointsCreatorController,
     bindings: {
+        publisher: '<',
         triggerDialog: '<',
         columns: '<'
     }
