@@ -22,12 +22,29 @@
         <span ma-tr="ui.app.removeSelectedPoints"></span>
     </md-button>
 </div>
-<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
-    custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
-    refresh-table="$ctrl.refreshTable" publisher="$ctrl.publisherInfo">
+<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" ng-change="$ctrl.removePoints()"
+    resource-service="$ctrl.PublisherPoints" custom-columns="$ctrl.customColumns"
+    customize-query="$ctrl.customizeQuery($queryBuilder)" refresh-table="$ctrl.refreshTable"
+    publisher="$ctrl.publisherInfo">
 </ma-publisher-points-table>
 
 <pre>{{ $ctrl.pointsToRemove }}</pre>
+
+<div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
+    <div layout layout-align="center">
+        <em>
+            <span ng-bind="$ctrl.bulkTask.progress || 0"></span>% (<span ma-tr="ui.app.pointXofX"
+                ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
+        </em>
+    </div>
+
+    <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
+
+    <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()">
+        <md-icon>cancel</md-icon>
+        <span ma-tr="ui.app.cancelBulkEdit"></span>
+    </md-button>
+</div>
 <!-- 
 <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage" role="alert"
     class="ma-error-text"></div>
@@ -56,11 +73,4 @@
             <br>
         </span>
     </em>
-</div>
-
-<div class="ma-action-buttons">
-    <md-button class="md-raised md-primary" ng-click="$ctrl.savePoints($event)">
-        <md-icon>save</md-icon>
-        <span ma-tr="ui.app.startBulkEdit"></span>
-    </md-button>
 </div> -->
