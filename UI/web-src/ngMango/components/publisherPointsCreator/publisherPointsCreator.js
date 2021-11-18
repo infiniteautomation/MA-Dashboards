@@ -197,6 +197,7 @@ class PublisherPointsCreatorController {
                     toastOptions.textTr = ['ui.app.bulkEditSuccess', resource.position];
                     delete toastOptions.classes;
                     this.refreshTable();
+                    this.dialogCancelled();
                     this.errorMessages = [];
                     this.validationMessages = [];
                 } else {
