@@ -29,6 +29,12 @@ class PublisherPointsCreatorController {
         //     return points;
         // });
 
+        this.tableOptions = {
+            limit: 15,
+            page: 1,
+            total: 0
+        };
+
         this.showDialog = false;
     }
 
@@ -48,6 +54,10 @@ class PublisherPointsCreatorController {
         // this.revertItem();
         this.showDialog = false;
         this.dialog.hide();
+    }
+
+    getOrderBy(index) {
+        // return this.tableBody[index];
     }
 
     // TODO: Remove this method as queries for each single point
@@ -88,6 +98,7 @@ export default {
     template,
     controller: PublisherPointsCreatorController,
     bindings: {
-        triggerDialog: '<'
+        triggerDialog: '<',
+        columns: '<'
     }
 };
