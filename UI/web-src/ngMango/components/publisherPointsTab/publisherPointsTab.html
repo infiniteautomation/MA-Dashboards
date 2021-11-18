@@ -11,10 +11,23 @@
         </ma-drop-down-button>
     </md-input-container> -->
 
-<ma-publisher-points-table ng-model="$ctrl.publisher.points" resource-service="$ctrl.PublisherPoints"
+
+<div>
+    <md-button class="md-raised md-primary" ng-click="$ctrl.savePoints($event)">
+        <md-icon>add</md-icon>
+        <span ma-tr="ui.app.addPoints"></span>
+    </md-button>
+    <md-button class="md-raised md-primary md-warn" ng-click="$ctrl.savePoints($event)">
+        <md-icon>delete</md-icon>
+        <span ma-tr="ui.app.removeSelectedPoints"></span>
+    </md-button>
+</div>
+<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
     custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
     refresh-table="$ctrl.refreshTable" publisher="$ctrl.publisherInfo">
 </ma-publisher-points-table>
+
+<pre>{{ $ctrl.pointsToRemove }}</pre>
 <!-- 
 <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage" role="alert"
     class="ma-error-text"></div>
