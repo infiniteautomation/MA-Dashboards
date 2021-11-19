@@ -130,9 +130,14 @@
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
                     class="{{column.class}}">
-                    <span ng-if="column.name !== 'enabled'"
+                    <span ng-if="column.name !== 'enabled' && column.name !== 'dataPointXid'"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
+
+                    <a ng-if="column.name === 'dataPointXid'"
+                        ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
+                        ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"
+                        ui-sref="ui.dataPointDetails({pointXid: $ctrl.getCellValue(item, column)})"></a>
                 </div>
             </div>
         </div>

@@ -77,11 +77,13 @@ class PublisherPointsTableController extends TableController {
     }
 
     doQuery(queryBuilder, opts) {
-        console.log('running query');
         if (typeof this.exposedDoQuery === 'function') {
             return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });
         }
-        return super.doQuery(queryBuilder, opts);
+        return super.doQuery(queryBuilder, opts).then((points) => {
+            console.log('running query', points);
+            return points;
+        });
     }
 
     customizeQuery(queryBuilder) {
