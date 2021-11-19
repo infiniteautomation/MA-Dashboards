@@ -54,6 +54,7 @@ class PublisherPointsTabController {
         }));
 
         this.customColumns = [...DEFAULT_COLUMNS, ...builtColumns];
+        this.refreshTable = {};
     }
 
     // TODO: Cancel query if pub xid is null
@@ -141,6 +142,7 @@ class PublisherPointsTabController {
                     });
                 }
             });
+            console.log('validationMessages', validationMessages);
             this.validationMessages = this.fixValidationMessages(validationMessages);
         }
 

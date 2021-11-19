@@ -43,9 +43,7 @@ class PublisherPointsTableController extends TableController {
         }
         if (changes.customColumns && changes.customColumns.currentValue) {
             this.defaultColumns = this.customColumns;
-            this.$q.resolve(this.loadColumns()).then(() => {
-                this.selectColumns();
-            });
+            this.prepareTable(false);
         }
         if (changes.resourceService && changes.resourceService.currentValue) {
             this.idProperty = this.resourceService.idProperty;
@@ -62,6 +60,16 @@ class PublisherPointsTableController extends TableController {
         super.loadSettings();
     }
 
+    prepareTable(withItems = false) {
+        // loading the items
+        this.loadColumns().then(() => {
+            this.selectColumns();
+            if (withItems) {
+                this.getItems();
+            }
+        });
+    }
+
     loadColumns() {
         return super.loadColumns().then(() => {
             this.nonTagColumns = this.columns;
@@ -69,10 +77,10 @@ class PublisherPointsTableController extends TableController {
     }
 
     doQuery(queryBuilder, opts) {
+        console.log('running query');
         if (typeof this.exposedDoQuery === 'function') {
             return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });
         }
-
         return super.doQuery(queryBuilder, opts);
     }
 

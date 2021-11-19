@@ -166,7 +166,7 @@ function publisherProvider() {
                         if (!pp.editorTemplate) {
                             pp.editorTemplate = `
                             <md-input-container flex>
-                                <input ng-model="item[pointProperty.name]" ng-required="pointProperty.required">
+                                <input ng-model="item[column.name]" ng-required="column.required">
                             </md-input-container>`;
                         }
                         pp.editorTemplateUrl = `publisherEditor.${this.type}.${pp.name}.html`;
