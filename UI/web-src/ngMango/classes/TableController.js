@@ -203,10 +203,7 @@ class TableController {
 
         // have to load columns first as they may have saved filters which we need to apply before
         // loading the items
-        this.loadColumns().then(() => {
-            this.selectColumns();
-            this.getItems();
-        });
+        this.prepareTable();
     }
 
     $onDestroy() {
@@ -277,6 +274,14 @@ class TableController {
 
     getFilters() {
         return this.settings.filters;
+    }
+
+    prepareTable() {
+        // loading the items
+        this.loadColumns().then(() => {
+            this.selectColumns();
+            this.getItems();
+        });
     }
 
     loadColumns() {
