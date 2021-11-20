@@ -7,9 +7,9 @@ import template from './publisherPointsCreator.html';
 import './publisherPointsCreator.css';
 
 const VALIDATION_MESSAGE_PROPERTY_MAP = {
-    purgeType: 'purgePeriod.type',
-    purgePeriod: 'purgePeriod.periods',
-    name: 'common.name'
+    // Mapped to xid so It can pick up the full table length
+    dataPointId: 'xid',
+    id: 'xid'
 };
 class PublisherPointsCreatorController {
     static get $$ngIsClass() {
@@ -57,6 +57,8 @@ class PublisherPointsCreatorController {
     clearDialog() {
         this.points = [];
         this.pointsToPublish = [];
+        this.errorMessages = [];
+        this.validationMessages = [];
     }
 
     getOrderBy(index) {

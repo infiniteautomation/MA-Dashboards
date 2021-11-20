@@ -48,11 +48,25 @@
                                             ng-bind="item[column.name] | maDisplayNull"></span>
 
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && column.editable">
-                                            <input ng-model="item[column.name]">
+                                            <input name="{{column.name + '-' - $index}}" ng-model="item[column.name]"
+                                                required>
+                                            <div ng-messages="$ctrl.form[column.name + '-' - $index].$error">
+                                                <div ng-message="required" ma-tr="ui.app.requiredParameter"></div>
+                                                <div ng-message="validationMessage"
+                                                    ng-bind="$ctrl.form[column.name + '-' - $index].validationMessage">
+                                                </div>
+                                            </div>
                                         </md-input-container>
 
                                         <span ng-if="column.name !== 'enabled' && column.editorTemplateUrl"
                                             ng-include="column.editorTemplateUrl"></span>
+                                    </td>
+                                    <td md-cell colspan="$ctrl.columns.length">
+                                        <div ng-messages="$ctrl.form.xid.$error">
+                                            <div ng-message="validationMessage"
+                                                ng-bind="$ctrl.form.xid.validationMessage">
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -65,7 +79,7 @@
 
                     <div>
                         <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
-                            ng-disabled="$ctrl.form.$valid && $ctrl.pointsToPublish.length > 0">
+                            ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
                             <md-icon>add</md-icon>
                             <span ma-tr="ui.app.addPointsToPublisher"></span>
                         </md-button>
