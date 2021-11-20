@@ -1,5 +1,5 @@
 <ma-dialog show-dialog="$ctrl.showDialog" on-hide="$ctrl.dialogHidden()" on-cancel="$ctrl.dialogCancelled()">
-    <md-dialog flex="75" flex-xs="100">
+    <md-dialog class="ma-publisher-points-creator" flex="75" flex-xs="100">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2 ma-tr="ui.app.addPoints"></h2>
@@ -64,7 +64,8 @@
                     </md-table-pagination>
 
                     <div>
-                        <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()">
+                        <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
+                            ng-disabled="$ctrl.form.$valid && $ctrl.pointsToPublish.length > 0">
                             <md-icon>add</md-icon>
                             <span ma-tr="ui.app.addPointsToPublisher"></span>
                         </md-button>
