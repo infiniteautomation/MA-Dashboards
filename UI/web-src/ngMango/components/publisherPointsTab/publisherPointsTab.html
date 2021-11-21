@@ -3,7 +3,8 @@
         <md-icon>add</md-icon>
         <span ma-tr="ui.app.addPoints"></span>
     </md-button>
-    <md-button class="md-raised md-primary md-warn" ng-click="$ctrl.removePoints($event)">
+    <md-button class="md-raised md-primary md-warn" ng-click="$ctrl.removePoints($event)"
+        ng-disabled="$ctrl.pointsToRemove.length === 0">
         <md-icon>delete</md-icon>
         <span ma-tr="ui.app.removeSelectedPoints"></span>
     </md-button>

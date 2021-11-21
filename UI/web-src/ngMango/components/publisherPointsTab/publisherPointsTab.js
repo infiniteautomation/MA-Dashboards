@@ -29,6 +29,8 @@ class PublisherPointsTabController {
     constructor(maPublisherPoints, maDialogHelper) {
         this.PublisherPoints = maPublisherPoints;
         this.DialogHelper = maDialogHelper;
+
+        this.pointsToRemove = [];
     }
 
     $onChanges(changes) {
@@ -190,6 +192,7 @@ class PublisherPointsTabController {
                     delete toastOptions.classes;
                     this.errorMessages = [];
                     this.validationMessages = [];
+                    this.pointsToRemove = [];
                 } else {
                     toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
                 }
