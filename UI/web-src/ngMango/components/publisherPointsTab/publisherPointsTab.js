@@ -53,7 +53,7 @@ class PublisherPointsTabController {
         }));
 
         const builtColumns = (publisherType.pointProperties || []).map((props) => ({
-            name: props.name,
+            ...props,
             label: props.translationKey,
             selectedByDefault: true,
             editable: true,

@@ -166,7 +166,13 @@ function publisherProvider() {
                         if (!pp.editorTemplate) {
                             pp.editorTemplate = `
                             <md-input-container flex>
-                                <input ng-model="item[column.name]" ng-required="column.required">
+                                <input name="{{column.columnName}}" ng-model="item[column.name]" ng-required="column.required">
+                                <div ng-messages="$ctrl.form[column.columnName].$error">
+                                    <div ng-message="required" ma-tr="ui.app.requiredParameter"></div>
+                                    <div ng-message="validationMessage"
+                                        ng-bind="$ctrl.form[column.columnName].validationMessage">
+                                    </div>
+                                </div>
                             </md-input-container>`;
                         }
                         pp.editorTemplateUrl = `publisherEditor.${this.type}.${pp.name}.html`;
