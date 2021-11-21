@@ -42,6 +42,15 @@ class PublisherPointsTabController {
     }
 
     buildColumns(publisherType) {
+        const defaultColumns = DEFAULT_COLUMNS.map((col) => ({
+            ...col,
+            set colName(v) {
+                if (!this.columnName) {
+                    this.columnName = `${this.name}-${v}`;
+                }
+            }
+        }));
+
         const builtColumns = (publisherType.pointProperties || []).map((props) => ({
             name: props.name,
             label: props.translationKey,
@@ -50,10 +59,15 @@ class PublisherPointsTabController {
             editorTemplateUrl: props.editorTemplateUrl,
             class: `ma-publisher-point-${props.name}`,
             sortable: false,
-            filterable: false
+            filterable: false,
+            set colName(v) {
+                if (!this.columnName) {
+                    this.columnName = `${this.name}-${v}`;
+                }
+            }
         }));
 
-        this.customColumns = [...DEFAULT_COLUMNS, ...builtColumns];
+        this.customColumns = [...defaultColumns, ...builtColumns];
         this.refreshTable = {};
     }
 

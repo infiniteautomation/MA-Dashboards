@@ -47,13 +47,13 @@
                                             ng-class="{'ma-empty-null': item[column.name] == null}"
                                             ng-bind="item[column.name] | maDisplayNull"></span>
 
+                                        <span ng-show="false">{{column.colName = $parent.$index}}</span>
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && column.editable">
-                                            <input name="{{column.name + '-' - $index}}" ng-model="item[column.name]"
-                                                required>
-                                            <div ng-messages="$ctrl.form[column.name + '-' - $index].$error">
+                                            <input name="{{column.columnName}}" ng-model="item[column.name]" required>
+                                            <div ng-messages="$ctrl.form[column.columnName].$error">
                                                 <div ng-message="required" ma-tr="ui.app.requiredParameter"></div>
                                                 <div ng-message="validationMessage"
-                                                    ng-bind="$ctrl.form[column.name + '-' - $index].validationMessage">
+                                                    ng-bind="$ctrl.form[column.columnName].validationMessage">
                                                 </div>
                                             </div>
                                         </md-input-container>
@@ -62,11 +62,14 @@
                                             ng-include="column.editorTemplateUrl"></span>
                                     </td>
                                     <td md-cell colspan="$ctrl.columns.length">
-                                        <div ng-messages="$ctrl.form.xid.$error">
-                                            <div ng-message="validationMessage"
-                                                ng-bind="$ctrl.form.xid.validationMessage">
+                                        <md-input-container flex>
+                                            <input name="{{'xid-' + $index}}" ng-model="item.xid" type="hidden">
+                                            <div ng-messages="$ctrl.form['xid-' + $index].$error">
+                                                <div ng-message="validationMessage"
+                                                    ng-bind="$ctrl.form['xid-' + $index].validationMessage">
+                                                </div>
                                             </div>
-                                        </div>
+                                        </md-input-container>
                                     </td>
                                 </tr>
                             </tbody>

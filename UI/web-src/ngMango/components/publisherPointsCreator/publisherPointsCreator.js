@@ -204,6 +204,7 @@ class PublisherPointsCreatorController {
                     this.validationMessages = [];
                 } else {
                     toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
+                    this.pruneValidItems();
                 }
                 break;
             default:
@@ -229,6 +230,11 @@ class PublisherPointsCreatorController {
             }
         });
         return validationMessages;
+    }
+
+    pruneValidItems() {
+        console.log(this.form);
+        console.log(this.validationMessages);
     }
 }
 
