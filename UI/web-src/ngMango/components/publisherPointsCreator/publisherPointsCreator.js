@@ -168,7 +168,7 @@ class PublisherPointsCreatorController {
                     });
                 }
             });
-            this.validationMessages = this.fixValidationMessages(validationMessages);
+            this.pruneValidItems(validationMessages);
         }
 
         this.notifyBulkEditComplete(resource);
@@ -204,7 +204,6 @@ class PublisherPointsCreatorController {
                     this.validationMessages = [];
                 } else {
                     toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
-                    this.pruneValidItems();
                 }
                 break;
             default:
@@ -222,19 +221,24 @@ class PublisherPointsCreatorController {
         });
     }
 
-    fixValidationMessages(validationMessages) {
+    pruneValidItems(validationMessages) {
+        const failedXids = validationMessages.map((vm) => vm.xid);
+        this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
+        console.log(this.pointsToPublish);
+        console.log(this.form);
+        this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
+        console.log(this.validationMessages);
+    }
+
+    fixValidationMessages(validationMessages, pointsToPublish) {
         validationMessages.forEach((vm) => {
+            const pointToPublishIndex = pointsToPublish.findIndex((ptp) => ptp.xid === vm.xid);
             const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property];
             if (newKey) {
-                vm.property = newKey;
+                vm.property = `${newKey}-${pointToPublishIndex}`;
             }
         });
         return validationMessages;
-    }
-
-    pruneValidItems() {
-        console.log(this.form);
-        console.log(this.validationMessages);
     }
 }
 
