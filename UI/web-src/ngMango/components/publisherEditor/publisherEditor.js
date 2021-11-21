@@ -19,10 +19,10 @@ class PublisherEditorController {
     }
 
     static get $inject() {
-        return ['maPublisher', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate', '$attrs', '$parse', 'maEvents', 'maPoint', 'maUtil'];
+        return ['maPublisher', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate', '$attrs', '$parse', 'maEvents', 'maUtil'];
     }
 
-    constructor(maPublisher, $q, maDialogHelper, $scope, $window, maTranslate, $attrs, $parse, Events, maPoint, maUtil) {
+    constructor(maPublisher, $q, maDialogHelper, $scope, $window, maTranslate, $attrs, $parse, Events, maUtil) {
         this.maPublisher = maPublisher;
         this.$q = $q;
         this.maDialogHelper = maDialogHelper;
@@ -30,7 +30,6 @@ class PublisherEditorController {
         this.$window = $window;
         this.maTranslate = maTranslate;
         this.maUtil = maUtil;
-        this.maPoint = maPoint;
 
         this.eventLevels = Events.levels;
         this.publishTypeCodes = maPublisher.publishTypeCodes;
