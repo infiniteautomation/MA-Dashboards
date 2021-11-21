@@ -15,6 +15,10 @@ md-dialog.ma-publisher-points-creator md-table-container table.md-table tbody.md
 md-dialog.ma-publisher-points-creator md-table-container table.md-table td.md-cell {
     border-top: 0;
 }
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table td.md-cell md-input-container {
+    margin: unset;
+}
 /* md-dialog.ma-publisher-points-creator md-table-container tbody tr {
     background: rgba(var(--ma-foreground-value), 0.);
 } */

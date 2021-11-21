@@ -79,14 +79,6 @@
                     <md-table-pagination md-limit="$ctrl.tableOptions.limit" md-limit-options="[5, 10, 15,20, 50, 100]"
                         md-page="$ctrl.tableOptions.page" md-total="{{$ctrl.tableOptions.total}}">
                     </md-table-pagination>
-
-                    <div>
-                        <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
-                            ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
-                            <md-icon>add</md-icon>
-                            <span ma-tr="ui.app.addPointsToPublisher"></span>
-                        </md-button>
-                    </div>
                 </div>
 
                 <div class="md-padding" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage"
@@ -107,7 +99,7 @@
                         <span ma-tr="ui.app.cancelBulkEdit"></span>
                     </md-button>
                 </div>
-
+                <!-- 
                 <div ng-if="$ctrl.errorMessages.length" class="md-padding">
                     <em class="ma-error-text">
                         <span ng-repeat="msg in $ctrl.errorMessages">
@@ -116,6 +108,14 @@
                             <br>
                         </span>
                     </em>
+                </div> -->
+
+                <div>
+                    <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
+                        ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
+                        <md-icon>add</md-icon>
+                        <span ma-tr="ui.app.addPointsToPublisher"></span>
+                    </md-button>
                 </div>
             </div>
         </md-dialog-content>
