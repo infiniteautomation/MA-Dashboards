@@ -246,6 +246,17 @@ class PublisherPointsCreatorController {
         });
         return validationMessages;
     }
+
+    /**
+     * Retrieves the DataPoint from the published point
+     * Note: used from Publisher modules, do not remove.
+     *
+     * @param publisherPoint
+     * @returns {maPoint}
+     */
+    getPoint(publisherPoint) {
+        return this.points.get(publisherPoint);
+    }
 }
 
 export default {
