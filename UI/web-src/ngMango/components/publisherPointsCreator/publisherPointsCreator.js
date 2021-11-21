@@ -88,6 +88,7 @@ class PublisherPointsCreatorController {
                 }
                 return publisherPoint;
             });
+            console.log(this.pointsToPublish);
 
             this.tableOptions.total = this.pointsToPublish.length;
         }
@@ -255,7 +256,7 @@ class PublisherPointsCreatorController {
      * @returns {maPoint}
      */
     getPoint(publisherPoint) {
-        return this.points.get(publisherPoint);
+        return this.points.find((p) => p.xid === publisherPoint.dataPointXid);
     }
 }
 
@@ -264,6 +265,7 @@ export default {
     controller: PublisherPointsCreatorController,
     bindings: {
         publisher: '<',
+        publisherType: '<',
         triggerDialog: '<',
         columns: '<',
         refreshTable: '&'
