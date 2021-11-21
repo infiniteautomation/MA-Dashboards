@@ -81,6 +81,11 @@ class PublisherPointsTableController extends TableController {
             return this.exposedDoQuery({ $queryBuilder: queryBuilder, $opts: opts });
         }
         return super.doQuery(queryBuilder, opts).then((points) => {
+            if (typeof this.exposePaginationInfo === 'function') {
+                const { args } = queryBuilder.built;
+                const [pageSize, page] = args[queryBuilder.built.args.length - 1].args;
+                this.exposePaginationInfo({ $pages: this.pages, $page: page / pageSize, $total: points.$total });
+            }
             console.log('running query', points);
             return points;
         });
@@ -116,6 +121,7 @@ export default {
         refreshTable: '<?',
         userCustomizeQuery: '&?customizeQuery',
         exposedDoQuery: '&?doQuery',
+        exposePaginationInfo: '&paginationInfo',
         customRowFilter: '&?rowFilter',
         publisherContainer: '<publisher',
         modifiedPoint: '&'
