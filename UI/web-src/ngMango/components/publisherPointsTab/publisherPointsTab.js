@@ -36,6 +36,7 @@ class PublisherPointsTabController {
             const { publisher, type } = this.publisherInfo;
             this.publisher = publisher;
             this.publisherType = type;
+            console.log(this.publisherType);
 
             this.buildColumns(type);
         }
