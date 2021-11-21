@@ -35,7 +35,7 @@
                             </thead>
                             <tbody md-body ng-if="$ctrl.pointsToPublish.length === 0">
                                 <tr md-row>
-                                    <td md-cell colspan="$ctrl.columns.length" class="ma-no-items-to-list"
+                                    <td md-cell colspan="{{$ctrl.columns.length}}" class="ma-no-items-to-list"
                                         ma-tr="ui.publisher.noPointsSelected"></td>
                                 </tr>
                             </tbody>
