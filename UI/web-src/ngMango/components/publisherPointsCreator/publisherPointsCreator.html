@@ -43,19 +43,21 @@
                                 <tr md-row
                                     ng-repeat="item in $ctrl.pointsToPublish | orderBy: myOrder | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
                                     <td md-cell ng-repeat="column in $ctrl.columns">
+                                        <span ng-show="false">{{column.colName = $parent.$index}}</span>
+
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && !column.editable">
-                                            <span ng-if="!column.editorTemplateUrl && !column.editable"
-                                                ng-class="{'ma-empty-null': item[column.name] == null}"
+                                            <span ng-class="{'ma-empty-null': item[column.name] == null}"
                                                 ng-bind="item[column.name] | maDisplayNull"></span>
-                                            <input name="{{'xid-' + $index}}" ng-model="item.xid" type="hidden">
-                                            <div ng-messages="$ctrl.form['xid-' + $index].$error">
+
+                                            <input ng-show="false" name="{{column.columnName}}"
+                                                ng-model="item[column.name]">
+                                            <div ng-messages="$ctrl.form[column.columnName].$error">
                                                 <div ng-message="validationMessage"
-                                                    ng-bind="$ctrl.form['xid-' + $index].validationMessage">
+                                                    ng-bind="$ctrl.form[column.columnName].validationMessage">
                                                 </div>
                                             </div>
                                         </md-input-container>
 
-                                        <span ng-show="false">{{column.colName = $parent.$index}}</span>
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && column.editable">
                                             <input name="{{column.columnName}}" ng-model="item[column.name]" required>
                                             <div ng-messages="$ctrl.form[column.columnName].$error">

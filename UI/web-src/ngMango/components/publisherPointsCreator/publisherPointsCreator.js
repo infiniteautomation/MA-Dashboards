@@ -59,6 +59,10 @@ class PublisherPointsCreatorController {
         this.pointsToPublish = [];
         this.errorMessages = [];
         this.validationMessages = [];
+        if (this.form) {
+            this.form.$setUntouched();
+            this.form.$setPristine();
+        }
     }
 
     getOrderBy(index) {
@@ -90,6 +94,8 @@ class PublisherPointsCreatorController {
     }
 
     addPoints() {
+        this.form.$setSubmitted();
+
         this.validationMessages = [];
         this.errorMessages = [];
 
