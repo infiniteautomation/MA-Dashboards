@@ -1,6 +1,6 @@
 ma-publisher-points-table {
     flex-grow: 1;
-    min-height: 400px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
 }
@@ -85,7 +85,7 @@ md-menu-content.md-menu-bar-menu.ma-data-point-selector.ma-checkbox-menu md-chec
 ma-publisher-points-table .ma-virtual-repeat-table .ma-virtual-repeat-table-row > *.ma-message-column {
     white-space: unset;
 }
-     
+
 ma-publisher-points-table span.ma-message-cell.ma-truncated {
     white-space: nowrap;
 }
@@ -101,5 +101,5 @@ ma-publisher-points-table span.ma-active-status-cell {
 }
 
 ma-publisher-points-table a.ma-no-border {
-	border: none;
+    border: none;
 }
