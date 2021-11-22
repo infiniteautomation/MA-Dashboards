@@ -8,7 +8,7 @@ import './publisherPointsCreator.css';
 
 const VALIDATION_MESSAGE_PROPERTY_MAP = {
     // Mapped to xid so It can pick up the full table length
-    dataPointId: 'xid',
+    dataPointId: 'dataPointXid',
     id: 'xid'
 };
 class PublisherPointsCreatorController {
