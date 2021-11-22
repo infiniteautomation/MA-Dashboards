@@ -1,4 +1,4 @@
-<div>
+<div class="ma-published-points-tab-header-actions">
     <md-button class="md-raised md-primary" ng-click="$ctrl.showDialog = {}">
         <md-icon>add</md-icon>
         <span ma-tr="ui.app.addPoints"></span>
@@ -8,7 +8,7 @@
         <md-icon>delete</md-icon>
         <span ma-tr="ui.app.removeSelectedPoints"></span>
     </md-button>
-    <span ma-tr="ui.publisher.pageXofX" ma-tr-args="[$ctrl.page, $ctrl.pages, $ctrl.total]"></span>
+    <span ma-tr="ui.publisher.pageXofX" ma-tr-args="[$ctrl.total]"></span>
 </div>
 
 <ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"

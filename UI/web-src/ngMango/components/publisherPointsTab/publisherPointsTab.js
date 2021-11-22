@@ -82,7 +82,6 @@ class PublisherPointsTabController {
     }
 
     getPageInfo($pages, $page, $total) {
-        console.log($pages);
         this.pages = $pages.size;
         this.page = $page;
         this.total = $total;
