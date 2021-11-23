@@ -240,7 +240,7 @@ class PublisherPointsCreatorController {
     fixValidationMessages(validationMessages, pointsToPublish) {
         validationMessages.forEach((vm) => {
             const pointToPublishIndex = pointsToPublish.findIndex((ptp) => ptp.xid === vm.xid);
-            const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property];
+            const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property] || vm.property;
             if (newKey) {
                 vm.property = `${newKey}-${pointToPublishIndex}`;
             }
