@@ -1,0 +1,105 @@
+ma-publisher-points-table {
+    flex-grow: 1;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+ma-publisher-points-table .ma-publisher-points-selector {
+    display: block;
+    margin-top: 0;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table-container {
+    flex: 1 0 auto;
+    display: flex;
+    overflow-x: auto;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table {
+    flex: 1 0 auto;
+}
+
+ma-publisher-points-table .ma-empty-null {
+    opacity: 0.5;
+    font-style: italic;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table-header md-input-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column {
+    flex: 0 0 32px;
+    display: flex;
+    justify-content: center;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-checkbox-column md-checkbox,
+ma-publisher-points-table .ma-virtual-repeat-table .ma-publisher-point-includeTimestamp md-checkbox {
+    width: 20px;
+    margin: 0;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-actions-column {
+    flex: 0 0 43px;
+    display: flex;
+    justify-content: center;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-actions-column md-checkbox {
+    width: 20px;
+    margin: 0;
+}
+
+ma-publisher-points-table .ma-data-point-row {
+    user-select: none;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox {
+    pointer-events: none;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table-row md-checkbox.ma-pp-enabled-cell,
+ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-readOnly > span > md-checkbox,
+ma-publisher-points-table .ma-virtual-repeat-table-row .ma-publisher-point-includeTimestamp > span > md-checkbox {
+    pointer-events: unset;
+    margin: unset;
+}
+
+ma-publisher-points-table md-menu-bar {
+    width: 32px;
+    padding: 0;
+}
+
+md-menu-content.md-menu-bar-menu.md-dense.ma-data-point-selector {
+    padding: 8px 0;
+}
+
+md-menu-content.md-menu-bar-menu.ma-data-point-selector.ma-checkbox-menu md-checkbox {
+    margin: 0;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-virtual-repeat-table-row > *.ma-message-column {
+    white-space: unset;
+}
+
+ma-publisher-points-table span.ma-message-cell.ma-truncated {
+    white-space: nowrap;
+}
+
+ma-publisher-points-table .ma-virtual-repeat-table .ma-virtual-repeat-table-row > *.ma-active-status-column {
+    white-space: unset;
+    overflow: unset;
+    text-overflow: unset;
+}
+
+ma-publisher-points-table span.ma-active-status-cell {
+    white-space: nowrap;
+}
+
+ma-publisher-points-table a.ma-no-border {
+    border: none;
+}

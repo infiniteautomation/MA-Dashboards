@@ -1,0 +1,32 @@
+ma-data-point-selector.ma-publisher-editor {
+    height: 400px;
+}
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table {
+    border-collapse: collapse;
+}
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table tbody.md-body > tr.md-row {
+    height: 50px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table td.md-cell {
+    border-top: 0;
+}
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table td.md-cell md-input-container {
+    margin: unset;
+}
+/* md-dialog.ma-publisher-points-creator md-table-container tbody tr {
+    background: rgba(var(--ma-foreground-value), 0.);
+} */
+
+md-dialog.ma-publisher-points-creator md-table-container tbody tr.difference {
+    /* background: rgba(var(--ma-warn-A700-value), 0.4); */
+    border-width: 1px;
+    border-right-width: 2px;
+    border-style: solid;
+    border-color: var(--ma-warn-A700);
+}

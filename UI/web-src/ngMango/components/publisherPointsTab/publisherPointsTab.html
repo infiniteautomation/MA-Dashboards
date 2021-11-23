@@ -1,0 +1,38 @@
+<div class="ma-published-points-tab-header-actions">
+    <md-button class="md-raised md-primary" ng-click="$ctrl.showDialog = {}">
+        <md-icon>add</md-icon>
+        <span ma-tr="ui.app.addPoints"></span>
+    </md-button>
+    <md-button class="md-raised md-primary md-warn" ng-click="$ctrl.removePoints($event)"
+        ng-disabled="$ctrl.pointsToRemove.length === 0">
+        <md-icon>delete</md-icon>
+        <span ma-tr="ui.app.removeSelectedPoints"></span>
+    </md-button>
+    <span ma-tr="ui.publisher.pageXofX" ma-tr-args="[$ctrl.total]"></span>
+</div>
+
+<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
+    custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
+    pagination-info="$ctrl.getPageInfo($pages,$page, $total)" refresh-table="$ctrl.refreshTable"
+    publisher="$ctrl.publisherInfo">
+</ma-publisher-points-table>
+
+<div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
+    <div layout layout-align="center">
+        <em>
+            <span ng-bind="$ctrl.bulkTask.progress || 0"></span>% (<span ma-tr="ui.app.pointXofX"
+                ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
+        </em>
+    </div>
+
+    <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
+
+    <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()">
+        <md-icon>cancel</md-icon>
+        <span ma-tr="ui.app.cancelBulkEdit"></span>
+    </md-button>
+</div>
+
+<ma-publisher-points-creator publisher="$ctrl.publisher" publisher-type="$ctrl.publisherType"
+    trigger-dialog="$ctrl.showDialog" columns="$ctrl.customColumns" refresh-table="$ctrl.refreshTable = {}">
+</ma-publisher-points-creator>

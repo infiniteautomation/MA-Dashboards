@@ -3,6 +3,7 @@
  */
 
 import './ngMangoServices';
+import angular from 'angular';
 import pointList from './directives/pointList';
 import filteringPointList from './directives/filteringPointList';
 import pointValue from './directives/pointValue';
@@ -164,6 +165,9 @@ import eventTypeFilter from './components/eventTypeFilter/eventTypeFilter';
 import publisherList from './components/publisherList/publisherList';
 import publisherSelect from './components/publisherSelect/publisherSelect';
 import publisherEditor from './components/publisherEditor/publisherEditor';
+import publisherPointsTab from './components/publisherPointsTab/publisherPointsTab';
+import publisherPointsTable from './components/publisherPointsTable/publisherPointsTable';
+import publisherPointsCreator from './components/publisherPointsCreator/publisherPointsCreator';
 import dataPointSelector from './components/dataPointSelector/dataPointSelector';
 import dropDownButton from './components/dropDownButton/dropDownButton';
 import tileMap from './components/tileMap/tileMap';
@@ -203,7 +207,6 @@ import pointValueImport from './components/pointValueImport/pointValueImport';
 import systemSetup from './components/systemSetup/systemSetup';
 
 import slideUp from './animations/slideUp';
-import angular from 'angular';
 
 import '../shims/exportAMD.js';
 import './ngMango.css';
@@ -217,7 +220,7 @@ import './ngMango.css';
  * The ngMango module handles loading of the custom directives used for creating a Mango 3.x dashboard.
  *
  *
-**/
+ * */
 const ngMango = angular.module('ngMango', ['ngMangoServices']);
 
 ngMango.directive('maFilteringPointList', filteringPointList);
@@ -387,6 +390,9 @@ ngMango.component('maEventTypeFilter', eventTypeFilter);
 ngMango.component('maPublisherList', publisherList);
 ngMango.component('maPublisherSelect', publisherSelect);
 ngMango.component('maPublisherEditor', publisherEditor);
+ngMango.component('maPublisherPointsTable', publisherPointsTable);
+ngMango.component('maPublisherPointsTab', publisherPointsTab);
+ngMango.component('maPublisherPointsCreator', publisherPointsCreator);
 ngMango.component('maDataPointSelector', dataPointSelector);
 ngMango.component('maDropDownButton', dropDownButton);
 ngMango.component('maTileMap', tileMap);
@@ -422,59 +428,63 @@ ngMango.animation('.ma-slide-up', slideUp);
 
 // add some additional event handlers which aren't in Angular by default
 'touchstart touchend touchmove touchcancel'.split(' ').forEach((eventName) => {
-    const directiveName = 'ma' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+    const directiveName = `ma${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`;
     const fn = eventHandler.bind(null, eventName, directiveName);
     fn.$inject = eventHandler.$inject;
     ngMango.directive(directiveName, fn);
 });
 
 ngMango.constant('MA_DATE_RANGE_PRESETS', [
-   {type: 'LAST_5_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 5]]},
-   {type: 'LAST_15_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 15]]},
-   {type: 'LAST_30_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 30]]},
-   {type: 'LAST_1_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 1]]},
-   {type: 'LAST_3_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 3]]},
-   {type: 'LAST_6_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 6]]},
-   {type: 'LAST_12_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 12]]},
-   {type: 'LAST_1_DAYS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.days', 1]]},
-   {type: 'LAST_1_WEEKS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.weeks', 1]]},
-   {type: 'LAST_2_WEEKS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.weeks', 2]]},
-   {type: 'LAST_1_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 1]]},
-   {type: 'LAST_3_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 3]]},
-   {type: 'LAST_6_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 6]]},
-   {type: 'LAST_1_YEARS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.years', 1]]},
-   {type: 'LAST_2_YEARS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.years', 2]]},
-   {type: 'DAY_SO_FAR', translation: 'ui.dateRangePreset.todaySoFar'},
-   {type: 'WEEK_SO_FAR', translation: 'ui.dateRangePreset.weekSoFar'},
-   {type: 'MONTH_SO_FAR', translation: 'ui.dateRangePreset.monthSoFar'},
-   {type: 'YEAR_SO_FAR', translation: 'ui.dateRangePreset.yearSoFar'},
-   {type: 'PREVIOUS_DAY', translation: 'ui.dateRangePreset.previousDay'},
-   {type: 'PREVIOUS_WEEK', translation: 'ui.dateRangePreset.previousWeek'},
-   {type: 'PREVIOUS_MONTH', translation: 'ui.dateRangePreset.previousMonth'},
-   {type: 'PREVIOUS_YEAR', translation: 'ui.dateRangePreset.previousYear'}
+    { type: 'LAST_5_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 5]] },
+    { type: 'LAST_15_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 15]] },
+    { type: 'LAST_30_MINUTES', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.minutes', 30]] },
+    { type: 'LAST_1_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 1]] },
+    { type: 'LAST_3_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 3]] },
+    { type: 'LAST_6_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 6]] },
+    { type: 'LAST_12_HOURS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.hours', 12]] },
+    { type: 'LAST_1_DAYS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.days', 1]] },
+    { type: 'LAST_1_WEEKS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.weeks', 1]] },
+    { type: 'LAST_2_WEEKS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.weeks', 2]] },
+    { type: 'LAST_1_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 1]] },
+    { type: 'LAST_3_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 3]] },
+    { type: 'LAST_6_MONTHS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.months', 6]] },
+    { type: 'LAST_1_YEARS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.years', 1]] },
+    { type: 'LAST_2_YEARS', translation: 'ui.dateRangePreset.lastX', translationArgs: [['ui.time.years', 2]] },
+    { type: 'DAY_SO_FAR', translation: 'ui.dateRangePreset.todaySoFar' },
+    { type: 'WEEK_SO_FAR', translation: 'ui.dateRangePreset.weekSoFar' },
+    { type: 'MONTH_SO_FAR', translation: 'ui.dateRangePreset.monthSoFar' },
+    { type: 'YEAR_SO_FAR', translation: 'ui.dateRangePreset.yearSoFar' },
+    { type: 'PREVIOUS_DAY', translation: 'ui.dateRangePreset.previousDay' },
+    { type: 'PREVIOUS_WEEK', translation: 'ui.dateRangePreset.previousWeek' },
+    { type: 'PREVIOUS_MONTH', translation: 'ui.dateRangePreset.previousMonth' },
+    { type: 'PREVIOUS_YEAR', translation: 'ui.dateRangePreset.previousYear' }
 ]);
 
-ngMango.factory('MA_AMCHARTS_DATE_FORMATS', ['MA_DATE_FORMATS', function(mangoDateFormats) {
-    return {
-        categoryAxis: [
-            {period: 'fff', format: mangoDateFormats.timeSeconds},
-            {period: 'ss', format: mangoDateFormats.timeSeconds},
-            {period: 'mm', format: mangoDateFormats.time},
-            {period: 'hh', format: mangoDateFormats.time},
-            {period: 'DD', format: mangoDateFormats.monthDay},
-            {period: 'WW', format: mangoDateFormats.monthDay},
-            {period: 'MM', format: mangoDateFormats.monthDay},
-            {period: 'YYYY', format: mangoDateFormats.year}
-        ],
-        categoryBalloon: mangoDateFormats.shortDateTimeSeconds
-    };
-}]);
+ngMango.factory('MA_AMCHARTS_DATE_FORMATS', [
+    'MA_DATE_FORMATS',
+    function (mangoDateFormats) {
+        return {
+            categoryAxis: [
+                { period: 'fff', format: mangoDateFormats.timeSeconds },
+                { period: 'ss', format: mangoDateFormats.timeSeconds },
+                { period: 'mm', format: mangoDateFormats.time },
+                { period: 'hh', format: mangoDateFormats.time },
+                { period: 'DD', format: mangoDateFormats.monthDay },
+                { period: 'WW', format: mangoDateFormats.monthDay },
+                { period: 'MM', format: mangoDateFormats.monthDay },
+                { period: 'YYYY', format: mangoDateFormats.year }
+            ],
+            categoryBalloon: mangoDateFormats.shortDateTimeSeconds
+        };
+    }
+]);
 
-ngMango.config(['$animateProvider', function($animateProvider) {
-    $animateProvider.customFilter(function(node, event, options) {
-        return !node.classList.contains('ma-disable-animate');
-    });
-}]);
+ngMango.config([
+    '$animateProvider',
+    function ($animateProvider) {
+        $animateProvider.customFilter((node, event, options) => !node.classList.contains('ma-disable-animate'));
+    }
+]);
 
 ngMango.run([
     '$rootScope',
@@ -485,15 +495,13 @@ ngMango.run([
     'MA_DATE_RANGE_PRESETS',
     'maUser',
     '$timeout',
-function($rootScope, mangoWatchdog, MA_ROLLUP_TYPES, MA_TIME_PERIOD_TYPES,
-        MA_CHART_TYPES, MA_DATE_RANGE_PRESETS, User, $timeout) {
-
-    $rootScope.mangoWatchdog = mangoWatchdog;
-    $rootScope.rollupTypes = MA_ROLLUP_TYPES;
-    $rootScope.timePeriodTypes = MA_TIME_PERIOD_TYPES;
-    $rootScope.chartTypes = MA_CHART_TYPES;
-    $rootScope.dateRangePresets = MA_DATE_RANGE_PRESETS;
-
-}]);
+    function ($rootScope, mangoWatchdog, MA_ROLLUP_TYPES, MA_TIME_PERIOD_TYPES, MA_CHART_TYPES, MA_DATE_RANGE_PRESETS, User, $timeout) {
+        $rootScope.mangoWatchdog = mangoWatchdog;
+        $rootScope.rollupTypes = MA_ROLLUP_TYPES;
+        $rootScope.timePeriodTypes = MA_TIME_PERIOD_TYPES;
+        $rootScope.chartTypes = MA_CHART_TYPES;
+        $rootScope.dateRangePresets = MA_DATE_RANGE_PRESETS;
+    }
+]);
 
 export default ngMango;
