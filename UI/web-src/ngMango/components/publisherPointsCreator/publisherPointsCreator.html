@@ -30,8 +30,11 @@
                     <md-table-container>
                         <table md-table>
                             <thead md-head md-order="myOrder">
-                                <th md-column ng-repeat="column in $ctrl.columns" ma-tr="{{column.label}}"
-                                    md-order-by="{{$ctrl.getOrderBy($index)}}"></th>
+                                <th md-column ng-repeat="column in $ctrl.columns"
+                                    md-order-by="{{$ctrl.getOrderBy($index)}}">
+                                    <span ma-tr="{{column.label}}"></span>
+                                    <span ng-if="column.required">*</span>
+                                </th>
                             </thead>
                             <tbody md-body ng-if="$ctrl.pointsToPublish.length === 0">
                                 <tr md-row>

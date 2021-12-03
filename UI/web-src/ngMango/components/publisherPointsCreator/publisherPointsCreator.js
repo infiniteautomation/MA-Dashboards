@@ -11,6 +11,8 @@ const VALIDATION_MESSAGE_PROPERTY_MAP = {
     dataPointId: 'dataPointXid',
     id: 'xid'
 };
+
+// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 class PublisherPointsCreatorController {
     static get $$ngIsClass() {
         return true;
@@ -88,7 +90,6 @@ class PublisherPointsCreatorController {
                 }
                 return publisherPoint;
             });
-            console.log(this.pointsToPublish);
 
             this.tableOptions.total = this.pointsToPublish.length;
         }
@@ -110,8 +111,6 @@ class PublisherPointsCreatorController {
 
             return request;
         });
-
-        console.log('requests', requests);
 
         if (requests.length <= 0) return null;
 
@@ -231,10 +230,7 @@ class PublisherPointsCreatorController {
     pruneValidItems(validationMessages) {
         const failedXids = validationMessages.map((vm) => vm.xid);
         this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
-        console.log(this.pointsToPublish);
-        console.log(this.form);
         this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
-        console.log(this.validationMessages);
     }
 
     fixValidationMessages(validationMessages, pointsToPublish) {
@@ -260,6 +256,7 @@ class PublisherPointsCreatorController {
     }
 }
 
+// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 export default {
     template,
     controller: PublisherPointsCreatorController,

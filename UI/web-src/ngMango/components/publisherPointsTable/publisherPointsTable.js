@@ -86,7 +86,6 @@ class PublisherPointsTableController extends TableController {
                 const [pageSize, page] = args[queryBuilder.built.args.length - 1].args;
                 this.exposePaginationInfo({ $pages: this.pages, $page: page / pageSize, $total: points.$total });
             }
-            console.log('running query', points);
             return points;
         });
     }

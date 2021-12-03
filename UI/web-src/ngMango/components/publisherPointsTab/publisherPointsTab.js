@@ -34,13 +34,8 @@ class PublisherPointsTabController {
     }
 
     $onChanges(changes) {
-        if (changes.publisherInfo && changes.publisherInfo.currentValue) {
-            const { publisher, type } = this.publisherInfo;
-            this.publisher = publisher;
-            this.publisherType = type;
-            console.log(this.publisherType);
-
-            this.buildColumns(type);
+        if (changes.publisherType && changes.publisherType.currentValue) {
+            this.buildColumns(this.publisherType);
         }
     }
 
@@ -101,8 +96,6 @@ class PublisherPointsTabController {
 
             return request;
         });
-
-        console.log('requests', requests);
 
         if (requests.length <= 0) return null;
 
@@ -165,7 +158,6 @@ class PublisherPointsTabController {
                     });
                 }
             });
-            console.log('validationMessages', validationMessages);
             this.validationMessages = this.fixValidationMessages(validationMessages);
         }
 
@@ -233,6 +225,7 @@ export default {
     template,
     controller: PublisherPointsTabController,
     bindings: {
-        publisherInfo: '<'
+        publisher: '<',
+        publisherType: '<'
     }
 };
