@@ -265,7 +265,6 @@ export default {
     controller: PublisherPointsCreatorController,
     bindings: {
         publisher: '<',
-        publisherType: '<',
         triggerDialog: '<',
         columns: '<',
         refreshTable: '&'

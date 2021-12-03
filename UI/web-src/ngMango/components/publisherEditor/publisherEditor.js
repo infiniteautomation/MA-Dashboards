@@ -42,9 +42,6 @@ class PublisherEditorController {
         if ($attrs.hasOwnProperty('dynamicHeight')) {
             this.dynamicHeight = $parse($attrs.dynamicHeight)($scope.$parent);
         }
-
-        this.pointsToPublish = new Map();
-        this.publishedPoints = new Map();
     }
 
     $onInit() {
@@ -85,7 +82,7 @@ class PublisherEditorController {
         const viewValue = this.ngModelCtrl.$viewValue;
         if (viewValue) {
             if (viewValue instanceof this.maPublisher) {
-                this.publisher = viewValue.copy();
+                this.publisher = viewValue;
             } else {
                 this.publisher = new this.maPublisher(viewValue);
             }

@@ -34,13 +34,8 @@ class PublisherPointsTabController {
     }
 
     $onChanges(changes) {
-        if (changes.publisherInfo && changes.publisherInfo.currentValue) {
-            const { publisher, type } = this.publisherInfo;
-            this.publisher = publisher;
-            this.publisherType = type;
-            console.log(this.publisherType);
-
-            this.buildColumns(type);
+        if (changes.publisherType && changes.publisherType.currentValue) {
+            this.buildColumns(this.publisherType);
         }
     }
 
@@ -233,6 +228,7 @@ export default {
     template,
     controller: PublisherPointsTabController,
     bindings: {
-        publisherInfo: '<'
+        publisher: '<',
+        publisherType: '<'
     }
 };
