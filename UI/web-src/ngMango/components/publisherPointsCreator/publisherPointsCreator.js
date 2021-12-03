@@ -11,6 +11,8 @@ const VALIDATION_MESSAGE_PROPERTY_MAP = {
     dataPointId: 'dataPointXid',
     id: 'xid'
 };
+
+// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 class PublisherPointsCreatorController {
     static get $$ngIsClass() {
         return true;
@@ -254,11 +256,13 @@ class PublisherPointsCreatorController {
     }
 }
 
+// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 export default {
     template,
     controller: PublisherPointsCreatorController,
     bindings: {
         publisher: '<',
+        publisherType: '<',
         triggerDialog: '<',
         columns: '<',
         refreshTable: '&'
