@@ -97,8 +97,6 @@ class PublisherPointsTabController {
             return request;
         });
 
-        console.log('requests', requests);
-
         if (requests.length <= 0) return null;
 
         this.bulkTask = new this.PublisherPoints.Bulk({
@@ -160,7 +158,6 @@ class PublisherPointsTabController {
                     });
                 }
             });
-            console.log('validationMessages', validationMessages);
             this.validationMessages = this.fixValidationMessages(validationMessages);
         }
 
