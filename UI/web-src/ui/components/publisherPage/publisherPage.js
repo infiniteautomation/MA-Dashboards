@@ -13,7 +13,7 @@ class PublisherPageController {
         return ['maPublisher', '$state', '$mdMedia'];
     }
 
-    constructor (maPublisher, $state, $mdMedia) {
+    constructor(maPublisher, $state, $mdMedia) {
         this.maPublisher = maPublisher;
         this.$state = $state;
         this.$mdMedia = $mdMedia;
@@ -21,14 +21,7 @@ class PublisherPageController {
 
     $onInit() {
         if (this.$state.params.xid) {
-            this.maPublisher.get(this.$state.params.xid).then(
-                (item) => {
-                    this.publisher = item;
-                },
-                (error) => {
-                    this.newPublisher();
-                }
-            );
+            this.getPublisher();
         } else {
             this.newPublisher();
         }
@@ -52,6 +45,18 @@ class PublisherPageController {
     publisherChanged() {
         this.$state.params.xid = (this.publisher && this.publisher.getOriginalId()) || null;
         this.$state.go('.', this.$state.params, { location: 'replace', notify: false });
+        this.getPublisher();
+    }
+
+    getPublisher() {
+        this.maPublisher.get(this.$state.params.xid).then(
+            (item) => {
+                this.publisher = item;
+            },
+            (error) => {
+                this.newPublisher();
+            }
+        );
     }
 }
 

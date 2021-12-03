@@ -69,7 +69,9 @@ class PublisherEditorController {
         });
     }
 
-    $onChanges(changes) { }
+    $onChanges(changes) {
+        // do something
+    }
 
     render(confirmDiscard = false) {
         if (confirmDiscard && !this.confirmDiscard('modelChange')) {
@@ -87,7 +89,6 @@ class PublisherEditorController {
                 this.publisher = new this.maPublisher(viewValue);
             }
             this.publisherType = this.publisherTypesByName[this.publisher.modelType];
-            this.publisherWithType = { publisher: this.publisher, type: this.publisherType };
         } else {
             this.publisher = null;
             this.publisherType = null;
