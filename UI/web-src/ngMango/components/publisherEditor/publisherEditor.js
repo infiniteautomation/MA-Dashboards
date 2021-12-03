@@ -82,7 +82,7 @@ class PublisherEditorController {
         const viewValue = this.ngModelCtrl.$viewValue;
         if (viewValue) {
             if (viewValue instanceof this.maPublisher) {
-                this.publisher = viewValue;
+                this.publisher = viewValue.copy();
             } else {
                 this.publisher = new this.maPublisher(viewValue);
             }
