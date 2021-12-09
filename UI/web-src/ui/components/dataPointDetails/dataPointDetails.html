@@ -74,7 +74,7 @@
                     
                     <div layout="row">
                         <div flex layout>
-                            <ma-set-point-value ng-if="$ctrl.dataPoint.pointLocator.dataType !== 'IMAGE' && $ctrl.User.current.hasPermission($ctrl.dataPoint.setPermission)"
+                            <ma-set-point-value ng-if="$ctrl.User.current.hasPermission($ctrl.dataPoint.setPermission)"
                                 point="$ctrl.dataPoint" flex></ma-set-point-value>
                         </div>
                         <md-button class="md-accent md-raised" ng-click="$ctrl.openEditDialog($ctrl.dataPoint)" ng-switch="$ctrl.hasEditPermission()">
@@ -126,10 +126,9 @@
                         <tbody md-body ng-class="{'ma-point-values-non-realtime' : !$ctrl.realtimeMode}" ng-if="$ctrl.realtimePointValues">
                             <tr md-row ng-repeat="value in $ctrl.realtimePointValues | orderBy: myOrder track by $index" ng-class="{'ma-point-value-cached': value.cached}">
                                 <td md-cell ng-bind="value.timestamp | maDate:'shortDateTimeSeconds'"></td>
-                                <td ng-if="$ctrl.dataPoint.pointLocator.dataType !== 'IMAGE'" md-cell>
+                                <td md-cell>
                                 <span ng-bind="value.rendered" ng-style="{color: $ctrl.dataPoint.getTextRenderer().render(value.value).color}"></span> <strong ng-if="value.annotation"><em>(<span ng-bind="value.annotation"></span>)</em></strong>
                                 </td>
-                                <td ng-if="$ctrl.dataPoint.pointLocator.dataType == 'IMAGE'" md-cell><img ng-src="{{value.value}}" alt="{{value.annotation||''}}" class="imageValue"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -169,7 +168,7 @@
         </div>
     </div>
     
-    <div flex="100" class="ma-dpd-chart" ng-if="$ctrl.dataPoint.pointLocator.dataType !== 'ALPHANUMERIC' && $ctrl.dataPoint.pointLocator.dataType !== 'IMAGE'">
+    <div flex="100" class="ma-dpd-chart" ng-if="$ctrl.dataPoint.pointLocator.dataType !== 'ALPHANUMERIC'">
         <md-card>
             <md-toolbar class="md-whiteframe-1dp md-hue-3">
                 <div class="md-toolbar-tools">
@@ -186,21 +185,6 @@
             </md-toolbar>
             <ma-serial-chart series-1-values="$ctrl.pointValues" series-1-point="$ctrl.dataPoint" series-1-type="{{$ctrl.chartType}}" legend="false" balloon="true" export="true">
             </ma-serial-chart>
-        </md-card>
-    </div>
-    
-    <div flex="100" class="ma-dpd-image-slider" ng-if="$ctrl.dataPoint.pointLocator.dataType == 'IMAGE'">
-        <md-card>
-          <md-toolbar class="md-whiteframe-1dp md-hue-3">
-            <div class="md-toolbar-tools">
-              <h2 flex>
-                  <span ma-tr="ui.app.images"></span>
-              </h2>
-            </div>
-          </md-toolbar>
-          <md-card-content>
-              <ma-image-slider point-values="$ctrl.pointValues"></ma-image-slider>
-          </md-card-content>
         </md-card>
     </div>
     

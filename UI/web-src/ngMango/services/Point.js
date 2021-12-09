@@ -421,11 +421,6 @@ function dataPointProvider() {
                     key: 'ALPHANUMERIC',
                     translation: 'common.dataTypes.alphanumeric',
                     value: 4
-                },
-                {
-                    key: 'IMAGE',
-                    translation: 'common.dataTypes.image',
-                    value: 5
                 }
             ]),
 
@@ -471,8 +466,7 @@ function dataPointProvider() {
                         'BINARY',
                         'ALPHANUMERIC',
                         'MULTISTATE',
-                        'NUMERIC',
-                        'IMAGE'
+                        'NUMERIC'
                     ])
                 },
                 {
@@ -521,11 +515,6 @@ function dataPointProvider() {
                     type: 'textRendererBinary',
                     translation: 'textRenderer.binary',
                     dataTypes: new Set(['BINARY'])
-                },
-                {
-                    type: 'textRendererNone',
-                    translation: 'textRenderer.none',
-                    dataTypes: new Set(['IMAGE'])
                 },
                 {
                     type: 'textRendererTime',

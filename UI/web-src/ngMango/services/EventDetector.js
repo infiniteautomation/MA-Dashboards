@@ -25,7 +25,7 @@ function eventDetectorProvider() {
             type: 'UPDATE',
             description: 'pointEdit.detectors.update',
             pointEventDetector: true,
-            dataTypes: new Set(['BINARY', 'MULTISTATE', 'NUMERIC', 'ALPHANUMERIC', 'IMAGE'])
+            dataTypes: new Set(['BINARY', 'MULTISTATE', 'NUMERIC', 'ALPHANUMERIC'])
         },
         {
             type: 'POINT_CHANGE',
@@ -135,7 +135,7 @@ function eventDetectorProvider() {
             description: 'pointEdit.detectors.noUpdate',
             pointEventDetector: true,
             template: noUpdate,
-            dataTypes: new Set(['BINARY', 'MULTISTATE', 'NUMERIC', 'ALPHANUMERIC','IMAGE'])
+            dataTypes: new Set(['BINARY', 'MULTISTATE', 'NUMERIC', 'ALPHANUMERIC'])
         },
         {
             type: 'POSITIVE_CUSUM',

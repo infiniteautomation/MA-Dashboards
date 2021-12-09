@@ -158,7 +158,7 @@ function pointValue(PointValueController, MA_DATE_FORMATS, maEvents, $injector) 
                 color: null
             });
 
-            this.resolvedDisplayType = this.displayType || (this.point.pointLocator && this.point.pointLocator.dataType === 'IMAGE' ? 'image' : 'rendered');
+            this.resolvedDisplayType = this.displayType || (this.point.pointLocator && this.point.pointLocator.dataType === 'rendered');
             delete this.valueStyle.color;
 
             switch(this.resolvedDisplayType) {

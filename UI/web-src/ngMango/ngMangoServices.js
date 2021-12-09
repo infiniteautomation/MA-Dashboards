@@ -260,7 +260,7 @@ ngMangoServices.constant('MA_CHART_TYPES', [
 ]);
 
 ngMangoServices.constant('MA_SIMPLIFY_TYPES', [
-    { type: 'NONE', translation: 'pointEdit.simplify.none', dataTypes: new Set(['BINARY', 'ALPHANUMERIC', 'MULTISTATE', 'NUMERIC', 'IMAGE']) },
+    { type: 'NONE', translation: 'pointEdit.simplify.none', dataTypes: new Set(['BINARY', 'ALPHANUMERIC', 'MULTISTATE', 'NUMERIC']) },
     { type: 'TARGET', translation: 'pointEdit.simplify.target', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY']) },
     { type: 'TOLERANCE', translation: 'pointEdit.simplify.tolerance', dataTypes: new Set(['NUMERIC', 'MULTISTATE', 'BINARY']) }
 ]);

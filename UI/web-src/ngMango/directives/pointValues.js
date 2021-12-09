@@ -414,9 +414,7 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                     }
 
                     let value;
-                    if (point.pointLocator.dataType === 'IMAGE') {
-                        value = payload.value.value;
-                    } else if (payload.convertedValue != null) {
+                    if (payload.convertedValue != null) {
                         value = payload.convertedValue;
                     } else {
                         value = payload.value.value;
@@ -509,16 +507,7 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                         }
                     }
 
-                    return pointValues.getPointValuesForXid(point.xid, options).then(values => {
-                        if (dataType === 'IMAGE') {
-                            values.forEach(value => {
-                                if (value.value == null) {
-                                    value.value = noDataForPeriod;
-                                }
-                            });
-                        }
-                        return values;
-                    });
+                    return pointValues.getPointValuesForXid(point.xid, options);
                 } catch (error) {
                     return $q.reject(error);
                 }
