@@ -34,19 +34,19 @@
     "jszip": "^3.1.5",
     "leaflet": "^1.5.1",
     "material-design-icons-iconfont": "4.0.4",
-    "mathjs": "^4.4.2",
+    "mathjs": "^9",
     "md-color-picker": "^0.2.6",
     "md-pickers": "^1.1.1",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
-    "papaparse": "^4.5.0",
+    "papaparse": "^5.0.0",
     "pdfmake": "^0.1.36",
     "requirejs": "^2.3.5",
     "rql": "^0.3.3",
     "simplify-js": "^1.2.3",
     "stacktrace-js": "^2.0.0",
     "tinycolor2": "^1.4.1",
-    "xlsx": "^0.12.13"
+    "xlsx": ">=0.17.0"
   },
   "devDependencies": {
     "@infinite-automation/mango-module-tools": "^2.4.1",
