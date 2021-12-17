@@ -2310,10 +2310,10 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
-complex.js@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/complex.js/-/complex.js-2.0.10.tgz#afac74e4fb9131e8709f9c300420ce58fa36f18d"
-  integrity sha512-PsT3WqpnTjS2ijoMM8XodCi/BYO04vkS8kBg1YXcqf5KcnKVV6uXUc1eeLHhBksj8i7Vu9iQF2/6ZG9gqI6CPQ==
+complex.js@^2.0.11:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/complex.js/-/complex.js-2.0.15.tgz#7add6848b4c1d12aa9262f7df925ebe7a51a7406"
+  integrity sha512-gDBvQU8IG139ZBQTSo2qvDFP+lANMGluM779csXOr6ny1NUtA3wkUnCFjlDNH/moAVfXtvClYt6G0zarFbtz5w==
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -2846,10 +2846,10 @@ decamelize@^1.1.2, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decimal.js@9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-9.0.1.tgz#1cc8b228177da7ab6498c1cc06eb130a290e6e1e"
-  integrity sha512-2h0iKbJwnImBk4TGk7CG1xadoA0g3LDPlQhQzbZ221zvG0p2YVUedbKIPsOZXKZGx6YmZMJKYOalpCMxSdDqTQ==
+decimal.js@^10.2.1:
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.3.1.tgz#d8c3a444a9c6774ba60ca6ad7261c3a94fd5e783"
+  integrity sha512-V0pfhfr8suzyPGOx3nmq4aHqabehUZn6Ch9kyFpV79TGDTWFmHqUqXdabR7QHqxzrYolF4+tVmJhUG4OURg5dQ==
 
 decode-uri-component@^0.2.0:
   version "0.2.0"
@@ -3268,10 +3268,10 @@ escalade@^3.1.1:
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==
 
-escape-latex@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/escape-latex/-/escape-latex-1.0.3.tgz#1b9085e3e66570faabe21f05655643f64e78717a"
-  integrity sha512-GfKaG/7FOKdIdciylIzgaShBTPjdGQ5LJ2EcKLKXPLpcMO1MvCEVotkhydEShwCINRacZr2r3fk5A1PwZ4e5sA==
+escape-latex@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/escape-latex/-/escape-latex-1.2.0.tgz#07c03818cf7dac250cce517f4fda1b001ef2bca1"
+  integrity sha512-nV5aVWW1K0wEiUIEdZ4erkGGH8mDxGyxSeqPzRNtWP7ataw+/olFObw7hujFWlVjNsaDFw5VZ5NzVSIqRgfTiw==
 
 escape-string-regexp@1.0.5, escape-string-regexp@^1.0.0, escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
@@ -3705,10 +3705,10 @@ frac@~1.1.2:
   resolved "https://registry.yarnpkg.com/frac/-/frac-1.1.2.tgz#3d74f7f6478c88a1b5020306d747dc6313c74d0b"
   integrity sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==
 
-fraction.js@4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.8.tgz#e53618112e3b36b348c61a81323173bceb01e418"
-  integrity sha512-8Jx2AkFIFQtFaF8wP7yUIW+lnCgzPbxsholryMZ+oPK6kKjY/nUrvMKtq1+A8aSAeFau7+G/zfO8aGk2Aw1wCA==
+fraction.js@^4.0.12:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.1.2.tgz#13e420a92422b6cf244dff8690ed89401029fbe8"
+  integrity sha512-o2RiJQ6DZaR/5+Si0qJUIy637QMRudSi9kU/FFzx9EZazrIdnBgpU+3sEWCxAVhH2RtxW2Oz+T4p2o8uOPVcgA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -4825,7 +4825,7 @@ jake@^10.6.1:
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
-javascript-natural-sort@0.7.1:
+javascript-natural-sort@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
   integrity sha1-+eIwPUUH9tdDVac2ZNFED7Wg71k=
@@ -5409,19 +5409,19 @@ material-design-icons-iconfont@4.0.4:
   resolved "https://registry.yarnpkg.com/material-design-icons-iconfont/-/material-design-icons-iconfont-4.0.4.tgz#8f1eb68bd59a42944209907bfd1eb997405bf162"
   integrity sha512-jz4P9uLPrbEbzhEsEKuN+5N1TgBFdc4Dslzx/wc22D7FKT/Aelgs/HP8mB3LGI893NND5Rw6xpvZoiXtukB5zw==
 
-mathjs@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-4.4.2.tgz#79a5c8ad92a6434e22dbfac13e223a9bd62d6981"
-  integrity sha512-T5zGIbDT/JGmzIu2Bocq4U8gbcmQVCyZaJbBCHKmJkLMQoWuh1SOuFH98doj1JEQwjpKkq3rqdUCuy3vLlBZOA==
+mathjs@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-7.5.1.tgz#eb125295310a99ddcaf6145c47b09aab36e48274"
+  integrity sha512-H2q/Dq0qxBLMw+G84SSXmGqo/znihuxviGgAQwAcyeFLwK2HksvSGNx4f3dllZF51bWOnu2op60VZxH2Sb51Pw==
   dependencies:
-    complex.js "2.0.10"
-    decimal.js "9.0.1"
-    escape-latex "1.0.3"
-    fraction.js "4.0.8"
-    javascript-natural-sort "0.7.1"
-    seed-random "2.2.0"
-    tiny-emitter "2.0.2"
-    typed-function "1.0.3"
+    complex.js "^2.0.11"
+    decimal.js "^10.2.1"
+    escape-latex "^1.2.0"
+    fraction.js "^4.0.12"
+    javascript-natural-sort "^0.7.1"
+    seed-random "^2.2.0"
+    tiny-emitter "^2.1.0"
+    typed-function "^2.0.0"
 
 md-color-picker@^0.2.6:
   version "0.2.6"
@@ -6937,7 +6937,7 @@ scope-analyzer@^2.0.1:
     estree-is-function "^1.0.0"
     get-assigned-identifiers "^1.1.0"
 
-seed-random@2.2.0:
+seed-random@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/seed-random/-/seed-random-2.2.0.tgz#2a9b19e250a817099231a5b99a4daf80b7fbed54"
   integrity sha1-KpsZ4lCoFwmSMaW5mk2vgLf77VQ=
@@ -7631,10 +7631,10 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
-tiny-emitter@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.0.2.tgz#82d27468aca5ade8e5fd1e6d22b57dd43ebdfb7c"
-  integrity sha512-2NM0auVBGft5tee/OxP4PI3d8WItkDM+fPnaRAVo6xTDI2knbz9eC5ArWGqtGlYqiH3RU5yMpdyTTO7MguC4ow==
+tiny-emitter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+  integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
 tiny-inflate@^1.0.0, tiny-inflate@^1.0.2:
   version "1.0.3"
@@ -7763,10 +7763,10 @@ type@^2.5.0:
   resolved "https://registry.yarnpkg.com/type/-/type-2.5.0.tgz#0a2e78c2e77907b252abe5f298c1b01c63f0db3d"
   integrity sha512-180WMDQaIMm3+7hGXWf12GtdniDEy7nYcyFMKJn/eZz/6tSLXrUN9V0wKSbMjej0I1WHWbpREDEKHtqPQa9NNw==
 
-typed-function@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-1.0.3.tgz#57026246214b664a5af45ef0a06679f4453bd090"
-  integrity sha512-sVC/1pm70oELDFMdYtFXMFqyawenLoaDiAXA3QvOAwKF/WvFNTSJN23cY2lFNL8iP0kh3T0PPKewrboO8XUVGQ==
+typed-function@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-2.0.0.tgz#15ab3825845138a8b1113bd89e60cd6a435739e8"
+  integrity sha512-Hhy1Iwo/e4AtLZNK10ewVVcP2UEs408DS35ubP825w/YgSBK1KVLwALvvIG4yX75QJrxjCpcWkzkVRB0BwwYlA==
 
 typedarray@^0.0.6:
   version "0.0.6"
