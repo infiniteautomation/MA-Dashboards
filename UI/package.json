@@ -46,7 +46,7 @@
     "simplify-js": "^1.2.3",
     "stacktrace-js": "^2.0.0",
     "tinycolor2": "^1.4.1",
-    "xlsx": "^0.12.13"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@infinite-automation/mango-module-tools": "^2.4.1",
