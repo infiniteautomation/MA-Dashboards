@@ -1,0 +1,107 @@
+<div class="ma-help-doc-container">
+    <h2 ma-tr="ui.dox.eventHandlers.script"></h2>
+    <p>
+        This handler will execute callback functions when an event raised, acknowledged, returns to normal or deactivated (e.g. on shutdown).
+    </p>
+
+    <h3>Script engine</h3>
+    <p>
+        <li>Graal.js (ECMAScript)</li>
+        <li>Groovy Scripting Engine (Groovy)</li>
+        <li>OpenJDK Nashorn (ECMAScript)</li>
+        <li>Oracle Nashorn (ECMAScript)</li>
+    </p>
+
+    <h3>Script Permissions</h3>
+    <p>
+      Script Permissions are used by any Script Utility to access Mango Points, 
+      Publishers,Data Sources and any other items that require permission.  
+    </p>
+    <h3>Script Utilities That Use Permissions</h3>
+    <ul>
+        <li>RuntimeManager</li>
+        <li>DataSourceQuery</li>
+        <li>DataPointQuery</li>
+        <li>JsonEmportScriptUtility</li>
+    </ul>
+
+    <h3>Callback functions</h3>
+    <p>
+        <li>eventRaised (*required)</li>
+        <li>eventInactive (*required)</li>
+        <li>eventAcknowledged (optional)</li>
+    </p>
+
+<h4>ECMAScript example:</h4>
+<ma-ace-editor ng-model="ecma.script" mode="javascript" style="height: 420px;"
+    options="{readOnly: true}"
+    editor-loaded="$editor.setReadOnly(true)">
+/**
+ * Called when the Mango event is raised.
+ */
+function eventRaised(event) {
+    console.log(event)
+}
+
+/**
+ * Called when the Mango event is
+ * acknowledged (the event may still be active).
+ */
+function eventAcknowledged(event) {
+    console.log(event);
+}
+
+/**
+ * Called when the Mango event returns to normal
+ * or is deactivated (e.g. on shutdown).
+ */
+function eventInactive(event) {
+    console.log(event);
+}
+</ma-ace-editor>
+
+<h4>Groovy example:</h4>
+<ma-ace-editor ng-model="groovy.script" mode="groovy" style="height: 420px;"
+    options="{readOnly: true}"
+    editor-loaded="$editor.setReadOnly(true)">
+/**
+ * Called when the Mango event is raised.
+ */
+def eventRaised(event) {
+    println(event)
+}
+
+/**
+ * Called when the Mango event is
+ * acknowledged (the event may still be active).
+ */
+def eventAcknowledged(event) {
+    println(event);
+}
+
+/**
+ * Called when the Mango event returns to normal
+ * or is deactivated (e.g. on shutdown).
+ */
+def eventInactive(event) {
+    println(event);
+}
+</ma-ace-editor>
+
+    <h3 ma-tr="ui.app.mangoJavaScript"></h3>
+    <p>
+        More examples of user created scripts can be found
+        <a href="https://github.com/MangoAutomation/script-examples" target="_blank">here</a>.
+    </p>
+    <p>
+        More information regarding Mango Java script can be found at:
+        <a target="_blank" href="help/scripting-editor/help" ma-tr="ui.app.mangoJavaScript"></a>
+    </p>
+
+    <h3 ma-tr="js.help.related"></h3>
+    <ul>
+        <li>
+            <a ui-sref="ui.help.eventHandlers" ma-tr="ui.dox.eventHandlers"></a>
+        </li>
+    </ul>
+</div>
