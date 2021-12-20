@@ -1257,6 +1257,16 @@ export default [
         }
     },
     {
+        name: 'ui.help.eventHandlers.script',
+        menuTr: 'ui.dox.eventHandlers.script',
+        url: '/script-event-handler',
+        views: {
+            '@ui.help': {
+                templatePromise: helpTemplate('scriptEventHandler.html')
+            }
+        }
+    },
+    {
         name: 'ui.examples',
         url: '/examples',
         menuTr: 'ui.dox.examples',
