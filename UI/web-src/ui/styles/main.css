@@ -189,6 +189,7 @@ md-sidenav.ma-help-sidebar {
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 82; /*one more than side bar*/
 }
 
 .ma-help-sidebar md-content li {
