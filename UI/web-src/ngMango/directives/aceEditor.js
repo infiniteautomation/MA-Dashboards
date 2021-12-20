@@ -43,7 +43,7 @@ function AceEditor(maModuleLoader) {
             const $ctrl = this;
             
             this.ngModelCtrl.$render = function() {
-                $ctrl.setEditorText(this.$viewValue || '');
+                $ctrl.setEditorText(this.$viewValue || $ctrl.initialText || '');
             };
             
             this.aceConfig = Object.assign(this.defaultOptions(), this.options);
