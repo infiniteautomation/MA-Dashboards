@@ -10,7 +10,7 @@ function rqlBuilderFactory() {
     
     const andOrNot = ['and', 'or', 'not'];
     const sortLimit = ['sort', 'limit'];
-    const operators = ['eq', 'ne', 'le', 'ge', 'lt', 'gt', 'in', 'match', 'like', 'contains'];
+    const operators = ['eq', 'ne', 'le', 'ge', 'lt', 'gt', 'in', 'match', 'contains'];
 
     class RqlBuilder {
         constructor(root = new RqlNode(), visitorOptions = {}) {

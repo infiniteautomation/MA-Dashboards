@@ -121,10 +121,6 @@ export class RqlVisitor {
         };
     }
 
-    like(args) {
-        return this.match(args);
-    }
-
     contains(args) {
         const propertyName = args[0];
         const target = args[1];
