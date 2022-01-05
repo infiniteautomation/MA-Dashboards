@@ -101,7 +101,8 @@
                 </div>
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name" ng-click="column.sortable && $ctrl.sortBy(column, $event)" tabindex="1">
                     <span ma-tr="{{column.label}}" ma-tr-args="column.labelArgs"></span>
-                    <md-icon class="ma-sort-icon ma-disable-animate" ng-if="column.sortable && $ctrl.sort[0].columnName === column.name" ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
+                    <md-icon class="ma-sort-icon ma-disable-animate"
+                             ng-if="column.sortable" ng-class="$ctrl.sortClasses(column)">arrow_upward</md-icon>
                 </div>
             </div>
             <div class="ma-virtual-repeat-table-row" ng-if="$ctrl.showFilters" class="ma-filter-header">

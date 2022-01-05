@@ -691,6 +691,20 @@ class TableController {
         }
         return value;
     }
+
+    sortClasses(column) {
+        const index = this.sort.findIndex(s => s.columnName === column.name);
+        if (index >= 0) {
+            const sort = this.sort[index];
+            const indexClass = `ma-sort-order-${index}`;
+            return {
+                'ma-sort-descending': !!sort.descending,
+                [indexClass]: true
+            };
+        }
+        return 'ng-hide';
+    }
+
 }
 
 export default TableController;

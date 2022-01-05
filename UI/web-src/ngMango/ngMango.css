@@ -1345,6 +1345,14 @@ md-input-container.ma-filter > .ma-input-button > md-icon.material-icons {
 	transform: rotate(180deg);
 }
 
+.ma-virtual-repeat-table .ma-virtual-repeat-table-header .ma-sort-icon.ma-sort-order-1 {
+    opacity: 40%;
+}
+
+.ma-virtual-repeat-table .ma-virtual-repeat-table-header .ma-sort-icon.ma-sort-order-2 {
+    opacity: 20%;
+}
+
 .ma-virtual-repeat-table .ma-no-items-to-list {
 	font-style: italic;
 	text-align: center;
