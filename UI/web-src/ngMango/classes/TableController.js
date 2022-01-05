@@ -472,26 +472,25 @@ class TableController {
         // b) descending
         // c) no sort
 
-        const firstSort = this.sort[0];
-        if (firstSort && firstSort.columnName === column.name) {
-            if (!firstSort.descending) {
+        const lastSort = this.sort[this.sort.length - 1];
+        if (lastSort && lastSort.columnName === column.name) {
+            if (!lastSort.descending) {
                 // second click
-                firstSort.descending = true;
+                lastSort.descending = true;
             } else {
                 // third click
-                this.sort.shift();
+                this.sort.pop();
             }
         } else {
             // first click
             this.sort = this.sort.filter(item => item.columnName !== column.name);
-
-            this.sort.unshift({columnName: column.name});
+            this.sort.push({columnName: column.name});
         }
 
         const multiSort = !!event && event.ctrlKey;
         const maxSortColumns = multiSort ? this.maxSortColumns : 1;
         while (this.sort.length > maxSortColumns) {
-            this.sort.pop();
+            this.sort.shift();
         }
 
         this.saveSettings();
