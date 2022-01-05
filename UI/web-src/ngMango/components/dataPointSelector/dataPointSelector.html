@@ -99,7 +99,7 @@
                     </md-menu-bar>
 
                 </div>
-                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name" ng-click="column.sortable && $ctrl.sortBy(column)" tabindex="1">
+                <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name" ng-click="column.sortable && $ctrl.sortBy(column, $event)" tabindex="1">
                     <span ma-tr="{{column.label}}" ma-tr-args="column.labelArgs"></span>
                     <md-icon class="ma-sort-icon ma-disable-animate" ng-if="column.sortable && $ctrl.sort[0].columnName === column.name" ng-class="{'ma-sort-descending': $ctrl.sort[0].descending}">arrow_upward</md-icon>
                 </div>

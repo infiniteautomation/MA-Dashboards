@@ -160,6 +160,7 @@ class TableController {
         this.cacheSize = 10;
         this.pages = new BoundedMap(this.cacheSize);
         this.selectedItems = new Map();
+        this.maxSortColumns = 3;
 
         this.loadSettings();
     }
@@ -467,7 +468,7 @@ class TableController {
         return this.selectAll(startIndex, endIndex, true);
     }
 
-    sortBy(column) {
+    sortBy(column, event) {
         // sort order goes from
         // a) ascending
         // b) descending
@@ -487,9 +488,12 @@ class TableController {
             this.sort = this.sort.filter(item => item.columnName !== column.name);
 
             this.sort.unshift({columnName: column.name});
-            if (this.sort.length > 3) {
-                this.sort.pop();
-            }
+        }
+
+        const multiSort = !!event && event.ctrlKey;
+        const maxSortColumns = multiSort ? this.maxSortColumns : 1;
+        while (this.sort.length > maxSortColumns) {
+            this.sort.pop();
         }
 
         this.saveSettings();
