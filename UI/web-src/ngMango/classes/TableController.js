@@ -68,10 +68,7 @@ class Column {
                 op = 'contains';
             } else if (value && (this.type === 'string' || !this.type)) {
                 op = 'match';
-                const hasWildcard = value.includes('*') || value.includes('?');
-                if (!hasWildcard) {
-                    value = `*${value}*`;
-                }
+                value = this.tableCtrl.customizeMatchFilter(value);
             } else {
                 op = 'eq';
             }
@@ -161,6 +158,7 @@ class TableController {
         this.pages = new BoundedMap(this.cacheSize);
         this.selectedItems = new Map();
         this.maxSortColumns = 3;
+        this.autoWildcard = true;
 
         this.loadSettings();
     }
@@ -682,6 +680,16 @@ class TableController {
 
     createColumn(options) {
         return new Column(options, this.Translate);
+    }
+
+    customizeMatchFilter(value) {
+        if (this.autoWildcard) {
+            const hasWildcard = value.includes('*') || value.includes('?');
+            if (!hasWildcard) {
+                return `*${value}*`;
+            }
+        }
+        return value;
     }
 }
 
