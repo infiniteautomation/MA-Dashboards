@@ -158,7 +158,7 @@ class TableController {
         this.pages = new BoundedMap(this.cacheSize);
         this.selectedItems = new Map();
         this.maxSortColumns = 3;
-        this.autoWildcard = true;
+        this.autoWildcard = false;
 
         this.loadSettings();
     }
