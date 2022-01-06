@@ -432,11 +432,12 @@ class TableController {
         });
     }
 
-    doSelectAll(startIndex, endIndex, deselect) {
+    doSelectAll(startIndex, endIndex, deselect, selected = 0, total = null) {
         const page = this.selectAllPage = this.getPage(startIndex, false);
         page.promise.then(items => {
             items.every((item, i) => {
                 if (endIndex == null || i < endIndex - startIndex) {
+                    selected++;
                     if (deselect) {
                         this.selectedItems.delete(item[this.idProperty]);
                     } else {
@@ -450,21 +451,23 @@ class TableController {
             const hasMore = items.$total > nextPageIndex;
             const wantMore = endIndex == null || endIndex > nextPageIndex;
 
+            if (total == null) total = (endIndex || items.$total) - startIndex;
+
             if (wantMore && hasMore) {
                 this.selectAllProgress = {
-                    key: deselect ? 'ui.app.deselectAllProgress' : 'ui.app.selectAllProgress',
-                    args: [nextPageIndex, items.$total]
+                    key: deselect ? 'ui.app.deselectProgress' : 'ui.app.selectProgress',
+                    args: [selected, total]
                 };
-                this.doSelectAll(nextPageIndex, endIndex, deselect);
+                this.doSelectAll(nextPageIndex, endIndex, deselect, selected, total);
             } else {
-                const trKey = deselect ? 'ui.app.deselectAllComplete' : 'ui.app.selectAllComplete';
-                this.maDialogHelper.toast([trKey, items.$total]);
+                const trKey = deselect ? 'ui.app.deselectComplete' : 'ui.app.selectComplete';
+                this.maDialogHelper.toast([trKey, selected]);
                 this.setViewValue();
             }
         }, error => {
             if (!this.resourceService.wasCancelled(error)) {
                 const message = error.mangoStatusText || (error + '');
-                const trKey = deselect ? 'ui.app.errorSelectingAll' : 'ui.app.errorDeselectingAll';
+                const trKey = deselect ? 'ui.app.errorSelecting' : 'ui.app.errorDeselecting';
                 this.maDialogHelper.errorToast([trKey, message]);
             }
         }).finally(() => {
