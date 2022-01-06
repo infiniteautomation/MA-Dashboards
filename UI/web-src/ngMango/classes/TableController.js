@@ -310,6 +310,7 @@ class TableController {
     }
 
     clearCache(preserveTotal = true) {
+        this.cancelSelectAll();
         this.markCacheAsStale();
 
         const total = this.pages.$total;
