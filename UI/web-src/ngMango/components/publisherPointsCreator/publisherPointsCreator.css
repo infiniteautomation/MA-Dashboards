@@ -30,3 +30,8 @@ md-dialog.ma-publisher-points-creator md-table-container tbody tr.difference {
     border-style: solid;
     border-color: var(--ma-warn-A700);
 }
+
+md-dialog.ma-publisher-points-creator md-table-container table.md-table .ma-checkbox-column {
+    padding: unset !important;
+    width: 24px;
+}

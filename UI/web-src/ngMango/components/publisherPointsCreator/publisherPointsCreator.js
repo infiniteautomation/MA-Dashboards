@@ -248,9 +248,14 @@ class PublisherPointsCreatorController {
         return validationMessages;
     }
 
+    removeSelectedPoints(point) {
+        this.pointsToPublish = this.pointsToPublish.filter((ptp) => ptp.xid !== point.xid);
+        this.points = this.points.filter((p) => p.xid !== point.dataPointXid);
+    }
+
     /**
      * A method to remove non exisitng points in table from points model
-     * @param {*} dpXids xids of points that are still shown in table
+     * @param {*} dpXids array of xids from points that are still shown in table
      */
     editSelectedPoints(dpXids) {
         this.points = this.points.filter((p) => dpXids.includes(p.xid));

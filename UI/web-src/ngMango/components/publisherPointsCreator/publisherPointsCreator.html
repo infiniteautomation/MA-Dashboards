@@ -30,6 +30,7 @@
                     <md-table-container>
                         <table md-table>
                             <thead md-head md-order="myOrder">
+                                <th md-column class="ma-checkbox-column"></th>
                                 <th md-column ng-repeat="column in $ctrl.columns"
                                     md-order-by="{{$ctrl.getOrderBy($index)}}">
                                     <span ma-tr="{{column.label}}"></span>
@@ -45,6 +46,12 @@
                             <tbody md-body ng-if="$ctrl.pointsToPublish.length > 0">
                                 <tr md-row
                                     ng-repeat="item in $ctrl.pointsToPublish | orderBy: myOrder | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
+                                    <td md-cell class="ma-checkbox-column">
+                                        <md-button class="md-icon-button md-primary" aria-label="clear"
+                                            ng-click="$ctrl.removeSelectedPoints(item)">
+                                            <md-icon>clear</md-icon>
+                                        </md-button>
+                                    </td>
                                     <td md-cell ng-repeat="column in $ctrl.columns">
                                         <span ng-show="false">{{column.columnName = column.name + '-'
                                             +$parent.$index}}</span>
