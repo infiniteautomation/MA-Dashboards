@@ -30,6 +30,9 @@ function temporaryRestResourceFactory(RestResource, $q, $timeout) {
             // only update if the new resource version is newer than what we already have
             if (this.resourceVersion == null || item.resourceVersion > this.resourceVersion) {
                 super.itemUpdated(item, responseType, true);
+                // requests array can be massive, if we are updating the item we must have already successfully send the requests
+                // delete the requests array, its no longer needed
+                delete this.requests;
             }
         }
         
@@ -74,10 +77,12 @@ function temporaryRestResourceFactory(RestResource, $q, $timeout) {
                     } else {
                         // cancel and restart the timer every time we get an update
                         startTimeout();
-                        
-                        // notify with a copy as the listener as the subscribe callback uses $applyAsync
-                        // resulting in a batch of messages being processed at once, we might want to see each progress message separately
-                        tmpResourceDeferred.notify(this.copy());
+
+                        // The subscribe-callback (listener) uses $applyAsync which means a batch of messages can be processed at once.
+                        // This means it may process this temporary resource multiple times when it has the exact same content.
+                        // We used to call this.copy() here to prevent this but that can be a relatively expensive operation.
+                        //
+                        tmpResourceDeferred.notify(this);
                     }
                 }
             };
@@ -144,7 +149,7 @@ function temporaryRestResourceFactory(RestResource, $q, $timeout) {
                 return this.save(opts);
             });
         }
-        
+
         cancel(opts = {}) {
             const originalId = this.getOriginalId();
             
