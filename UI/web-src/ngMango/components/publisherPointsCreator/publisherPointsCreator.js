@@ -232,6 +232,9 @@ class PublisherPointsCreatorController {
         const failedXids = validationMessages.map((vm) => vm.xid);
         this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
         this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
+
+        const dpXids = this.pointsToPublish.map((ptp) => ptp.dataPointXid);
+        this.editSelectedPoints(dpXids);
     }
 
     fixValidationMessages(validationMessages, pointsToPublish) {
@@ -243,6 +246,14 @@ class PublisherPointsCreatorController {
             }
         });
         return validationMessages;
+    }
+
+    /**
+     * A method to remove non exisitng points in table from points model
+     * @param {*} dpXids xids of points that are still shown in table
+     */
+    editSelectedPoints(dpXids) {
+        this.points = this.points.filter((p) => dpXids.includes(p.xid));
     }
 
     /**
