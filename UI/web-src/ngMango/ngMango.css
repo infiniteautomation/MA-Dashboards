@@ -1359,6 +1359,12 @@ md-input-container.ma-filter > .ma-input-button > md-icon.material-icons {
 	padding: 16px 0;
 }
 
+.ma-virtual-repeat-table .ma-select-progress {
+    font-style: italic;
+    text-align: center;
+    padding: 4px 0;
+}
+
 .ma-action-buttons {
 	margin-top: 24px;
 }

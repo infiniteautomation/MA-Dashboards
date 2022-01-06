@@ -208,6 +208,7 @@ class TableController {
     $onDestroy() {
         this.deregister();
         this.$interval.cancel(this.intervalPromise);
+        this.cancelSelectAll();
     }
 
     $onChanges(changes) {
@@ -306,16 +307,7 @@ class TableController {
 
     markCacheAsStale() {
         for (let page of this.pages.values()) {
-            if (typeof page.cancel === 'function') {
-                page.cancel();
-            }
-
-            // resource service can extend RestResource or $resource
-            // cancelRequest is only available on our extended $resource
-            if (typeof this.resourceService.cancelRequest === 'function' && page.queryPromise) {
-                this.resourceService.cancelRequest(page.queryPromise);
-            }
-
+            page.cancel();
             page.stale = true;
         }
     }
@@ -378,10 +370,8 @@ class TableController {
 
         // reuse the existing page, preserving its items array for the meantime
         const page = pages.get(startIndex) || {startIndex};
-        if (page.items && !page.stale) {
-            return this.$q.resolve(page.items);
-        } else if (page.promise) {
-            return page.promise;
+        if (page.promise && !page.stale) {
+            return page;
         }
         pages.set(startIndex, page, evictCache);
 
@@ -389,12 +379,21 @@ class TableController {
         queryBuilder.limit(this.pageSize, startIndex);
 
         const cancel = this.$q.defer();
-        page.cancel = cancel.resolve;
-        page.queryPromise = this.doQuery(queryBuilder, {
-            cancel: cancel.promise
+        const queryPromise = this.doQuery(queryBuilder, {
+            'cancel': cancel.promise
         });
 
-        page.promise = page.queryPromise.then(result => {
+        page.cancel = () => {
+            cancel.resolve();
+            // resource service can extend RestResource or $resource
+            // cancelRequest is only available on our extended $resource
+            if (typeof this.resourceService.cancelRequest === 'function') {
+                this.resourceService.cancelRequest(queryPromise);
+            }
+            pages.delete(startIndex);
+        }
+
+        page.promise = queryPromise.then(result => {
             pages.$total = result.$total;
             delete page.stale;
             page.items = result;
@@ -405,7 +404,7 @@ class TableController {
             if (this.resourceService.wasCancelled(error)) {
                 // request cancelled, ignore error
                 pages.delete(startIndex);
-                return;
+                return this.$q.reject(error);
             }
 
             const message = error.mangoStatusText || (error + '');
@@ -417,16 +416,13 @@ class TableController {
             }, 60 * 1000);
 
             return this.$q.reject(error);
-        }).finally(() => {
-            delete page.queryPromise;
-            delete page.promise;
         });
 
-        return page.promise;
+        return page;
     }
 
     getItems(startIndex = 0) {
-        const itemsPromise = this.itemsPromise = this.getPage(startIndex);
+        const itemsPromise = this.itemsPromise = this.getPage(startIndex).promise;
 
         this.itemsPromise.finally(() => {
             // check we are deleting our own promise, not one for a new query
@@ -436,9 +432,9 @@ class TableController {
         });
     }
 
-    selectAll(startIndex = 0, endIndex = undefined, deselect = false) {
-        this.getPage(startIndex, false).then(items => {
-
+    doSelectAll(startIndex, endIndex, deselect) {
+        const page = this.selectAllPage = this.getPage(startIndex, false);
+        page.promise.then(items => {
             items.every((item, i) => {
                 if (endIndex == null || i < endIndex - startIndex) {
                     if (deselect) {
@@ -455,15 +451,46 @@ class TableController {
             const wantMore = endIndex == null || endIndex > nextPageIndex;
 
             if (wantMore && hasMore) {
-                this.selectAll(nextPageIndex, endIndex, deselect);
+                this.selectAllProgress = {
+                    key: deselect ? 'ui.app.deselectAllProgress' : 'ui.app.selectAllProgress',
+                    args: [nextPageIndex, items.$total]
+                };
+                this.doSelectAll(nextPageIndex, endIndex, deselect);
             } else {
+                const trKey = deselect ? 'ui.app.deselectAllComplete' : 'ui.app.selectAllComplete';
+                this.maDialogHelper.toast([trKey, items.$total]);
                 this.setViewValue();
+            }
+        }, error => {
+            if (!this.resourceService.wasCancelled(error)) {
+                const message = error.mangoStatusText || (error + '');
+                const trKey = deselect ? 'ui.app.errorSelectingAll' : 'ui.app.errorDeselectingAll';
+                this.maDialogHelper.errorToast([trKey, message]);
+            }
+        }).finally(() => {
+            if (this.selectAllPage === page) {
+                delete this.selectAllPage;
             }
         });
     }
 
+    selectAll(startIndex = 0, endIndex = undefined, deselect = false) {
+        this.cancelSelectAll();
+        delete this.selectAllProgress;
+        this.doSelectAll(startIndex, endIndex, deselect);
+    }
+
     deselectAll(startIndex = 0, endIndex = undefined) {
-        return this.selectAll(startIndex, endIndex, true);
+        this.cancelSelectAll();
+        delete this.selectAllProgress;
+        this.doSelectAll(startIndex, endIndex, true);
+    }
+
+    cancelSelectAll() {
+        if (this.selectAllPage != null) {
+            this.selectAllPage.cancel();
+            delete this.selectAllPage;
+        }
     }
 
     sortBy(column, event) {
