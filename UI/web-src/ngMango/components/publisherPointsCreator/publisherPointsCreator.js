@@ -264,6 +264,14 @@ class PublisherPointsCreatorController {
     }
 
     /**
+     * A method to remove non exisitng points in table from points model
+     * @param {*} dpXids xids of points that are still shown in table
+     */
+    editSelectedPoints(dpXids) {
+        this.points = this.points.filter((p) => dpXids.includes(p.xid));
+    }
+
+    /**
      * Retrieves the DataPoint from the published point
      * Note: used from Publisher modules, do not remove.
      *
