@@ -46,7 +46,8 @@
                                 <tr md-row
                                     ng-repeat="item in $ctrl.pointsToPublish | orderBy: myOrder | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
                                     <td md-cell ng-repeat="column in $ctrl.columns">
-                                        <span ng-show="false">{{column.colName = $parent.$index}}</span>
+                                        <span ng-show="false">{{column.columnName = column.name + '-'
+                                            +$parent.$index}}</span>
 
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && !column.editable">
                                             <span ng-class="{'ma-empty-null': item[column.name] == null}"
