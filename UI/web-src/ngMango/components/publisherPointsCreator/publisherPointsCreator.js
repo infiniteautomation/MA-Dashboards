@@ -19,13 +19,14 @@ class PublisherPointsCreatorController {
     }
 
     static get $inject() {
-        return ['maUtil', 'maPublisherPoints', 'maDialogHelper'];
+        return ['maUtil', 'maPublisherPoints', 'maDialogHelper', '$scope'];
     }
 
-    constructor(maUtil, maPublisherPoints, maDialogHelper) {
+    constructor(maUtil, maPublisherPoints, maDialogHelper, $scope) {
         this.maUtil = maUtil;
         this.PublisherPoints = maPublisherPoints;
         this.DialogHelper = maDialogHelper;
+        this.$scope = $scope;
 
         this.tableOptions = {
             limit: 5,
