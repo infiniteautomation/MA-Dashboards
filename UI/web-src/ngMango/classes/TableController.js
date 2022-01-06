@@ -672,6 +672,12 @@ class TableController {
         this.selectRow($event, $item, $index);
     }
 
+    rowMousedown({$event, $item, $index}) {
+        if (this.selectMultiple && $event.shiftKey) {
+            $event.preventDefault();
+        }
+    }
+
     selectRow(event, item, index) {
         const itemId = item[this.idProperty];
         const deselect = this.selectedItems.has(itemId);

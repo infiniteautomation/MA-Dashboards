@@ -123,7 +123,8 @@
         <div class="ma-virtual-repeat-table-body" md-virtual-repeat-container>
             <div class="ma-virtual-repeat-table-row ma-item-row" md-virtual-repeat="item in $ctrl" md-on-demand
                     ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.xid)}"
-                    ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
+                    ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})"
+                    ng-mousedown="$ctrl.rowMousedown({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
                 <div class="ma-checkbox-column">
                     <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1" ng-checked="$ctrl.selectedItems.has(item.xid)" md-no-ink="true"></md-checkbox>
                 </div>
