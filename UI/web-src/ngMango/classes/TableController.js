@@ -7,13 +7,11 @@ import moment from 'moment-timezone';
 
 class Column {
 
-    constructor(options, Translate) {
+    constructor(options) {
         Object.assign(this, options);
-
         this.property = this.name.split('.');
         this.filterable = options.hasOwnProperty('filterable') ? !!options.filterable : true;
         this.sortable = options.hasOwnProperty('sortable') ? !!options.sortable : true;
-        this.Translate = Translate;
     }
 
     parseBoolean(value) {
@@ -292,8 +290,7 @@ class TableController {
                     order: i,
                     filter: filters[column.name] || null,
                     dateFormat: this.dateFormat,
-                    maDateFormat: this.maDateFormat,
-                    tableCtrl: this
+                    maDateFormat: this.maDateFormat
                 }, column));
             });
         });
@@ -714,7 +711,10 @@ class TableController {
     }
 
     createColumn(options) {
-        return new Column(options, this.Translate);
+        return new Column(Object.assign({
+            Translate: this.Translate,
+            tableCtrl: this
+        }, options), this.Translate);
     }
 
     customizeMatchFilter(value) {
