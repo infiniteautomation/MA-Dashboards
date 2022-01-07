@@ -37,6 +37,8 @@ class PublisherPointsCreatorController {
         this.showDialog = false;
 
         this.clearDialog();
+
+        this.onPaginateBound = (...args) => this.onPaginate(...args);
     }
 
     $onChanges(changes) {
@@ -232,6 +234,9 @@ class PublisherPointsCreatorController {
         const failedXids = validationMessages.map((vm) => vm.xid);
         this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
         this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
+
+        const dpXids = this.pointsToPublish.map((ptp) => ptp.dataPointXid);
+        this.editSelectedPoints(dpXids);
     }
 
     fixValidationMessages(validationMessages, pointsToPublish) {
@@ -245,6 +250,19 @@ class PublisherPointsCreatorController {
         return validationMessages;
     }
 
+    removeSelectedPoints(point) {
+        this.pointsToPublish = this.pointsToPublish.filter((ptp) => ptp.xid !== point.xid);
+        this.points = this.points.filter((p) => p.xid !== point.dataPointXid);
+    }
+
+    /**
+     * A method to remove non exisitng points in table from points model
+     * @param {*} dpXids array of xids from points that are still shown in table
+     */
+    editSelectedPoints(dpXids) {
+        this.points = this.points.filter((p) => dpXids.includes(p.xid));
+    }
+
     /**
      * Retrieves the DataPoint from the published point
      * Note: used from Publisher modules, do not remove.
@@ -254,6 +272,25 @@ class PublisherPointsCreatorController {
      */
     getPoint(publisherPoint) {
         return this.points.find((p) => p.xid === publisherPoint.dataPointXid);
+    }
+
+    buildColumnName(column, parentIndex) {
+        const { limit, page } = this.tableOptions;
+        const pageMultiplier = (page - 1) * limit;
+        const name = `${column.name}-${parentIndex + pageMultiplier}`;
+        return name;
+    }
+
+    /**
+     * Callback Method from onPaginateBound, this method resets validation messages in order
+     * to show them in a newer page
+     * @param {*} page tables current page
+     * @param {*} limit tables current limit
+     */
+    onPaginate(page, limit) {
+        const validationMessages = angular.copy(this.validationMessages);
+        delete this.validationMessages;
+        this.validationMessages = validationMessages;
     }
 }
 

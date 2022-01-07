@@ -57,12 +57,7 @@ class PublisherPointsTabController {
             editorTemplateUrl: props.editorTemplateUrl,
             class: `ma-publisher-point-${props.name}`,
             sortable: false,
-            filterable: false,
-            set colName(v) {
-                if (!this.columnName) {
-                    this.columnName = `${this.name}-${v}`;
-                }
-            }
+            filterable: false
         }));
 
         this.customColumns = [...defaultColumns, ...builtColumns];
