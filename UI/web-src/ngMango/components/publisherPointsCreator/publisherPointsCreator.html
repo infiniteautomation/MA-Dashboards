@@ -55,7 +55,6 @@
                                     <td md-cell ng-repeat="column in $ctrl.columns">
                                         <span ng-show="false">{{column.columnName = $ctrl.buildColumnName(column,
                                             $parent.$index)}}</span>
-                                        <pre>{{ column.columnName }}</pre>
 
                                         <md-input-container flex ng-if="!column.editorTemplateUrl && !column.editable">
                                             <span ng-class="{'ma-empty-null': item[column.name] == null}"

@@ -234,7 +234,6 @@ class PublisherPointsCreatorController {
         const failedXids = validationMessages.map((vm) => vm.xid);
         this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
         this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
-        console.log('validationMessages', this.validationMessages);
 
         const dpXids = this.pointsToPublish.map((ptp) => ptp.dataPointXid);
         this.editSelectedPoints(dpXids);
