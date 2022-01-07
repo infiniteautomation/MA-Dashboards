@@ -169,13 +169,14 @@
             </md-tab-body>
         </md-tab>
 
-        <md-tab md-on-select="$ctrl.hideActionButtons = false" md-on-deselect="$ctrl.hideActionButtons = true">
+        <md-tab md-on-select="$ctrl.hideActionButtons = false;$ctrl.tabTriggered(true)"
+            md-on-deselect="$ctrl.hideActionButtons = true;$ctrl.tabTriggered()">
             <md-tab-label>
                 <span ma-tr="publisherEdit.points"></span>
             </md-tab-label>
             <md-tab-body>
                 <div class="md-padding">
-                    <ma-publisher-points-tab publisher="$ctrl.publisher" publisher-type="$ctrl.publisherType">
+                    <ma-publisher-points-tab publisher="$ctrl.publisher" tab-triggered="$ctrl.refreshTable">
                     </ma-publisher-points-tab>
                 </div>
             </md-tab-body>
