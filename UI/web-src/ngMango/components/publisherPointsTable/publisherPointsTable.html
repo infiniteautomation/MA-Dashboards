@@ -69,7 +69,7 @@
                                         <md-menu-content width="3" class="ma-data-point-selector ma-checkbox-menu"
                                             md-colors="::{background: 'background-hue-2'}">
                                             <md-menu-item
-                                                ng-repeat="column in $ctrl.nonTagColumns track by column.name">
+                                                ng-repeat="column in $ctrl.columns track by column.name">
                                                 <md-button ng-init="model = $ctrl.getSelectedColumnsModel(column)"
                                                     ng-click="model.value = !model.value; $ctrl.selectedColumnsChanged()"
                                                     md-prevent-menu-close
@@ -133,7 +133,7 @@
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name"
                     class="{{column.class}}">
-                    <span ng-if="column.name !== 'enabled' && column.name !== 'dataPointXid'"
+                    <span ng-if="column.name !== 'dataPointXid'"
                         ng-class="{'ma-empty-null': $ctrl.getCellValue(item, column) == null}"
                         ng-bind="$ctrl.getCellValue(item, column) | maDisplayNull"></span>
 
@@ -145,9 +145,4 @@
             </div>
         </div>
     </div>
-</div>
-<div layout="column" ng-if="$ctrl.dropDownCtrl.fullscreen && $ctrl.selectMultiple">
-    <md-button ng-click="$ctrl.dropDownCtrl.close()">
-        <span ma-tr="common.ok"></span>
-    </md-button>
 </div>

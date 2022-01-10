@@ -6,17 +6,12 @@ import angular from 'angular';
 import template from './publisherPointsTab.html';
 import './publisherPointsTab.css';
 
-const DEFAULT_COLUMNS = [
-    { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
-    { name: 'dataPointXid', label: 'ui.components.dataPointXid', selectedByDefault: true },
-    { name: 'name', label: 'common.name', selectedByDefault: true, editable: true }
-];
-
 const VALIDATION_MESSAGE_PROPERTY_MAP = {
     purgeType: 'purgePeriod.type',
     purgePeriod: 'purgePeriod.periods',
     name: 'common.name'
 };
+
 class PublisherPointsTabController {
     static get $$ngIsClass() {
         return true;
@@ -31,66 +26,7 @@ class PublisherPointsTabController {
         this.PublisherPoints = maPublisherPoints;
         this.DialogHelper = maDialogHelper;
 
-        this.publisherTypesByName = maPublisher.typesByName;
-
         this.pointsToRemove = [];
-    }
-
-    $onChanges(changes) {
-        if (changes.publisher && changes.publisher.currentValue) {
-            const publisherDidNotChange = angular.equals(changes.publisher.currentValue, changes.publisher.previousValue);
-            this.publisherType = this.publisherTypesByName[this.publisher.modelType];
-            this.buildColumns(this.publisherType, publisherDidNotChange);
-        }
-        if (changes.tabTriggered && changes.tabTriggered.currentValue) {
-            if (this.customColumns.length > 0) {
-                this.refreshTable = {};
-            } else {
-                this.buildColumns(this.publisherType);
-            }
-        }
-    }
-
-    buildColumns(publisherType, publisherDidNotChange = false) {
-        const defaultColumns = DEFAULT_COLUMNS.map((col) => ({
-            ...col,
-            set colName(v) {
-                if (!this.columnName) {
-                    this.columnName = `${this.name}-${v}`;
-                }
-            }
-        }));
-
-        const builtColumns = (publisherType.pointProperties || []).map((props) => ({
-            ...props,
-            label: props.translationKey,
-            selectedByDefault: true,
-            editable: true,
-            editorTemplateUrl: props.editorTemplateUrl,
-            class: `ma-publisher-point-${props.name}`,
-            sortable: false,
-            filterable: false
-        }));
-
-        this.customColumns = [...defaultColumns, ...builtColumns];
-
-        // If publisher is new do not requery points table
-        if (this.publisher && !this.publisher.isNew() && !publisherDidNotChange) {
-            this.refreshTable = {};
-        }
-    }
-
-    // TODO: Cancel query if pub xid is null
-    customizeQuery(queryBuilder) {
-        if (this.publisher) {
-            queryBuilder.eq('publisherXid', this.publisher.xid);
-        }
-    }
-
-    getPageInfo($pages, $page, $total) {
-        this.pages = $pages.size;
-        this.page = $page;
-        this.total = $total;
     }
 
     removePoints() {
@@ -236,7 +172,6 @@ export default {
     template,
     controller: PublisherPointsTabController,
     bindings: {
-        publisher: '<',
-        tabTriggered: '<'
+        publisher: '<'
     }
 };

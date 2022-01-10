@@ -11,10 +11,7 @@
     <span ma-tr="ui.publisher.pageXofX" ma-tr-args="[$ctrl.total]"></span>
 </div>
 
-<ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
-    custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
-    pagination-info="$ctrl.getPageInfo($pages,$page, $total)" refresh-table="$ctrl.refreshTable">
-</ma-publisher-points-table>
+<ma-publisher-points-table publisher="$ctrl.publisher" ng-model="$ctrl.pointsToRemove"></ma-publisher-points-table>
 
 <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
     <div layout layout-align="center">
@@ -32,6 +29,4 @@
     </md-button>
 </div>
 
-<ma-publisher-points-creator publisher="$ctrl.publisher" publisher-type="$ctrl.publisherType"
-    trigger-dialog="$ctrl.showDialog" columns="$ctrl.customColumns" refresh-table="$ctrl.refreshTable = {}">
-</ma-publisher-points-creator>
+<ma-publisher-points-creator publisher="$ctrl.publisher" trigger-dialog="$ctrl.showDialog"></ma-publisher-points-creator>
