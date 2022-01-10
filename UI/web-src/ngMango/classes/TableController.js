@@ -715,7 +715,7 @@ class TableController {
         return new Column(Object.assign({
             Translate: this.Translate,
             tableCtrl: this
-        }, options), this.Translate);
+        }, options));
     }
 
     customizeMatchFilter(value) {
