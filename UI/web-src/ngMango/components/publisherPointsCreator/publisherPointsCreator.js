@@ -244,20 +244,32 @@ class PublisherPointsCreatorController {
             const pointToPublishIndex = pointsToPublish.findIndex((ptp) => ptp.xid === vm.xid);
             const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property] || vm.property;
             if (newKey) {
-                vm.property = `${newKey}-${pointToPublishIndex}`;
+                const [property] = newKey.split('-');
+                vm.property = `${property}-${pointToPublishIndex}`;
             }
         });
         return validationMessages;
     }
 
     removeSelectedPoints(point) {
+        const validationMessages = this.validationMessages.filter((vm) => vm.xid !== point.xid);
+        delete this.validationMessages;
         this.pointsToPublish = this.pointsToPublish.filter((ptp) => ptp.xid !== point.xid);
         this.points = this.points.filter((p) => p.xid !== point.dataPointXid);
+        this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
     }
 
     /**
      * A method to remove non exisitng points in table from points model
      * @param {*} dpXids array of xids from points that are still shown in table
+     */
+    editSelectedPoints(dpXids) {
+        this.points = this.points.filter((p) => dpXids.includes(p.xid));
+    }
+
+    /**
+     * A method to remove non exisitng points in table from points model
+     * @param {*} dpXids xids of points that are still shown in table
      */
     editSelectedPoints(dpXids) {
         this.points = this.points.filter((p) => dpXids.includes(p.xid));
