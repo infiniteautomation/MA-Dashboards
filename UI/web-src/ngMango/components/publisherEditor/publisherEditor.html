@@ -169,7 +169,7 @@
             </md-tab-body>
         </md-tab>
 
-        <md-tab md-on-select="$ctrl.hideActionButtons = false;$ctrl.tabTriggered(true)"
+        <md-tab ng-if="!$ctrl.publisher.isNew()" md-on-select="$ctrl.hideActionButtons = false;$ctrl.tabTriggered(true)"
             md-on-deselect="$ctrl.hideActionButtons = true;$ctrl.tabTriggered()">
             <md-tab-label>
                 <span ma-tr="publisherEdit.points"></span>
