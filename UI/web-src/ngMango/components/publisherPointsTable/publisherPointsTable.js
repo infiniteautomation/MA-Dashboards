@@ -9,8 +9,8 @@ import './publisherPointsTable.css';
 const DEFAULT_COLUMNS = [
     { name: 'xid', label: 'ui.app.xidShort', selectedByDefault: true },
     { name: 'dataPointXid', label: 'ui.components.dataPointXid', selectedByDefault: true },
-    { name: 'name', label: 'common.name', selectedByDefault: true, editable: true },
-    { name: 'enabled', label: 'common.enabled', selectedByDefault: true }
+    { name: 'name', label: 'common.name', selectedByDefault: true, editable: true }
+    // { name: 'enabled', label: 'common.enabled', selectedByDefault: true }
 ];
 
 class PublisherPointsTableController extends TableController {

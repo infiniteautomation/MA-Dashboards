@@ -6,30 +6,37 @@ import angular from 'angular';
 import template from './publisherPointsCreator.html';
 import './publisherPointsCreator.css';
 
+const DEFAULT_COLUMNS = [
+    { name: 'xid', translationKey: 'ui.app.xidShort' },
+    { name: 'dataPointXid', translationKey: 'ui.components.dataPointXid' },
+    { name: 'name', translationKey: 'common.name', editable: true, required: true }
+    // { name: 'enabled', translationKey: 'common.enabled', editable: true }
+];
+
 const VALIDATION_MESSAGE_PROPERTY_MAP = {
     // Mapped to xid so It can pick up the full table length
     dataPointId: 'dataPointXid',
     id: 'xid'
 };
 
-// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 class PublisherPointsCreatorController {
     static get $$ngIsClass() {
         return true;
     }
 
     static get $inject() {
-        return ['maUtil', 'maPublisherPoints', 'maDialogHelper', '$scope'];
+        return ['maUtil', 'maPublisherPoints', 'maDialogHelper', '$scope', 'maPublisher'];
     }
 
-    constructor(maUtil, maPublisherPoints, maDialogHelper, $scope) {
+    constructor(maUtil, maPublisherPoints, maDialogHelper, $scope, maPublisher) {
         this.maUtil = maUtil;
         this.PublisherPoints = maPublisherPoints;
         this.DialogHelper = maDialogHelper;
         this.$scope = $scope;
+        this.maPublisher = maPublisher;
 
         this.tableOptions = {
-            limit: 5,
+            limit: 10,
             page: 1,
             total: 0
         };
@@ -44,6 +51,9 @@ class PublisherPointsCreatorController {
     $onChanges(changes) {
         if (changes.triggerDialog && changes.triggerDialog.currentValue) {
             this.showDialog = true;
+        }
+        if (changes.publisher) {
+            this.createColumns();
         }
     }
 
@@ -125,18 +135,11 @@ class PublisherPointsCreatorController {
         // TODO: Wire up clean up with errors or not on save
         return this.bulkTask
             .start(this.$scope)
-            .then(
-                (resource) => {
-                    this.saveMultipleComplete(resource, this.pointsToPublish);
-                },
-                (error) => {
-                    this.notifyBulkEditError(error);
-                },
-                (resource) => {
-                    // progress
-                }
-            )
-            .finally(() => {
+            .then((resource) => {
+                this.saveMultipleComplete(resource, this.pointsToPublish);
+            }, (error) => {
+                this.notifyBulkEditError(error);
+            }).finally(() => {
                 delete this.bulkTask;
             });
     }
@@ -155,7 +158,7 @@ class PublisherPointsCreatorController {
         if (hasError) {
             const validationMessages = [];
 
-            responses.forEach((response, i) => {
+            responses.forEach((response) => {
                 const message = response.error && response.error.localizedMessage;
                 if (message && !this.errorMessages.includes(message)) {
                     this.errorMessages.push(message);
@@ -207,7 +210,6 @@ class PublisherPointsCreatorController {
                 if (!numErrors) {
                     toastOptions.textTr = ['ui.app.bulkEditSuccess', resource.position];
                     delete toastOptions.classes;
-                    this.refreshTable();
                     this.dialogCancelled();
                     this.errorMessages = [];
                     this.validationMessages = [];
@@ -268,14 +270,6 @@ class PublisherPointsCreatorController {
     }
 
     /**
-     * A method to remove non exisitng points in table from points model
-     * @param {*} dpXids xids of points that are still shown in table
-     */
-    editSelectedPoints(dpXids) {
-        this.points = this.points.filter((p) => dpXids.includes(p.xid));
-    }
-
-    /**
      * Retrieves the DataPoint from the published point
      * Note: used from Publisher modules, do not remove.
      *
@@ -289,8 +283,7 @@ class PublisherPointsCreatorController {
     buildColumnName(column, parentIndex) {
         const { limit, page } = this.tableOptions;
         const pageMultiplier = (page - 1) * limit;
-        const name = `${column.name}-${parentIndex + pageMultiplier}`;
-        return name;
+        return `${column.name}-${parentIndex + pageMultiplier}`;
     }
 
     /**
@@ -304,17 +297,26 @@ class PublisherPointsCreatorController {
         delete this.validationMessages;
         this.validationMessages = validationMessages;
     }
+
+    createColumns() {
+        const publisherTypesByName = this.maPublisher.typesByName;
+        // $ctrl.publisherType is used by the pointProperties templates
+        this.publisherType = this.publisher ? publisherTypesByName[this.publisher.modelType] : null;
+
+        this.columns = DEFAULT_COLUMNS.slice();
+        if (this.publisherType && this.publisherType.pointProperties) {
+            for (let property of this.publisherType.pointProperties) {
+                this.columns.push(property);
+            }
+        }
+    }
 }
 
-// NOTE: Do NOT delete publisherType binding as it's requiered by included components
 export default {
     template,
     controller: PublisherPointsCreatorController,
     bindings: {
         publisher: '<',
-        publisherType: '<',
-        triggerDialog: '<',
-        columns: '<',
-        refreshTable: '&'
+        triggerDialog: '<'
     }
 };
