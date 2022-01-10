@@ -622,6 +622,7 @@ class TableController {
                 this.setViewValue();
             }
             this.markCacheAsStale();
+            this.getItems();
         });
     }
 
