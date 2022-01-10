@@ -36,7 +36,7 @@ class PublisherPointsTableController extends TableController {
         if ((changes.localStorageKey && changes.localStorageKey.currentValue) || (changes.defaultSort && changes.defaultSort.currentValue)) {
             this.loadSettings();
         }
-        if (this.selectedColumns && changes.refreshTable && changes.refreshTable.currentValue) {
+        if (changes.refreshTable && changes.refreshTable.currentValue) {
             if (this.selectedColumns) {
                 this.reloadTable();
             }
@@ -122,7 +122,6 @@ export default {
         exposedDoQuery: '&?doQuery',
         exposePaginationInfo: '&paginationInfo',
         customRowFilter: '&?rowFilter',
-        publisherContainer: '<publisher',
         modifiedPoint: '&'
     }
 };

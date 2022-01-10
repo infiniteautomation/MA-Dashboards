@@ -94,11 +94,6 @@ class PublisherEditorController {
             this.publisherType = null;
         }
 
-        // If publisher is new do not requery points table
-        if (this.publisher && this.publisher.isNew()) {
-            this.refreshTable = {};
-        }
-
         if (this.publisher && this.publisher.isNew()) {
             this.activeTab = 0;
         }
@@ -183,6 +178,14 @@ class PublisherEditorController {
     typeChanged() {
         this.publisher = this.publisher.changeType();
         this.publisherType = this.publisherTypesByName[this.publisher.modelType];
+    }
+
+    tabTriggered(refresh = false) {
+        if (refresh) {
+            this.refreshTable = {};
+        } else {
+            delete this.refreshTable;
+        }
     }
 }
 

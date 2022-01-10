@@ -23,23 +23,35 @@ class PublisherPointsTabController {
     }
 
     static get $inject() {
-        return ['maPublisherPoints', 'maDialogHelper'];
+        return ['maPublisher', 'maPublisherPoints', 'maDialogHelper'];
     }
 
-    constructor(maPublisherPoints, maDialogHelper) {
+    constructor(maPublisher, maPublisherPoints, maDialogHelper) {
+        this.maPublisher = maPublisher;
         this.PublisherPoints = maPublisherPoints;
         this.DialogHelper = maDialogHelper;
+
+        this.publisherTypesByName = maPublisher.typesByName;
 
         this.pointsToRemove = [];
     }
 
     $onChanges(changes) {
-        if (changes.publisherType && changes.publisherType.currentValue) {
-            this.buildColumns(this.publisherType);
+        if (changes.publisher && changes.publisher.currentValue) {
+            const publisherDidNotChange = angular.equals(changes.publisher.currentValue, changes.publisher.previousValue);
+            this.publisherType = this.publisherTypesByName[this.publisher.modelType];
+            this.buildColumns(this.publisherType, publisherDidNotChange);
+        }
+        if (changes.tabTriggered && changes.tabTriggered.currentValue) {
+            if (this.customColumns.length > 0) {
+                this.refreshTable = {};
+            } else {
+                this.buildColumns(this.publisherType);
+            }
         }
     }
 
-    buildColumns(publisherType) {
+    buildColumns(publisherType, publisherDidNotChange = false) {
         const defaultColumns = DEFAULT_COLUMNS.map((col) => ({
             ...col,
             set colName(v) {
@@ -61,7 +73,11 @@ class PublisherPointsTabController {
         }));
 
         this.customColumns = [...defaultColumns, ...builtColumns];
-        this.refreshTable = {};
+
+        // If publisher is new do not requery points table
+        if (this.publisher && !this.publisher.isNew() && !publisherDidNotChange) {
+            this.refreshTable = {};
+        }
     }
 
     // TODO: Cancel query if pub xid is null
@@ -221,6 +237,6 @@ export default {
     controller: PublisherPointsTabController,
     bindings: {
         publisher: '<',
-        publisherType: '<'
+        tabTriggered: '<'
     }
 };

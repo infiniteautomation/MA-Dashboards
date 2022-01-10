@@ -13,8 +13,7 @@
 
 <ma-publisher-points-table ng-model="$ctrl.pointsToRemove" resource-service="$ctrl.PublisherPoints"
     custom-columns="$ctrl.customColumns" customize-query="$ctrl.customizeQuery($queryBuilder)"
-    pagination-info="$ctrl.getPageInfo($pages,$page, $total)" refresh-table="$ctrl.refreshTable"
-    publisher="$ctrl.publisherInfo">
+    pagination-info="$ctrl.getPageInfo($pages,$page, $total)" refresh-table="$ctrl.refreshTable">
 </ma-publisher-points-table>
 
 <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
