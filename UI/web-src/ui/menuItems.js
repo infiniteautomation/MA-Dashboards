@@ -1685,6 +1685,12 @@ export default [
         templatePromise: helpTemplate('eventDetectors.html')
     },
     {
+        name: 'ui.help.dataPointSelector',
+        menuTr: 'ui.dox.dataPointSelector',
+        url: '/data-point-selector',
+        templatePromise: helpTemplate('dataPointSelector.html')
+    },
+    {
         name: 'ui.help.eventDetectors.rateOfChange',
         menuTr: 'dox.eventDetectors.rateOfChange',
         url: '/rate-of-change',

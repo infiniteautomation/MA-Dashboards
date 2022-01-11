@@ -57,3 +57,7 @@ md-menu-content.md-menu-bar-menu.md-dense.ma-data-point-selector {
 md-menu-content.md-menu-bar-menu.ma-data-point-selector.ma-checkbox-menu md-checkbox {
 	margin: 0;
 }
+
+md-menu-content.md-menu-bar-menu.md-dense.ma-data-point-selector md-menu-item > a.md-button{
+    padding-top: 0px;
+}

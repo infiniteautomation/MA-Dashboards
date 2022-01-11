@@ -6,6 +6,7 @@
 * Fix event detectors not removed from the list via websocket
 * Update AngularJS to v1.8.2
 * Update yarn/npm dependencies to latest compatible versions
+* Added help button to data point selector
 
 *Version 4.2.1*
 * Fix where pagination would not get triggered in watchlist builder selected points table
