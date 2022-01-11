@@ -2,7 +2,6 @@
  * Copyright (C) 2021 Radix IoT LLC. All rights reserved.
  */
 
-import angular from 'angular';
 import template from './publisherPointsCreator.html';
 import './publisherPointsCreator.css';
 
@@ -42,10 +41,13 @@ class PublisherPointsCreatorController {
         };
 
         this.showDialog = false;
+        this.errorMap = new WeakMap();
+        this.validationMessages = [];
 
         this.clearDialog();
 
-        this.onPaginateBound = (...args) => this.onPaginate(...args);
+        // shallow copy validationMessages to notify ma-validation-messages directive
+        this.onPaginateBound = () => this.validationMessages = this.validationMessages.slice();
     }
 
     $onChanges(changes) {
@@ -72,7 +74,6 @@ class PublisherPointsCreatorController {
     clearDialog() {
         this.points = [];
         this.pointsToPublish = [];
-        this.errorMessages = [];
         this.validationMessages = [];
         if (this.form) {
             this.form.$setUntouched();
@@ -94,7 +95,7 @@ class PublisherPointsCreatorController {
 
         if (Array.isArray(this.points)) {
             // map of XID to existing publisher points
-            const xidToPublisherPoint = this.maUtil.createMapObject([...this.pointsToPublish.values()], 'dataPointXid');
+            const xidToPublisherPoint = this.maUtil.createMapObject(this.pointsToPublish.values(), 'dataPointXid');
 
             this.pointsToPublish = this.points.map((point) => {
                 let publisherPoint = xidToPublisherPoint[point.xid];
@@ -110,19 +111,15 @@ class PublisherPointsCreatorController {
 
     addPoints() {
         this.form.$setSubmitted();
-
         this.validationMessages = [];
-        this.errorMessages = [];
+        this.pointsToPublish.forEach(p => this.errorMap.delete(p));
 
-        const requests = this.pointsToPublish.map((pPoint) => {
-            const request = {
-                xid: pPoint.getOriginalId() || pPoint.xid,
-                body: pPoint
+        const requests = this.pointsToPublish.map((publishedPoint) => {
+            return {
+                xid: publishedPoint.getOriginalId() || publishedPoint.xid,
+                body: publishedPoint,
+                action: 'CREATE'
             };
-
-            request.action = 'CREATE';
-
-            return request;
         });
 
         if (requests.length <= 0) return null;
@@ -136,7 +133,7 @@ class PublisherPointsCreatorController {
         return this.bulkTask
             .start(this.$scope)
             .then((resource) => {
-                this.saveMultipleComplete(resource, this.pointsToPublish);
+                this.saveMultipleComplete(resource);
             }, (error) => {
                 this.notifyBulkEditError(error);
             }).finally(() => {
@@ -144,51 +141,55 @@ class PublisherPointsCreatorController {
             });
     }
 
-    saveMultipleComplete(resource, savedPoints) {
-        const { hasError } = resource.result;
-        const { responses } = resource.result;
+    saveMultipleComplete(resource) {
+        const responses = resource.result.responses;
 
-        responses.forEach((response, i) => {
-            const point = savedPoints[i];
-            if (response.body && ['CREATE', 'UPDATE'].includes(response.action)) {
-                angular.copy(response.body, point);
+        const selectedPoints = [];
+        const pointsByXid = this.maUtil.createMap(this.points, 'xid');
+
+        for (let i = 0; i < responses.length; i++) {
+            const response = responses[i];
+            const publishedPoint = this.pointsToPublish[i];
+
+            if (response.error) {
+                this.errorMap.set(publishedPoint, response.error);
+
+                if (response.error.mangoStatusName === 'VALIDATION_FAILED' && response.error.result.messages) {
+                    const messages = response.error.result.messages;
+                    for (const m of messages) {
+                        m.xid = publishedPoint.xid;
+                        const property = VALIDATION_MESSAGE_PROPERTY_MAP[m.property] || m.property;
+                        m.property = publishedPoint.xid + '_' + property;
+                        this.validationMessages.push(m);
+                    }
+                }
+
+                // keep selected in data point selector drop down
+                const point = pointsByXid.get(publishedPoint.dataPointXid);
+                if (point) {
+                    selectedPoints.push(point);
+                }
             }
-        });
-
-        if (hasError) {
-            const validationMessages = [];
-
-            responses.forEach((response) => {
-                const message = response.error && response.error.localizedMessage;
-                if (message && !this.errorMessages.includes(message)) {
-                    this.errorMessages.push(message);
-                }
-
-                if (response.httpStatus === 422) {
-                    const { messages } = response.error.result;
-                    messages.forEach((m) => {
-                        const validationMessage = `${m.level}: ${response.xid} - ${m.message} ${m.property}`;
-                        if (!this.errorMessages.includes(validationMessage)) {
-                            this.errorMessages.push(validationMessage);
-                        }
-
-                        const found = validationMessages.find((m2) => m.level === m2.level && m.property === m2.property && m.message === m2.message);
-
-                        if (!found) {
-                            validationMessages.push({ ...m, xid: response.xid });
-                        }
-                    });
-                }
-            });
-            this.pruneValidItems(validationMessages);
         }
 
+        this.points = selectedPoints;
+        // shallow copy to notify ma-validation-messages directive
+        this.validationMessages = this.validationMessages.slice();
+        // remove all published points which completed successfully
+        this.pointsToPublish = this.pointsToPublish.filter((p) => this.errorMap.has(p));
         this.notifyBulkEditComplete(resource);
+    }
+
+    hasError(publishedPoint) {
+        return this.errorMap.has(publishedPoint);
+    }
+
+    getError(publishedPoint) {
+        return this.errorMap.get(publishedPoint);
     }
 
     notifyBulkEditComplete(resource) {
         const numErrors = resource.result.responses.reduce((accum, response) => (response.error ? accum + 1 : accum), 0);
-
         const toastOptions = {
             textTr: [null, resource.position, resource.maximum, numErrors],
             hideDelay: 10000,
@@ -207,12 +208,10 @@ class PublisherPointsCreatorController {
                 toastOptions.textTr.push(resource.error.localizedMessage);
                 break;
             case 'SUCCESS':
-                if (!numErrors) {
+                if (!resource.result.hasError) {
                     toastOptions.textTr = ['ui.app.bulkEditSuccess', resource.position];
                     delete toastOptions.classes;
                     this.dialogCancelled();
-                    this.errorMessages = [];
-                    this.validationMessages = [];
                 } else {
                     toastOptions.textTr[0] = 'ui.app.bulkEditSuccessWithErrors';
                 }
@@ -232,37 +231,17 @@ class PublisherPointsCreatorController {
         });
     }
 
-    pruneValidItems(validationMessages) {
-        const failedXids = validationMessages.map((vm) => vm.xid);
-        this.pointsToPublish = this.pointsToPublish.filter((ptp) => failedXids.includes(ptp.xid));
-        this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
-
-        const dpXids = this.pointsToPublish.map((ptp) => ptp.dataPointXid);
-        this.editSelectedPoints(dpXids);
-    }
-
-    fixValidationMessages(validationMessages, pointsToPublish) {
-        validationMessages.forEach((vm) => {
-            const pointToPublishIndex = pointsToPublish.findIndex((ptp) => ptp.xid === vm.xid);
-            const newKey = VALIDATION_MESSAGE_PROPERTY_MAP[vm.property] || vm.property;
-            if (newKey) {
-                const [property] = newKey.split('-');
-                vm.property = `${property}-${pointToPublishIndex}`;
-            }
-        });
-        return validationMessages;
-    }
-
-    removeSelectedPoints(point) {
-        const validationMessages = this.validationMessages.filter((vm) => vm.xid !== point.xid);
-        delete this.validationMessages;
-        this.pointsToPublish = this.pointsToPublish.filter((ptp) => ptp.xid !== point.xid);
+    removeSelectedPoint(point) {
+        const index = this.pointsToPublish.indexOf(point);
+        this.pointsToPublish.splice(index, 1);
         this.points = this.points.filter((p) => p.xid !== point.dataPointXid);
-        this.validationMessages = this.fixValidationMessages(validationMessages, this.pointsToPublish);
+
+        this.errorMap.delete(point);
+        this.validationMessages = this.validationMessages.filter((vm) => vm.xid !== point.xid);
     }
 
     /**
-     * A method to remove non exisitng points in table from points model
+     * A method to remove non-existing points in table from points model
      * @param {*} dpXids array of xids from points that are still shown in table
      */
     editSelectedPoints(dpXids) {
@@ -278,24 +257,6 @@ class PublisherPointsCreatorController {
      */
     getPoint(publisherPoint) {
         return this.points.find((p) => p.xid === publisherPoint.dataPointXid);
-    }
-
-    buildColumnName(column, parentIndex) {
-        const { limit, page } = this.tableOptions;
-        const pageMultiplier = (page - 1) * limit;
-        return `${column.name}-${parentIndex + pageMultiplier}`;
-    }
-
-    /**
-     * Callback Method from onPaginateBound, this method resets validation messages in order
-     * to show them in a newer page
-     * @param {*} page tables current page
-     * @param {*} limit tables current limit
-     */
-    onPaginate(page, limit) {
-        const validationMessages = angular.copy(this.validationMessages);
-        delete this.validationMessages;
-        this.validationMessages = validationMessages;
     }
 
     createColumns() {

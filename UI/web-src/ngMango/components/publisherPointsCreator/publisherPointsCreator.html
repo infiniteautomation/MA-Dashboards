@@ -24,93 +24,85 @@
             </md-input-container>
         </div>
 
+        <div class="md-padding ma-error-text" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage" role="alert"></div>
+        <div ng-if="$ctrl.bulkTask">
+            <div layout layout-align="center">
+                <em>
+                    <span ng-bind="$ctrl.bulkTask.progress || 0"></span>%
+                    (<span ma-tr="ui.app.pointXofX" ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
+                </em>
+            </div>
+            <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
+        </div>
+
         <md-dialog-content ng-if="$ctrl.showDialog" layout="column" flex layout-padding>
             <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
-                <div>
-                    <md-table-container>
-                        <table md-table>
-                            <thead md-head>
-                                <tr md-row>
-                                    <th md-column class="ma-checkbox-column"></th>
-                                    <th md-column ng-repeat="column in $ctrl.columns"
-                                        md-order-by="{{$ctrl.getOrderBy($index)}}">
-                                        <span ma-tr="{{column.translationKey}}"></span>
-                                        <span ng-if="column.required">*</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody md-body ng-if="$ctrl.pointsToPublish.length === 0">
-                                <tr md-row>
-                                    <td md-cell colspan="{{$ctrl.columns.length}}" class="ma-no-items-to-list"
-                                        ma-tr="ui.publisher.noPointsSelected"></td>
-                                </tr>
-                            </tbody>
-                            <tbody md-body ng-if="$ctrl.pointsToPublish.length > 0">
-                                <tr md-row
-                                    ng-repeat="item in $ctrl.pointsToPublish | limitTo: $ctrl.tableOptions.limit: ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit">
-                                    <td md-cell class="ma-checkbox-column">
-                                        <md-button class="md-icon-button md-primary" aria-label="clear"
-                                            ng-click="$ctrl.removeSelectedPoints(item)">
-                                            <md-icon>clear</md-icon>
-                                        </md-button>
-                                    </td>
-                                    <td md-cell ng-repeat="column in $ctrl.columns">
-                                        <span ng-show="::false">{{column.columnName = $ctrl.buildColumnName(column, $parent.$index)}}</span>
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column class="ma-checkbox-column"></th>
+                                <th md-column ng-repeat="column in $ctrl.columns track by column.name"
+                                    md-order-by="{{$ctrl.getOrderBy($index)}}">
+                                    <span ma-tr="{{column.translationKey}}"></span>
+                                    <span ng-if="column.required">*</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody md-body ng-if="$ctrl.pointsToPublish.length === 0">
+                            <tr md-row>
+                                <td md-cell colspan="{{$ctrl.columns.length}}" class="ma-no-items-to-list"
+                                    ma-tr="ui.publisher.noPointsSelected"></td>
+                            </tr>
+                        </tbody>
+                        <tbody md-body ng-if="$ctrl.pointsToPublish.length > 0">
+                            <tr md-row
+                                    ng-repeat="item in $ctrl.pointsToPublish | limitTo : $ctrl.tableOptions.limit : ($ctrl.tableOptions.page - 1) * $ctrl.tableOptions.limit track by item.xid"
+                                    ng-class="{'ma-error-text': $ctrl.hasError(item)}">
+                                <td md-cell class="ma-checkbox-column">
+                                    <md-button class="md-icon-button md-primary" aria-label="clear"
+                                        ng-click="$ctrl.removeSelectedPoint(item)">
+                                        <md-icon>clear</md-icon>
+                                    </md-button>
+                                </td>
+                                <td md-cell ng-repeat="column in $ctrl.columns track by column.name">
 
-                                        <md-input-container flex ng-if="!column.editorTemplateUrl && !column.editable">
-                                            <span ng-class="{'ma-empty-null': item[column.name] == null}" ng-bind="item[column.name] | maDisplayNull"></span>
-                                            <input ng-show="::false" ng-attr-name="{{column.columnName}}" ng-model="item[column.name]">
-                                            <div ng-messages="$ctrl.form[column.columnName].$error">
-                                                <div ng-message="validationMessage" ng-bind="$ctrl.form[column.columnName].validationMessage"></div>
+                                    <md-input-container flex ng-if="!column.editorTemplateUrl && !column.editable">
+                                        <span ng-class="{'ma-empty-null': item[column.name] == null}" ng-bind="item[column.name] | maDisplayNull"></span>
+                                        <input ng-show="::false" ng-attr-name="{{item.xid}}_{{column.name}}" ng-model="item[column.name]">
+                                        <div ng-messages="$ctrl.form[item.xid + '_' + column.name].$error">
+                                            <div ng-message="validationMessage" ng-bind="$ctrl.form[item.xid + '_' + column.name].validationMessage"></div>
+                                        </div>
+                                    </md-input-container>
+
+                                    <md-input-container flex ng-if="!column.editorTemplateUrl && column.editable">
+                                        <input ng-attr-name="{{item.xid}}_{{column.name}}" ng-model="item[column.name]" required>
+                                        <div ng-messages="$ctrl.form[item.xid + '_' + column.name].$error">
+                                            <div ng-message="required" ma-tr="validate.required"></div>
+                                            <div ng-message="validationMessage"
+                                                ng-bind="$ctrl.form[item.xid + '_' + column.name].validationMessage">
                                             </div>
-                                        </md-input-container>
+                                        </div>
+                                    </md-input-container>
 
-                                        <md-input-container flex ng-if="!column.editorTemplateUrl && column.editable">
-                                            <input ng-attr-name="{{column.columnName}}" ng-model="item[column.name]" required>
-                                            <div ng-messages="$ctrl.form[column.columnName].$error">
-                                                <div ng-message="required" ma-tr="validate.required"></div>
-                                                <div ng-message="validationMessage"
-                                                    ng-bind="$ctrl.form[column.columnName].validationMessage">
-                                                </div>
-                                            </div>
-                                        </md-input-container>
-
-                                        <span ng-if="column.name !== 'enabled' && column.editorTemplateUrl"
-                                            ng-include="column.editorTemplateUrl"></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </md-table-container>
-
-
-                </div>
-
-                <div class="md-padding ma-error-text" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage"
-                    role="alert"></div>
-
-                <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
-                    <div layout layout-align="center">
-                        <em>
-                            <span ng-bind="$ctrl.bulkTask.progress || 0"></span>% (<span ma-tr="ui.app.pointXofX"
-                                ma-tr-args="[$ctrl.bulkTask.position || 0, $ctrl.bulkTask.maximum || 0]"></span>)
-                        </em>
-                    </div>
-
-                    <md-progress-linear md-mode="determinate" ng-value="$ctrl.bulkTask.progress"></md-progress-linear>
-
-                    <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()">
-                        <md-icon>cancel</md-icon>
-                        <span ma-tr="ui.app.cancelBulkEdit"></span>
-                    </md-button>
-                </div>
+                                    <span ng-if="column.name !== 'enabled' && column.editorTemplateUrl"
+                                        ng-include="column.editorTemplateUrl"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions>
             <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
-                       ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
+                       ng-disabled="!$ctrl.pointsToPublish.length || $ctrl.bulkTask">
                 <md-icon>add</md-icon>
                 <span ma-tr="ui.app.addPointsToPublisher"></span>
+            </md-button>
+            <md-button class="md-raised md-warn" ng-click="$ctrl.bulkTask.cancel()" ng-if="$ctrl.bulkTask">
+                <md-icon>cancel</md-icon>
+                <span ma-tr="ui.app.cancelBulkEdit"></span>
             </md-button>
             <span flex></span>
             <md-table-pagination md-limit="$ctrl.tableOptions.limit" md-limit-options="[5, 10, 15, 20, 50, 100]"
