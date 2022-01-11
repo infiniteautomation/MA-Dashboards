@@ -6,6 +6,10 @@ md-dialog.ma-publisher-points-creator md-table-container table.md-table {
     border-collapse: collapse;
 }
 
+md-dialog.ma-publisher-points-creator {
+    height: 800px;
+}
+
 md-dialog.ma-publisher-points-creator md-table-container table.md-table tbody.md-body > tr.md-row {
     height: 50px;
     margin-left: 1px;

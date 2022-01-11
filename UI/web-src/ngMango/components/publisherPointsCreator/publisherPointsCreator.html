@@ -10,22 +10,22 @@
             </div>
         </md-toolbar>
 
-        <div ng-init="$ctrl.dialog = $dialog"></div>
+        <div ng-init="$ctrl.dialog = $dialog" layout class="ma-margin-left ma-margin-right">
+            <md-input-container class="ma-publisher-points-selector" flex>
+                <ma-drop-down-button>
+                    <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.points.length]"></span>
+                    <ma-drop-down create-on-init="false" class="ma-slide-down"
+                                  on-close="$ctrl.pointSelectorClosed()">
+                        <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
+                                                ng-model="$ctrl.points" ng-change="$ctrl.pointsChanged()">
+                        </ma-data-point-selector>
+                    </ma-drop-down>
+                </ma-drop-down-button>
+            </md-input-container>
+        </div>
 
         <md-dialog-content ng-if="$ctrl.showDialog" layout="column" flex layout-padding>
             <div ng-form="$ctrl.form" ma-validation-messages="$ctrl.validationMessages" flex="noshrink" layout="column">
-                <md-input-container class="ma-publisher-points-selector">
-                    <ma-drop-down-button>
-                        <span ma-tr="ui.publisher.pointsSelected" ma-tr-args="[$ctrl.points.length]"></span>
-                        <ma-drop-down create-on-init="false" class="ma-slide-down"
-                            on-close="$ctrl.pointSelectorClosed()">
-                            <ma-data-point-selector select-multiple="::true" class="ma-publisher-editor"
-                                ng-model="$ctrl.points" ng-change="$ctrl.pointsChanged()">
-                            </ma-data-point-selector>
-                        </ma-drop-down>
-                    </ma-drop-down-button>
-                </md-input-container>
-
                 <div>
                     <md-table-container>
                         <table md-table>
@@ -83,10 +83,7 @@
                         </table>
                     </md-table-container>
 
-                    <md-table-pagination md-limit="$ctrl.tableOptions.limit" md-limit-options="[5, 10, 15, 20, 50, 100]"
-                        md-page="$ctrl.tableOptions.page" md-total="{{$ctrl.tableOptions.total}}"
-                        md-on-paginate="$ctrl.onPaginateBound">
-                    </md-table-pagination>
+
                 </div>
 
                 <div class="md-padding ma-error-text" ng-if="$ctrl.form.validationMessage" ng-bind="$ctrl.form.validationMessage"
@@ -107,14 +104,19 @@
                         <span ma-tr="ui.app.cancelBulkEdit"></span>
                     </md-button>
                 </div>
-                <div>
-                    <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
-                        ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
-                        <md-icon>add</md-icon>
-                        <span ma-tr="ui.app.addPointsToPublisher"></span>
-                    </md-button>
-                </div>
             </div>
         </md-dialog-content>
+        <md-dialog-actions>
+            <md-button class="md-raised md-primary" ng-click="$ctrl.addPoints()"
+                       ng-disabled="!($ctrl.form.$valid && $ctrl.pointsToPublish.length > 0)">
+                <md-icon>add</md-icon>
+                <span ma-tr="ui.app.addPointsToPublisher"></span>
+            </md-button>
+            <span flex></span>
+            <md-table-pagination md-limit="$ctrl.tableOptions.limit" md-limit-options="[5, 10, 15, 20, 50, 100]"
+                                 md-page="$ctrl.tableOptions.page" md-total="{{$ctrl.tableOptions.total}}"
+                                 md-on-paginate="$ctrl.onPaginateBound">
+            </md-table-pagination>
+        </md-dialog-actions>
     </md-dialog>
 </ma-dialog>
