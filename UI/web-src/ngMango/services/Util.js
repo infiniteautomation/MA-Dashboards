@@ -1117,19 +1117,19 @@ function UtilFactory(mangoBaseUrl, mangoDateFormats, $q, $timeout, MA_TIMEOUTS, 
         createMapObject(array, keyProperty, map = Object.create(null)) {
             // clear the map object in case user passed it in
             Object.keys(map).forEach(k => delete map[k]);
-            
-            return array.reduce((map, item) => {
-                return map[item[keyProperty]] = item, map;
-            }, map);
+            for (const item of array) {
+                map[item[keyProperty]] = item;
+            }
+            return map;
         },
         
         createMap(array, keyProperty, map = new Map()) {
             // clear the map object in case user passed it in
             map.clear();
-            
-            return array.reduce((map, item) => {
-                return map.set(item[keyProperty], item), map;
-            }, map);
+            for (const item of array) {
+                map.set(item[keyProperty], item);
+            }
+            return map;
         },
 
         freezeAll(array) {
