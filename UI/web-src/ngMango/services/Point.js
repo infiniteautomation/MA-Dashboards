@@ -711,8 +711,11 @@ function dataPointProvider() {
                 if (this.lastPayload === payload) return;
                 this.lastPayload = payload;
 
-                this.enabled = !!payload.pointEnabled;
-                this.running = !!payload.enabled;
+                // these fields are not accurate for ATTRIBUTE_CHANGE events
+                if (eventType !== 'ATTRIBUTE_CHANGE') {
+                    this.enabled = !!payload.pointEnabled;
+                    this.running = !!payload.enabled;
+                }
 
                 if (payload.value != null) {
                     const rendered = this.getTextRenderer().render(
@@ -727,10 +730,8 @@ function dataPointProvider() {
                     this.renderedValue = payload.renderedValue;
                 }
 
-                if (payload.attributes) {
+                if (payload.attributes && payload.attributes.hasOwnProperty('UNRELIABLE')) {
                     this.unreliable = !!payload.attributes.UNRELIABLE;
-                } else {
-                    this.unreliable = false;
                 }
             },
 
