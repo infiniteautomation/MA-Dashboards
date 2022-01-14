@@ -223,7 +223,6 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                 }
 
                 if (!$scope.points || !$scope.points.length) return;
-                const points = $scope.points.slice(0);
 
                 // Calculate rollups automatically based on to/from/type (if turned on)
                 if ($scope.autoRollupInterval) {
@@ -232,24 +231,19 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                     $scope.actualRollupInterval = $scope.rollupInterval;
                 }
 
-                const promises = [];
-
                 // cancel existing requests if there are any
                 if (pendingRequest) {
                     pendingRequest.cancel();
                     pendingRequest = null;
                 }
 
-                for (let i = 0; i < points.length; i++) {
-                    if (!points[i] || !points[i].xid) continue;
-                    let queryPromise;
-                    if (!points[i].pointLocator) {
-                        queryPromise = Point.get({xid: points[i].xid}).$promise.then(doQuery);
-                    } else {
-                        queryPromise = doQuery(points[i]);
+                const points = $scope.points.filter(p => p && p.xid);
+                const promises = points.map(p => {
+                    if (!p.pointLocator) {
+                        return Point.get({xid: p.xid}).$promise.then(doQuery);
                     }
-                    promises.push(queryPromise);
-                }
+                    return doQuery(p);
+                });
 
                 pendingRequest = $q.all(promises).then(results => {
                     if (!results.length) return;
