@@ -117,7 +117,8 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
             onValuesUpdated: '&?',
             simplifyTolerance: '<?',
             simplifyTarget: '<?',
-            bookend: '<?'
+            bookend: '<?',
+            fields: '<?'
         },
         bindToController: {
             refresh: '<?'
@@ -175,7 +176,8 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                     rollupInterval: $scope.rollupInterval,
                     rendered: $scope.rendered,
                     autoRollupInterval: $scope.autoRollupInterval,
-                    simplifyTolerance: $scope.simplifyTolerance
+                    simplifyTolerance: $scope.simplifyTolerance,
+                    fields: $scope.fields
                 };
             }, (newValue, oldValue) => {
                 let changedXids;
@@ -478,7 +480,8 @@ function pointValues($http, pointEventManager, Point, $q, Util, pointValues) {
                         bookend: $scope.bookend,
                         rollupInterval: $scope.actualRollupInterval,
                         timeout: $scope.timeout,
-                        timezone: $scope.timezone
+                        timezone: $scope.timezone,
+                        fields: $scope.fields
                     };
 
                     if (options.rollup === 'POINT_DEFAULT') {
