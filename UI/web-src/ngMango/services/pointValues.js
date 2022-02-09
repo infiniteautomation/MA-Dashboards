@@ -30,6 +30,10 @@ function pointValuesProvider() {
             if (options.dateTimeFormat ) {
                 body.dateTimeFormat = options.dateTimeFormat ;
             }
+
+            if (Array.isArray(options.fields)) {
+                body.fields = options.fields;
+            }
             
             if (options.latest != null) {
                 body.limit = isFinite(options.latest) && options.latest >= 0 && options.latest || 100;
@@ -128,7 +132,7 @@ function pointValuesProvider() {
                 if (typeof options.useCache === 'string') {
                     body.useCache = options.useCache;
                 } else {
-                    body.useCache = options.useCache ? 'BOTH' : 'NONE';
+                    body.useCache = options.useCache ? 'CACHE_ONLY' : 'NONE';
                 }
             }
 
@@ -152,7 +156,7 @@ function pointValuesProvider() {
                     if (typeof options.rollup === 'string' && options.rollup !== 'NONE') {
                         url += '/' + encodeURIComponent(options.rollup);
                     }
-                    
+
                     const data = optionsToPostBody(options, false);
                     let reverseData = false;
                     
