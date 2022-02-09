@@ -142,9 +142,10 @@ function pointValue(PointValueController, MA_DATE_FORMATS, maEvents, $injector) 
         updateText() {
             delete this.valueStyle.color;
 
+            this.resolvedDisplayType = this.displayType || 'rendered';
+
             if (!this.point || this.point.time == null) {
                 this.displayValue = '';
-                this.resolvedDisplayType = this.displayType || 'rendered';
 
                 this.noValue = this.point && this.point.time == null;
                 this.emptyValue = false;
@@ -158,7 +159,6 @@ function pointValue(PointValueController, MA_DATE_FORMATS, maEvents, $injector) 
                 color: null
             });
 
-            this.resolvedDisplayType = this.displayType || (this.point.pointLocator && this.point.pointLocator.dataType === 'rendered');
             delete this.valueStyle.color;
 
             switch(this.resolvedDisplayType) {
