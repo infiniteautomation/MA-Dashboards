@@ -6,8 +6,9 @@
     simplify-tolerance="$ctrl.dateBar.simplifyTolerance">
 </ma-point-values>
 
-<ma-point-values point="$ctrl.dataPoint" values="$ctrl.realtimePointValues" realtime="$ctrl.realtimeMode" rendered="true" latest="$ctrl.numValues" use-cache="$ctrl.showCachedData"
-    refresh="$ctrl.refreshTable"></ma-point-values>
+<ma-point-values point="$ctrl.dataPoint" values="$ctrl.latestPointValues" realtime="$ctrl.showCachedData"
+                 rendered="true" latest="$ctrl.numValues" use-cache="$ctrl.showCachedData"
+                 refresh="!$ctrl.showCachedData && $ctrl.refreshTable"></ma-point-values>
 
 <ma-point-statistics point="$ctrl.dataPoint" from="$ctrl.dateBar.from" to="$ctrl.dateBar.to" statistics="$ctrl.statsObj"></ma-point-statistics>
 
@@ -90,11 +91,7 @@
             <md-card flex>
                 <md-toolbar class="md-whiteframe-1dp md-hue-3">
                     <div class="md-toolbar-tools">
-                        <h2 ma-tr="ui.app.pointValueHistory"></h2>
-                        <md-button ng-show="!$ctrl.realtimeMode" class="md-icon-button dpd-table-refresh" ng-click="$ctrl.refreshTable = {}">
-                            <md-tooltip><span ma-tr="ui.app.refreshTable"></span></md-tooltip>
-                            <md-icon>refresh</md-icon>
-                        </md-button>
+                        <h2 ma-tr="{{$ctrl.showCachedData ? 'ui.app.pointDetails.realtimeData' : 'ui.app.pointDetails.loggedData'}}"></h2>
                         <span flex></span>
                         <md-checkbox ng-model="$ctrl.showTableOptions">
                             <span ma-tr="ui.app.configure"></span>
@@ -102,18 +99,15 @@
                     </div>
                 </md-toolbar>
                 <md-toolbar class="md-padding md-hue-2" ng-show="$ctrl.showTableOptions" layout layout-wrap layout-align="space-between center">
+                    <md-switch ng-model="$ctrl.showCachedData" ng-change="$ctrl.updatePreferences()">
+                        <span ma-tr="ui.app.pointDetails.useCache"></span>
+                    </md-switch>
                     <span class="dpd-num-values">
+                        <label ma-tr="ui.app.numberOfValues" for="ma-number-of-values"></label>
                         <md-input-container md-no-float>
                             <input id="ma-number-of-values" ng-model="$ctrl.numValues" type="number" ng-change="$ctrl.updatePreferences()">
                         </md-input-container>
-                        <label ma-tr="ui.app.numberOfValues" for="ma-number-of-values"></label>
                     </span>
-                    <md-switch ng-model="$ctrl.realtimeMode" ng-change="$ctrl.showCachedData = $ctrl.realtimeMode ? false : $ctrl.showCachedData; $ctrl.updatePreferences()">
-                        <span ma-tr="ui.app.realtime"></span>
-                    </md-switch>
-                    <md-switch ng-disabled="$ctrl.realtimeMode" ng-model="$ctrl.showCachedData" ng-change="$ctrl.updatePreferences()">
-                        <span ma-tr="pointDetails.useCache"></span>
-                    </md-switch>
                 </md-toolbar>
                 <md-table-container ng-init="myOrder='-timestamp'">
                     <table md-table class="ma-point-values-table">
@@ -123,8 +117,8 @@
                                 <th md-column md-order-by="value" ma-tr="ui.app.pointValue"></th>
                             </tr>
                         </thead>
-                        <tbody md-body ng-class="{'ma-point-values-non-realtime' : !$ctrl.realtimeMode}" ng-if="$ctrl.realtimePointValues">
-                            <tr md-row ng-repeat="value in $ctrl.realtimePointValues | orderBy: myOrder track by $index" ng-class="{'ma-point-value-cached': value.cached}">
+                        <tbody md-body ng-if="$ctrl.latestPointValues">
+                            <tr md-row ng-repeat="value in $ctrl.latestPointValues | orderBy: myOrder track by $index">
                                 <td md-cell ng-bind="value.timestamp | maDate:'shortDateTimeSeconds'"></td>
                                 <td md-cell>
                                 <span ng-bind="value.rendered" ng-style="{color: $ctrl.dataPoint.getTextRenderer().render(value.value).color}"></span> <strong ng-if="value.annotation"><em>(<span ng-bind="value.annotation"></span>)</em></strong>
@@ -173,7 +167,7 @@
             <md-toolbar class="md-whiteframe-1dp md-hue-3">
                 <div class="md-toolbar-tools">
                     <h2 flex>
-                          <span ma-tr="ui.app.chart"></span>
+                          <span ma-tr="ui.app.pointDetails.chartTitle"></span>
                     </h2>
                     <md-select ng-model="$ctrl.chartType" aria-label="Chart Type">
                         <md-option value="smoothedLine" ma-tr="ui.app.smooth"></md-option>

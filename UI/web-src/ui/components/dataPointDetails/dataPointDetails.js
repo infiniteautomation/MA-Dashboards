@@ -59,6 +59,8 @@ class DataPointDetailsController {
                 });
             }
         });
+
+        this.dateBar.subscribe(() => this.refreshTable = {}, this.$scope);
     }
 
     $onDestroy() {
@@ -137,7 +139,6 @@ class DataPointDetailsController {
     updatePreferences() {
         const preferences = this.localStorageService.get('uiPreferences') || {};
         preferences.numberOfPointValues = this.numValues;
-        preferences.realtimeMode = this.realtimeMode;
         preferences.showCachedData = this.showCachedData;
         this.localStorageService.set('uiPreferences', preferences);
     }
@@ -145,12 +146,10 @@ class DataPointDetailsController {
     retrievePreferences() {
         const defaults = {
             numberOfPointValues: 100,
-            realtimeMode: true,
-            showCachedData: false
+            showCachedData: true
         };
         const preferences = angular.merge(defaults, this.localStorageService.get('uiPreferences'));
         this.numValues = preferences.numberOfPointValues;
-        this.realtimeMode = preferences.realtimeMode;
         this.showCachedData = preferences.showCachedData;
     }
     
