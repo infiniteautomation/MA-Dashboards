@@ -60,7 +60,11 @@ class DataPointDetailsController {
             }
         });
 
-        this.dateBar.subscribe(() => this.refreshTable = {}, this.$scope);
+        this.dateBar.subscribe(() => {
+            if (!this.showCachedData) {
+                this.refreshTable = {};
+            }
+        }, this.$scope);
     }
 
     $onDestroy() {

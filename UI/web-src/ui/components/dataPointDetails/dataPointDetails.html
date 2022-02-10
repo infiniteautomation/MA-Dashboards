@@ -8,7 +8,7 @@
 
 <ma-point-values point="$ctrl.dataPoint" values="$ctrl.latestPointValues" realtime="$ctrl.showCachedData"
                  rendered="true" latest="$ctrl.numValues" use-cache="$ctrl.showCachedData"
-                 refresh="!$ctrl.showCachedData && $ctrl.refreshTable"></ma-point-values>
+                 refresh="$ctrl.refreshTable"></ma-point-values>
 
 <ma-point-statistics point="$ctrl.dataPoint" from="$ctrl.dateBar.from" to="$ctrl.dateBar.to" statistics="$ctrl.statsObj"></ma-point-statistics>
 
