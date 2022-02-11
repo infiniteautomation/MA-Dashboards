@@ -217,7 +217,10 @@ ngMangoServices.constant('MA_ROLLUP_TYPES', [
     { type: 'FIRST', nonNumeric: true, label: 'First', translation: 'common.rollup.first' },
     { type: 'LAST', nonNumeric: true, label: 'Last', translation: 'common.rollup.last' },
     { type: 'COUNT', nonNumeric: true, label: 'Count', translation: 'common.rollup.count' },
-    { type: 'INTEGRAL', nonNumeric: false, label: 'Integral', translation: 'common.rollup.integral' }
+    { type: 'INTEGRAL', nonNumeric: false, label: 'Integral', translation: 'common.rollup.integral' },
+    { type: 'ARITHMETIC_MEAN', nonNumeric: false, label: 'Arithmetic mean', translation: 'common.rollup.arithmeticMean' },
+    { type: 'MINIMUM_IN_PERIOD', nonNumeric: false, label: 'Minimum (in period)', translation: 'common.rollup.minimumInPeriod' },
+    { type: 'MAXIMUM_IN_PERIOD', nonNumeric: false, label: 'Maximum (in period)', translation: 'common.rollup.maximumInPeriod' }
     // {name: 'FFT', nonNumeric: false}
 ]);
 
