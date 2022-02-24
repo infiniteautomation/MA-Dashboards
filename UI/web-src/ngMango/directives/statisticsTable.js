@@ -62,6 +62,7 @@ function statisticsTable($injector, mangoDateFormats) {
         },
         link: function($scope, $element, $attrs) {
             $scope.formatTimestamp = function(ts) {
+                if (ts == null) return '';
                 const m = moment(ts);
                 if ($scope.timezone) {
                     m.tz($scope.timezone);
