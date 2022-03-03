@@ -11,7 +11,6 @@ import java.util.TimeZone;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ import com.infiniteautomation.mango.rest.latest.TranslationsController.Translati
 import com.infiniteautomation.mango.rest.latest.model.jsondata.JsonDataModel;
 import com.infiniteautomation.mango.rest.latest.model.modules.AngularJSModuleDefinitionGroupModel;
 import com.infiniteautomation.mango.rest.latest.model.user.UserModel;
-import com.infiniteautomation.mango.spring.MangoRuntimeContextConfiguration;
 import com.infiniteautomation.mango.spring.components.PublicUrlService;
 import com.infiniteautomation.mango.spring.components.pageresolver.PageResolver;
 import com.infiniteautomation.mango.spring.service.PermissionService;
@@ -37,6 +35,7 @@ import com.serotonin.m2m2.ICoreLicense;
 import com.serotonin.m2m2.db.dao.InstalledModulesDao;
 import com.serotonin.m2m2.db.dao.JsonDataDao;
 import com.serotonin.m2m2.db.dao.SystemSettingsDao;
+import com.infiniteautomation.mango.spring.annotations.RestMapper;
 import com.serotonin.m2m2.module.Module;
 import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.vo.User;
@@ -75,7 +74,7 @@ public class BootstrapController {
 
     @Autowired
     public BootstrapController(JsonDataDao jsonDataDao,
-                               @Qualifier(MangoRuntimeContextConfiguration.REST_OBJECT_MAPPER_NAME) ObjectMapper objectMapper,
+                               @RestMapper ObjectMapper objectMapper,
                                ServletContext servletContext, PublicUrlService publicUrlService, Environment env,
                                PermissionService permissionService, PageResolver pageResolver, OAuth2Information oAuth2Information,
                                InstalledModulesDao installedModulesDao) {
