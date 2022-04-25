@@ -733,6 +733,8 @@ function dataPointProvider() {
                 if (payload.attributes && payload.attributes.hasOwnProperty('UNRELIABLE')) {
                     this.unreliable = !!payload.attributes.UNRELIABLE;
                 }
+
+                this.attributes = payload.attributes || {};
             },
 
             amChartsGraphType() {
