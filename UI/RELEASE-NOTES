@@ -1,6 +1,9 @@
 *Version 4.4.0*
 * Upgraded for Mango 4.4.0
 
+*Version 4.3.1*
+* Extend/Update point object with runtime point attributes map when websocket message received
+
 *Version 4.3.0*
 * Upgraded for Mango 4.3.0
 * Show user count in users page
