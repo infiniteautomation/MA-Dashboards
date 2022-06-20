@@ -25,7 +25,11 @@
                     <md-icon>person_add</md-icon>
                     <md-tooltip><span ma-tr="users.add"></span></md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteUsers($event)" ng-disabled="!$ctrl.selectedUsers.length">
+                <md-button class="md-icon-button" ng-click="$ctrl.editUsers($event)" ng-disabled="!$ctrl.hasEditPermissions()">
+                    <md-icon>edit</md-icon>
+                    <md-tooltip><span ma-tr="users.editUser"></span></md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteUsers($event)" ng-disabled="!$ctrl.hasDeletePermissions()">
                     <md-icon>delete</md-icon>
                     <md-tooltip><span ma-tr="common.delete"></span></md-tooltip>
                 </md-button>
@@ -61,8 +65,9 @@
     <md-dialog flex="100" flex-gt-sm="80" flex-gt-md="65" flex-gt-lg="50" flex-gt-xl="30">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <span ng-if="!$ctrl.user.isNew()" ma-tr="ui.app.editUserX" ma-tr-args="[$ctrl.user.username]"></span>
-                <span ng-if="$ctrl.user.isNew()" ma-tr="ui.app.editNewUser"></span>
+                <span ng-if="!$ctrl.user.length && $ctrl.user.isNew()" ma-tr="ui.app.editNewUser"></span>
+                <span ng-if="!$ctrl.user.length && !$ctrl.user.isNew()" ma-tr="ui.app.editUserX" ma-tr-args="[$ctrl.user.username]"></span>
+                <span ng-if="$ctrl.user.length" ma-tr="ui.app.editXUsers" ma-tr-args="[$ctrl.user.length]"></span>
                 <div flex></div>
                 <md-button class="md-icon-button" ng-click="$dialog.cancel()">
                     <md-icon>close</md-icon>
@@ -71,7 +76,10 @@
         </md-toolbar>
 
         <md-dialog-content layout="column" flex>
-            <md-tabs md-dynamic-height="true" md-border-bottom="true" md-swipe-content="false" md-selected="$ctrl.userEditorTab">
+            <div ng-if="$ctrl.user.length" class="md-padding">
+                <ma-user-editor ng-model="$ctrl.user" ng-change="$ctrl.user ? $dialog.hide() : $dialog.cancel()"></ma-user-editor>
+            </div>
+            <md-tabs ng-if="!$ctrl.user.length" md-dynamic-height="true" md-border-bottom="true" md-swipe-content="false" md-selected="$ctrl.userEditorTab">
                 <md-tab>
                     <md-tab-label>
                         <span ng-if="!$ctrl.user.isNew()" ma-tr="users.editUser"></span>

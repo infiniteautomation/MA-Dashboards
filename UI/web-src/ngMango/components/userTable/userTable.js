@@ -29,7 +29,6 @@ const defaultColumns = [
 ];
 
 class UserTableController extends TableController {
-    
     static get $inject() { return ['maUser', '$scope', '$element', '$injector']; }
 
     constructor(maUser, $scope, $element, $injector) {
@@ -37,7 +36,7 @@ class UserTableController extends TableController {
             $scope,
             $element,
             $injector,
-            
+
             resourceService: maUser,
             localStorageKey: 'userTable',
             defaultColumns,
@@ -59,6 +58,25 @@ class UserTableController extends TableController {
                 queryBuilder.contains('inheritedRoles', role);
             }
         }
+    }
+
+    hasPermission(user) {
+        return user && this.hasEditPermission(user) && this.hasDeletePermission(user);
+    }
+
+    hasEditPermission(user) {
+        let selfEdit = false;
+        if (user.username === this.resourceService.current.username) {
+            selfEdit = this.resourceService.current.hasPermission('permissions.user.editSelf');
+        }
+        return selfEdit || this.resourceService.current.hasPermission(user.editPermission);
+    }
+
+    hasDeletePermission(user) {
+        if (user.username === this.resourceService.current.username) {
+            return false;
+        }
+        return this.hasEditPermission(user);
     }
 }
 
