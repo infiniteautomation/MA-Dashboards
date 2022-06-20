@@ -67,7 +67,7 @@ class UserTableController extends TableController {
     hasEditPermission(user) {
         let selfEdit = false;
         if (user.username === this.resourceService.current.username) {
-            selfEdit = this.resourceService.current.hasPermission('permissions.user.editSelf');
+            selfEdit = this.resourceService.current.hasSystemPermission('permissions.user.editSelf');
         }
         return selfEdit || this.resourceService.current.hasPermission(user.editPermission);
     }
