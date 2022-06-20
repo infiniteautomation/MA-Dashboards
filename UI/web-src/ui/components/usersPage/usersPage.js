@@ -59,23 +59,23 @@ class UsersPageController {
     addUser(event) {
         this.editUser(new this.User());
     }
-    
+
     editUser(user) {
         this.user = user;
         this.$state.params.username = this.user && !this.user.isNew() && this.user.username || null;
         this.$state.go('.', this.$state.params, {location: 'replace', notify: false});
-        
+
         if (user != null && !this.showUserEditDialog) {
             this.showUserEditDialog = {};
         }
     }
-    
+
     userEditorClosed() {
         delete this.showUserEditDialog;
         this.editUser(null);
         this.userEditorTab = 0;
     }
-    
+
     deleteUsers(event) {
         const users = this.selectedUsers;
         if (users.find(u => u.username === this.User.current.username)) {
@@ -100,7 +100,7 @@ class UsersPageController {
             }, error => {
                 this.maDialogHelper.errorToast(['ui.bulk.failedToStart', error.mangoStatusText]);
             });
-        });
+        }, angular.noop);
     }
 
     rowClicked(event, item, index, tableCtrl) {
@@ -113,6 +113,43 @@ class UsersPageController {
 
     updateSelectedRoleXids() {
         this.selectedRoleXids = [this.selectedRole.xid];
+    }
+
+    editUsers(event) {
+        if (this.selectedUsers.length === 1) {
+            this.editUser(this.selectedUsers[0]);
+        } else {
+            this.user = angular.copy(this.selectedUsers);
+            this.showUserEditDialog = {};
+        }
+    }
+
+    hasEditPermissions() {
+        const users = this.selectedUsers;
+
+        if (!users || users.length === 0) {
+            return false;
+        }
+
+        return users.every(u => {
+            let selfEdit = false;
+            if (u.username === this.User.current.username) {
+                selfEdit = this.User.current.hasPermission('permissions.user.editSelf');
+            }
+            return selfEdit || this.User.current.hasPermission(u.editPermission);
+        });
+    }
+
+    hasDeletePermissions() {
+        const users = this.selectedUsers;
+
+        if (!users || users.length === 0) {
+            return false;
+        }
+        if (users.find(u => u.username === this.User.current.username)) {
+            return false;
+        }
+        return this.hasEditPermissions();
     }
 }
 

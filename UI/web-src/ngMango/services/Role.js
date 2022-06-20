@@ -38,7 +38,7 @@ function roleFactory(RestResource) {
         }
 
         formatInheritedRoles() {
-            return this.constructor.formatRoles(this.inherited);
+            return this.inherited && this.constructor.formatRoles(this.inherited);
         }
     }
 
