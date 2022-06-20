@@ -134,7 +134,7 @@ class UsersPageController {
         return users.every(u => {
             let selfEdit = false;
             if (u.username === this.User.current.username) {
-                selfEdit = this.User.current.hasPermission('permissions.user.editSelf');
+                selfEdit = this.User.current.hasSystemPermission('permissions.user.editSelf');
             }
             return selfEdit || this.User.current.hasPermission(u.editPermission);
         });
