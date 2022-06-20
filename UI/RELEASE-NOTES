@@ -1,11 +1,9 @@
 *Version 4.4.0*
 * Upgraded for Mango 4.4.0
 
-*Version 4.3.2*
-* Added bulk edit feature for users
-
 *Version 4.3.1*
 * Extend/Update point object with runtime point attributes map when websocket message received
+* Added bulk edit feature for users
 
 *Version 4.3.0*
 * Upgraded for Mango 4.3.0
