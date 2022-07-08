@@ -3,7 +3,7 @@
         <md-input-container flex="100" flex-gt-md="50">
             <md-icon>label</md-icon>
             <label ma-tr="users.username"></label>
-            <input name="username" ng-model="$ctrl.user.username" required maxlength="40" ng-disabled="$ctrl.disabled">
+            <input name="username" ng-model="$ctrl.user.username" required maxlength="40" ng-disabled="$ctrl.disabled || $ctrl.user.username.hasMultipleValues()">
             <div ng-messages="$ctrl.userForm.username.$error">
                 <div ng-message="required" ma-tr="validate.required"></div>
                 <div ng-message="maxlength" ma-tr="validate.maxLength" ma-tr-args="[40, $ctrl.userForm.username.$viewValue.length]"></div>
@@ -23,7 +23,7 @@
         <md-input-container flex="100" flex-gt-md="50" class="ma-has-hint">
             <md-icon>{{$ctrl.user.emailVerified ? 'verified_user' : 'email'}}</md-icon>
             <label ma-tr="users.email"></label>
-            <input type="email" name="email" ng-model="$ctrl.user.email" required maxlength="255" ng-disabled="$ctrl.registerMode || $ctrl.disabled">
+            <input type="email" name="email" ng-model="$ctrl.user.email" required maxlength="255" ng-disabled="$ctrl.registerMode || $ctrl.disabled  || $ctrl.user.email.hasMultipleValues()">
             <div ng-messages="$ctrl.userForm.email.$error">
                 <div ng-message="required" ma-tr="validate.required"></div>
                 <div ng-message="email" ma-tr="validate.invalidEmail"></div>
@@ -38,7 +38,7 @@
         <md-input-container flex="100" flex-gt-md="50">
             <md-icon>phone</md-icon>
             <label ma-tr="users.phone"></label>
-            <input type="tel" name="phone" ng-model="$ctrl.user.phone" pattern="^(?:\+?[0-9]{1,3}[ -]?)?(?:\([0-9 ]+\)[ -]?)?[0-9]+(?:[ -][0-9]+)*$" maxlength="40" ng-disabled="$ctrl.disabled">
+            <input type="tel" name="phone" ng-model="$ctrl.user.phone" ng-pattern="$ctrl.user.phone.hasMultipleValues() ? '' : $ctrl.phonePattern" maxlength="40" ng-disabled="$ctrl.disabled">
             <div ng-messages="$ctrl.userForm.phone.$error">
                 <div ng-message="pattern" ma-tr="validate.invalidPhone"></div>
                 <div ng-message="maxlength" ma-tr="validate.maxLength" ma-tr-args="[40, $ctrl.userForm.phone.$viewValue.length]"></div>
@@ -85,11 +85,12 @@
         <md-input-container flex="100" flex-gt-md="50" ng-if="!$ctrl.registerMode" class="ma-has-hint">
             <md-icon>group</md-icon>
             <label ma-tr="users.roles"></label>
-            <ma-drop-down-button ng-disabled="$ctrl.disabled || !$ctrl.User.current.hasPermission($ctrl.original.editPermission)">
-                <span ng-bind="$ctrl.user.formatRoles()"></span>
+            <ma-drop-down-button ng-disabled="$ctrl.disabled || !$ctrl.hasEditPermission()">
+                <span ng-bind="$ctrl.formatRoles()"></span>
                 <ma-drop-down class="ma-user-editor-role-selector ma-full-screen-centered">
                     <ma-role-selector name="roles" ma-format-array="{xid: $item}" ma-parse-array="$item.xid"
-                                      ng-model="$ctrl.user.roles"
+                                      ng-model="$ctrl.selectedRoles"
+                                      ng-change="$ctrl.rolesChanged()"
                                       ng-multiple="::true"
                                       ng-disabled="$ctrl.disabled"
                                       disabled-options="::['user', 'anonymous']"
@@ -105,6 +106,9 @@
             <md-icon>alarm</md-icon>
             <label ma-tr="users.receiveAlarmEmails"></label>
             <md-select name="receiveAlarmEmails" ng-model="$ctrl.user.receiveAlarmEmails" required ng-disabled="$ctrl.disabled">
+                <md-option ng-if="$ctrl.user.receiveAlarmEmails.hasMultipleValues()"
+                           ng-value="$ctrl.user.receiveAlarmEmails" ng-bind="$ctrl.user.receiveAlarmEmails">
+                </md-option>
                 <md-option value="NONE" ma-tr="common.alarmLevel.none"></md-option>
                 <md-option value="INFORMATION" ma-tr="common.alarmLevel.info"></md-option>
                 <md-option value="IMPORTANT" ma-tr="common.alarmLevel.important"></md-option>
@@ -123,7 +127,7 @@
         <md-input-container flex="100" flex-gt-md="50">
             <md-icon>home</md-icon>
             <label ma-tr="users.homeURL"></label>
-            <input name="homeUrl" ng-model="$ctrl.user.homeUrl" pattern="^\/(?!\/).*" ng-disabled="$ctrl.disabled">
+            <input name="homeUrl" ng-model="$ctrl.user.homeUrl" ng-pattern="$ctrl.user.homeUrl.hasMultipleValues() ? '' : $ctrl.homeUrlPattern" ng-disabled="$ctrl.disabled">
             <div ng-messages="$ctrl.userForm.homeUrl.$error">
                 <div ng-message="pattern" ma-tr="validate.mustBeAbsolutePath"></div>
                 <div ng-message="validationMessage" ng-bind="$ctrl.userForm.homeUrl.validationMessage"></div>
@@ -134,13 +138,17 @@
             <md-icon>language</md-icon>
             <label ma-tr="users.locale"></label>
             <ma-drop-down-button ng-disabled="$ctrl.disabled">
-                <span ng-if="$ctrl.user.locale != null">
+                <span ng-if="$ctrl.user.locale != null && !$ctrl.user.locale.hasMultipleValues()">
                     <span ng-bind="$ctrl.locales[$ctrl.user.locale].name"></span>&nbsp;&mdash;&nbsp;<span ng-bind="$ctrl.locales[$ctrl.user.locale].native"></span>
                 </span>
+                <span ng-if="$ctrl.user.locale != null && $ctrl.user.locale.hasMultipleValues()" ng-bind="$ctrl.user.locale"></span>
                 <em ng-if="$ctrl.user.locale === null" ma-tr="users.useServerLocale"></em>
                 <ma-drop-down class="ma-locale-select ma-full-screen-centered" auto-focus="::false">
                     <ma-option-list name="locale" ng-model="$ctrl.user.locale" ng-disabled="$ctrl.disabled" items="$ctrl.getLocales($filter)"
                                     ma-configure-input-container has-value="$value !== undefined">
+                        <ma-option ng-if="$ctrl.user.locale.hasMultipleValues()" ng-value="$ctrl.user.locale" md-no-ink>
+                            <span ng-bind="$ctrl.user.locale"></span>
+                        </ma-option>
                         <ma-option ng-if="!$filter" ng-value="null" md-no-ink><em ma-tr="users.useServerLocale"></em></ma-option>
                         <ma-option ng-repeat="locale in $items track by locale.id" ng-value="locale.id" md-no-ink>
                             <span md-highlight-text="$filter" md-highlight-flags="ig">{{locale.name}} &mdash; {{locale.native}}</span>
@@ -174,7 +182,7 @@
             </div>
         </md-input-container>
         
-        <ma-duration-editor ng-if="$ctrl.User.current.hasPermission($ctrl.original.editPermission) && $ctrl.user.sessionExpirationOverride" ng-disabled="$ctrl.disabled"
+        <ma-duration-editor ng-if="$ctrl.hasEditPermission() && !$ctrl.user.sessionExpirationOverride.hasMultipleValues() && $ctrl.user.sessionExpirationOverride" ng-disabled="$ctrl.disabled"
                 flex="100" flex-gt-md="50" name="sessionExpirationPeriod" ng-model="$ctrl.user.sessionExpirationPeriod"
                 allowed-types="::['MINUTES', 'HOURS', 'DAYS', 'MONTHS', 'YEARS']" required>
             <ma-periods-label ma-tr="users.sessionExpirationPeriod"></ma-periods-label>
@@ -192,16 +200,17 @@
     </ma-permission-editor-container>
 
     <div layout="column" layout-gt-md="row" layout-align="start start" class="ma-user-checkboxes" ng-if="!$ctrl.registerMode">
-        <md-checkbox name="muted" ng-model="$ctrl.user.muted" ng-disabled="$ctrl.disabled">
+        <md-checkbox name="muted" ng-model="$ctrl.user.muted" ng-disabled="$ctrl.disabled" ma-flatten-values="false">
             <span ma-tr="users.muted"></span>
         </md-checkbox>
-        <md-checkbox ng-if="!$ctrl.profileMode" name="disabled" ng-model="$ctrl.user.disabled" ng-disabled="$ctrl.User.current.username === $ctrl.user.originalId || $ctrl.disabled">
+        <md-checkbox ng-if="!$ctrl.profileMode" name="disabled" ng-model="$ctrl.user.disabled" ng-disabled="$ctrl.isSelfUser() || $ctrl.disabled" ma-flatten-values="false">
             <span ma-tr="common.disabled"></span>
         </md-checkbox>
         <md-checkbox name="receiveOwnAuditEvents" ng-model="$ctrl.user.receiveOwnAuditEvents" ng-disabled="$ctrl.disabled">
             <span ma-tr="users.receiveOwnAuditEvents"></span>
         </md-checkbox>
-        <md-checkbox ng-if="$ctrl.User.current.hasPermission($ctrl.original.editPermission)" name="sessionExpirationOverride" ng-model="$ctrl.user.sessionExpirationOverride" ng-disabled="$ctrl.disabled">
+        <md-checkbox ng-if="$ctrl.hasEditPermission()" name="sessionExpirationOverride" ng-model="$ctrl.user.sessionExpirationOverride"
+                     ng-disabled="$ctrl.disabled" ng-change="$ctrl.sessionExpirationOverrideChanged()" ma-flatten-values="false">
             <span ma-tr="users.sessionExpirationOverride"></span>
         </md-checkbox>
     </div>
@@ -217,7 +226,7 @@
         <md-button class="md-raised" ng-click="$ctrl.revert($event)" ng-disabled="!$ctrl.user || !($ctrl.userForm.$dirty || $ctrl.updatedUser)">
             <md-icon>undo</md-icon> <span ma-tr="ui.app.revert"></span>
         </md-button>
-        <md-button ng-if="!$ctrl.profileMode" class="md-raised md-warn" ng-disabled="!$ctrl.user || $ctrl.user.isNew() || $ctrl.User.current.username === $ctrl.user.originalId || $ctrl.saving || $ctrl.deleting"
+        <md-button ng-if="!$ctrl.profileMode && !$ctrl.user.username.hasMultipleValues()" class="md-raised md-warn"ng-disabled="!$ctrl.user || $ctrl.user.isNew() || $ctrl.User.current.username === $ctrl.user.originalId || $ctrl.saving || $ctrl.deleting"
                 ng-click="$ctrl.remove($event)">
             <md-icon>delete</md-icon> <span ma-tr="common.delete"></span>
         </md-button>
