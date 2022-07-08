@@ -106,7 +106,7 @@
                     ng-class="{'ma-row-loading': item == null, 'ma-item-selected': $ctrl.selectedItems.has(item.username)}"
                     ng-click="$ctrl.rowClicked({$event: $event, $item: item, $index: $index, $tableCtrl: $ctrl})">
                 <div class="ma-checkbox-column">
-                    <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1" ng-checked="$ctrl.selectedItems.has(item.username)" md-no-ink="true"></md-checkbox>
+                    <md-checkbox ng-if="$ctrl.selectMultiple" tabindex="-1" ng-checked="$ctrl.selectedItems.has(item.username)" md-no-ink="true" ng-class="{'md-warn': !$ctrl.hasPermission(item)}"></md-checkbox>
                 </div>
 
                 <div ng-repeat="column in $ctrl.selectedColumns | orderBy:'order' track by column.name">
