@@ -38,7 +38,7 @@
     "md-color-picker": "^0.2.6",
     "md-pickers": "^1.1.1",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.17",
+    "moment-timezone": "^0.5.35",
     "papaparse": "^5.0.0",
     "pdfmake": "^0.1.36",
     "requirejs": "^2.3.5",
