@@ -55,6 +55,7 @@ class PublisherPointsCreatorController {
             this.showDialog = true;
         }
         if (changes.publisher) {
+            this.originalPublisher = angular.copy(this.publisher);
             this.createColumns();
         }
     }
