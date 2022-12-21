@@ -121,6 +121,7 @@ function NotificationManagerFactory(MA_BASE_URL, $rootScope, MA_TIMEOUTS, $q, $t
             }, MA_TIMEOUTS.websocket);
 
             socket.onclose = event => {
+                console.warn('WebSocket closed', event.target.url, 'reason:', event.reason);
                 socketDeferred.reject('Socket closed');
                 this.closeSocket(event);
             };
