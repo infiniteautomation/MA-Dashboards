@@ -191,6 +191,7 @@ function EventManagerFactory(mangoBaseUrl, $rootScope, MA_TIMEOUTS, maUser, $win
             }, MA_TIMEOUTS.websocket);
 
             socket.onclose = event => {
+                console.warn('WebSocket closed', event.target.url, 'reason:', event.reason);
                 this.closeSocket(event);
             };
 
@@ -367,7 +368,10 @@ function EventManagerFactory(mangoBaseUrl, $rootScope, MA_TIMEOUTS, maUser, $win
         }
 
         updateSubscriptions(xid) {
-            if (!this.socket || this.socket.readyState !== READY_STATE_OPEN) return;
+            if (!this.isConnected()) {
+                this.openSocket();
+                return;
+            }
 
             const subscriptions = xid ? this.subscriptionsByXid[xid] : this.allSubscriptions;
 
