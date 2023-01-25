@@ -62,7 +62,7 @@ ng-class="{'three-rows': $ctrl.mdMedia('xs') && ($ctrl.params.preset || $ctrl.st
             <md-input-container flex="30">
                 <label ma-tr="ui.app.rollupType"></label>
                 <md-select name="rollupType" ng-model="$ctrl.params.rollupType">
-                    <md-option ng-repeat="t in $ctrl.rollupTypes | filter:$ctrl.params.rollupTypesFilter track by t.type" ng-value="t.type">
+                    <md-option ng-repeat="t in $ctrl.displayedRollupTypes | filter:$ctrl.params.rollupTypesFilter track by t.type" ng-value="t.type">
                         <span ng-if="::t.type !== 'POINT_DEFAULT'" ma-tr="{{::t.translation}}"></span>
                         <em ng-if="::t.type === 'POINT_DEFAULT'" ma-tr="{{::t.translation}}"></em>
                     </md-option>
