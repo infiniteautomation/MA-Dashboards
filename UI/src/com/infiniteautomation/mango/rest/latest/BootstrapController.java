@@ -6,7 +6,6 @@ package com.infiniteautomation.mango.rest.latest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Clock;
-import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.TimeZone;
@@ -230,8 +229,7 @@ public class BootstrapController {
         data.setAggregationEnabled(aggregationEnabled);
 
         if (aggregateDao instanceof BoundaryAggregateDao) {
-            var boundaryDate = ((BoundaryAggregateDao) aggregateDao).boundary();
-            var queryBoundary = ChronoUnit.MILLIS.between(boundaryDate, ZonedDateTime.now(clock));
+            var queryBoundary = ((BoundaryAggregateDao) aggregateDao).fromBoundary(ChronoUnit.MILLIS);
             data.setQueryBoundary(queryBoundary);
         }
 
