@@ -5,6 +5,8 @@ package com.infiniteautomation.mango.rest.latest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Clock;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -26,6 +28,7 @@ import com.infiniteautomation.mango.rest.latest.TranslationsController.Translati
 import com.infiniteautomation.mango.rest.latest.model.jsondata.JsonDataModel;
 import com.infiniteautomation.mango.rest.latest.model.modules.AngularJSModuleDefinitionGroupModel;
 import com.infiniteautomation.mango.rest.latest.model.user.UserModel;
+import com.infiniteautomation.mango.spring.annotations.RestMapper;
 import com.infiniteautomation.mango.spring.components.PublicUrlService;
 import com.infiniteautomation.mango.spring.components.pageresolver.PageResolver;
 import com.infiniteautomation.mango.spring.service.PermissionService;
@@ -34,8 +37,9 @@ import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.ICoreLicense;
 import com.serotonin.m2m2.db.dao.InstalledModulesDao;
 import com.serotonin.m2m2.db.dao.JsonDataDao;
+import com.serotonin.m2m2.db.dao.PointValueDao;
 import com.serotonin.m2m2.db.dao.SystemSettingsDao;
-import com.infiniteautomation.mango.spring.annotations.RestMapper;
+import com.serotonin.m2m2.db.dao.pointvalue.BoundaryAggregateDao;
 import com.serotonin.m2m2.module.Module;
 import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.vo.User;
@@ -71,13 +75,17 @@ public class BootstrapController {
     private final PageResolver pageResolver;
     private final OAuth2Information oAuth2Information;
     private final InstalledModulesDao installedModulesDao;
+    private final PointValueDao pointValueDao;
+
+    @Autowired
+    Clock clock;
 
     @Autowired
     public BootstrapController(JsonDataDao jsonDataDao,
                                @RestMapper ObjectMapper objectMapper,
                                ServletContext servletContext, PublicUrlService publicUrlService, Environment env,
                                PermissionService permissionService, PageResolver pageResolver, OAuth2Information oAuth2Information,
-                               InstalledModulesDao installedModulesDao) {
+                               InstalledModulesDao installedModulesDao, PointValueDao pointValueDao) {
         this.jsonDataDao = jsonDataDao;
         this.permissionService = permissionService;
         this.pageResolver = pageResolver;
@@ -88,6 +96,7 @@ public class BootstrapController {
         this.servletContext = servletContext;
         this.publicUrlService = publicUrlService;
         this.env = env;
+        this.pointValueDao = pointValueDao;
     }
 
     private void merge(ObjectNode dest, ObjectNode src) throws IOException {
@@ -215,6 +224,15 @@ public class BootstrapController {
 
         data.setTranslations(TranslationsController.getTranslations(PRIVATE_TRANSLATIONS, user.getLocaleObject()));
 
+        var aggregateDao = pointValueDao.getAggregateDao();
+        var aggregationEnabled = aggregateDao.supportsPreAggregation() && aggregateDao.isPreAggregationEnabled();
+        data.setAggregationEnabled(aggregationEnabled);
+
+        if (aggregateDao instanceof BoundaryAggregateDao) {
+            var queryBoundary = ((BoundaryAggregateDao) aggregateDao).fromBoundary(ChronoUnit.MILLIS);
+            data.setQueryBoundary(queryBoundary);
+        }
+
         return data;
     }
 
@@ -329,6 +347,8 @@ public class BootstrapController {
         private TranslationsModel translations;
         private String vendor;
         private String vendorUrl;
+        private boolean aggregationEnabled;
+        private long queryBoundary;
 
         public String getInstanceDescription() {
             return instanceDescription;
@@ -395,6 +415,22 @@ public class BootstrapController {
 
         public void setVendorUrl(String vendorUrl) {
             this.vendorUrl = vendorUrl;
+        }
+
+        public boolean isAggregationEnabled() {
+            return aggregationEnabled;
+        }
+
+        public void setAggregationEnabled(boolean aggregationEnabled) {
+            this.aggregationEnabled = aggregationEnabled;
+        }
+
+        public long getQueryBoundary() {
+            return queryBoundary;
+        }
+
+        public void setQueryBoundary(long queryBoundary) {
+            this.queryBoundary = queryBoundary;
         }
     }
 }
