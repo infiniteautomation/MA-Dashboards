@@ -1,15 +1,123 @@
 {
   "titleSuffix": "Mango",
   "logoSrc": "../img/Mango_logo_4c_inverted-01.svg",
-  "defaultTheme": "mangoDark2020",
-  "usePreferredColorScheme": true,
-  "alternateTheme": "mangoLight2020",
+  "defaultTheme": "pimangolight",
+  "usePreferredColorScheme": false,
+  "alternateTheme": "pimangoDark",
   "alternateLogo": "../img/Mango_logo_4c-01.svg",
   "codeTheme": "monokai",
   "googleMapsApiKey": "",
   "mapboxAccessToken": "",
   "googleAnalyticsPropertyId": "",
   "palettes": {
+    "pimango-primary-light": {
+      "50": "#E9F1F5",
+      "100": "#37B6FB",
+      "200": "#0FA8FA",
+      "300": "#0491DC",
+      "400": "#0476B4",
+      "500": "#0369A1",
+      "600": "#035C8C",
+      "700": "#024F78",
+      "800": "#024264",
+      "900": "#023550",
+      "A100": "#37B6FB",
+      "A200": "#0FA8FA",
+      "A400": "#0476B4",
+      "A700": "#024F78",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 A100 A200"
+    },
+    "pimango-primary-dark": {
+      "50": "#E9F1F5",
+      "100": "#37B6FB",
+      "200": "#0FA8FA",
+      "300": "#0491DC",
+      "400": "#0476B4",
+      "500": "#0369A1",
+      "600": "#035C8C",
+      "700": "#024F78",
+      "800": "#024264",
+      "900": "#023550",
+      "A100": "#37B6FB",
+      "A200": "#0FA8FA",
+      "A400": "#0476B4",
+      "A700": "#024F78",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 A100 A200"
+    },
+    "pimango-accent-light": {
+      "50": "#F2EEFD",
+      "100": "#E3DAFB",
+      "200": "#C7B5F7",
+      "300": "#AB90F3",
+      "400": "#8F6BEF",
+      "500": "#7A51ED",
+      "600": "#7246EC",
+      "700": "#6434EA",
+      "800": "#5621E8",
+      "900": "#4C17DE",
+      "A100": "#E3DAFB",
+      "A200": "#C7B5F7",
+      "A400": "#8F6BEF",
+      "A700": "#6434EA",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 300 400 A100 A200"
+    },
+    "pimango-accent-dark": {
+      "50": "#E3DAFB",
+      "100": "#D5C8F9",
+      "200": "#C7B6F7",
+      "300": "#B9A3F5",
+      "400": "#AB91F3",
+      "500": "#9D7EF1",
+      "600": "#8F6CEF",
+      "700": "#7347EB",
+      "800": "#6535E9",
+      "900": "#5723E7",
+      "A100": "#D5C8F9",
+      "A200": "#C7B6F7",
+      "A400": "#AB91F3",
+      "A700": "#7347EB",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 300 400 A100 A200 A400"
+    },
+    "pimango-danger": {
+      "50": "#FDF0F3",
+      "100": "#FABCBC",
+      "200": "#F88888",
+      "300": "#F56E6E",
+      "400": "#F23D3D",
+      "500": "#D21212",
+      "600": "#DB2121",
+      "700": "#AF1A1A",
+      "800": "#831414",
+      "900": "#420A0A",
+      "A100": "#FCDEDE",
+      "A200": "#F47D7D",
+      "A400": "#C54040",
+      "A700": "#6E2323",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 300 A100 A200"
+    },
+    "pimango-background": {
+      "50": "#FCFCFC",
+      "100": "#FBFBFB",
+      "200": "#FAFAFA",
+      "300": "#F5F5F5",
+      "400": "#EBEBEB",
+      "500": "#0369A1",
+      "600": "#646464",
+      "700": "#5A5A5A",
+      "800": "#504F4F",
+      "900": "#3E3E3E",
+      "A100": "#FBFBFB",
+      "A200": "#FAFAFA",
+      "A400": "#EBEBEB",
+      "A700": "#5A5A5A",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 300 400 A100 A200 A400"
+    },
     "mango-orange": {
       "50": "#ffffff",
       "100": "#ffdfbd",
@@ -47,61 +155,123 @@
       "contrastDarkColors": "50 100 200 300 A100"
     },
     "mango-blue-2020": {
-		"50": "#E8F0F5",
-		"100": "#A6C5D7",
-		"200": "#7AA9C3",
-		"300": "#4E8CAF",
-		"400": "#387EA5",
-		"500": "#22709B",
-		"600": "#0C6291",
-		"700": "#0B5A84",
-		"800": "#073650",
-		"900": "#052435",
-		"A100": "#D2E2EB",
-		"A200": "#BCD4E1",
-		"A400": "#649BB9",
-		"A700": "#09486A",
-		"contrastDefaultColor": "light",
-		"contrastDarkColors": "50 100 200 A100 A200"
+      "50": "#E8F0F5",
+      "100": "#A6C5D7",
+      "200": "#7AA9C3",
+      "300": "#4E8CAF",
+      "400": "#387EA5",
+      "500": "#22709B",
+      "600": "#0C6291",
+      "700": "#0B5A84",
+      "800": "#073650",
+      "900": "#052435",
+      "A100": "#D2E2EB",
+      "A200": "#BCD4E1",
+      "A400": "#649BB9",
+      "A700": "#09486A",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 A100 A200"
     },
     "mango-orange-2020": {
-		"50": "#FAF1EE",
-		"100": "#F2D6CD",
-		"200": "#E5AD9B",
-		"300": "#DC927A",
-		"400": "#D47759",
-		"500": "#D06A49",
-		"600": "#BE6143",
-		"700": "#984E36",
-		"800": "#5F3122",
-		"900": "#391D14",
-		"A100": "#F6E3DD",
-		"A200": "#D06A49",
-		"A400": "#AB573C",
-		"A700": "#723A28",
-		"contrastDefaultColor": "light",
-		"contrastDarkColors": "50 100 200 A100"
+      "50": "#FAF1EE",
+      "100": "#F2D6CD",
+      "200": "#E5AD9B",
+      "300": "#DC927A",
+      "400": "#D47759",
+      "500": "#D06A49",
+      "600": "#BE6143",
+      "700": "#984E36",
+      "800": "#5F3122",
+      "900": "#391D14",
+      "A100": "#F6E3DD",
+      "A200": "#D06A49",
+      "A400": "#AB573C",
+      "A700": "#723A28",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 A100"
     },
     "mango-background-2020": {
-		"50": "#FAFDFF",
-		"100": "#E3EBF0",
-		"200": "#DDE4E8",
-		"300": "#CFDDE6",
-		"400": "#C3D0D9",
-		"500": "#B8C4CC",
-		"600": "#123D59",
-		"700": "#113954",
-		"800": "#1F4259",
-		"900": "#17374D",
-		"A100": "#EBF2F7",
-		"A200": "#162F40",
-		"A400": "#222C33",
-		"A700": "#181F24",
-		"contrastDefaultColor": "light",
-		"contrastDarkColors": "50 100 200 300 400 500 A100"
+      "50": "#FAFDFF",
+      "100": "#E3EBF0",
+      "200": "#DDE4E8",
+      "300": "#CFDDE6",
+      "400": "#C3D0D9",
+      "500": "#B8C4CC",
+      "600": "#123D59",
+      "700": "#113954",
+      "800": "#1F4259",
+      "900": "#17374D",
+      "A100": "#EBF2F7",
+      "A200": "#162F40",
+      "A400": "#222C33",
+      "A700": "#181F24",
+      "contrastDefaultColor": "light",
+      "contrastDarkColors": "50 100 200 300 400 500 A100"
     }
   },
   "themes": {
+    "pimangolight": {
+      "primaryPalette": "pimango-primary-light",
+      "primaryPaletteHues": {
+        "default": "500",
+        "hue-1": "300",
+        "hue-2": "800",
+        "hue-3": "100"
+      },
+      "accentPalette": "pimango-accent-light",
+      "accentPaletteHues": {
+        "default": "500",
+        "hue-1": "500",
+        "hue-2": "200",
+        "hue-3": "700"
+      },
+      "dangerPalette": "pimango-danger",
+      "dangerPaletteHues": {
+        "default": "500",
+        "hue-1": "500",
+        "hue-2": "500",
+        "hue-3": "500"
+      },
+      "backgroundPalette": "pimango-background",
+      "backgroundPaletteHues": {
+        "default": "50",
+        "hue-1": "100",
+        "hue-2": "500",
+        "hue-3": "400"
+      },
+      "dark": false
+    },
+    "pimangoDark": {
+      "primaryPalette": "pimango-primary-dark",
+      "primaryPaletteHues": {
+        "default": "500",
+        "hue-1": "300",
+        "hue-2": "800",
+        "hue-3": "100"
+      },
+      "accentPalette": "pimango-accent-dark",
+      "accentPaletteHues": {
+        "default": "500",
+        "hue-1": "500",
+        "hue-2": "200",
+        "hue-3": "700"
+      },
+      "dangerPalette": "pimango-danger",
+      "dangerPaletteHues": {
+        "default": "500",
+        "hue-1": "500",
+        "hue-2": "500",
+        "hue-3": "500"
+      },
+      "backgroundPalette": "pimango-background",
+      "backgroundPaletteHues": {
+        "default": "600",
+        "hue-1": "900",
+        "hue-2": "800",
+        "hue-3": "900"
+      },
+      "dark": true
+    },
     "mangoLight": {
       "primaryPalette": "mango-blue",
       "primaryPaletteHues": {
@@ -137,11 +307,11 @@
       "dark": true
     },
     "userTheme": {
-	    "primaryPalette": "yellow",
-	    "accentPalette": "pink",
-	    "warnPalette": "red",
-	    "backgroundPalette": "grey",
-	    "dark": false
+      "primaryPalette": "yellow",
+      "accentPalette": "pink",
+      "warnPalette": "red",
+      "backgroundPalette": "grey",
+      "dark": false
     },
     "mangoDark2020": {
       "primaryPalette": "mango-blue-2020",
@@ -193,10 +363,10 @@
     }
   },
   "fonts": {
-  	"default": "'Roboto Condensed'",
-  	"heading": "Roboto",
-  	"paragraph": "Roboto",
-  	"code": "'Roboto Mono'"
+    "default": "'Avenir'",
+    "heading": "Avenir",
+    "paragraph": "'Avenir'",
+    "code": "'Roboto Mono'"
   },
   "pointValuesLimit": 5001,
   "autoLoginUsername": "",
@@ -204,30 +374,30 @@
   "userModule": "",
   "userCss": "",
   "eventAudioFiles": {
-  	"NONE": "",
-  	"INFORMATION": "",
-  	"IMPORTANT": "",
-  	"WARNING": "",
+    "NONE": "",
+    "INFORMATION": "",
+    "IMPORTANT": "",
+    "WARNING": "",
     "URGENT": "/audio/urgent.mp3",
     "CRITICAL": "/audio/critical.mp3",
     "LIFE_SAFETY": "/audio/lifesafety.mp3",
     "DO_NOT_LOG": ""
   },
   "eventReadAloud": {
-  	"NONE": false,
-  	"INFORMATION": false,
-  	"IMPORTANT": false,
-  	"WARNING": false,
+    "NONE": false,
+    "INFORMATION": false,
+    "IMPORTANT": false,
+    "WARNING": false,
     "URGENT": false,
     "CRITICAL": false,
     "LIFE_SAFETY": false,
     "DO_NOT_LOG": false
   },
   "eventNotify": {
-  	"NONE": false,
-  	"INFORMATION": false,
-  	"IMPORTANT": false,
-  	"WARNING": false,
+    "NONE": false,
+    "INFORMATION": false,
+    "IMPORTANT": false,
+    "WARNING": false,
     "URGENT": true,
     "CRITICAL": true,
     "LIFE_SAFETY": true,
@@ -248,16 +418,16 @@
     "theme_color": "rgba(0, 107, 147, 1)",
     "background_color": "rgba(48, 48, 48, 1)",
     "icons": [
-        {
-            "src": "../img/icon192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "../img/icon512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
+      {
+        "src": "../img/icon192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "../img/icon512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
     ]
   },
   "pwaUseThemeColors": true,
