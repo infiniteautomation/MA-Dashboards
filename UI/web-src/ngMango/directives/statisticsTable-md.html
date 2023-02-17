@@ -17,18 +17,33 @@
 			<td md-cell ma-tr="common.stats.end"></td>
             <td md-cell><span ng-bind="statistics.last.value"></span> @ <span ng-bind="formatTimestamp(statistics.last.timestamp)"></span></td>
 		</tr>
-		<tr md-row ng-if="statistics.minimum" class="ma-statistics-minimum">
+
+		<tr md-row ng-if="!isAggregated() && statistics.minimum" class="ma-statistics-minimum">
 			<td md-cell ma-tr="common.stats.min"></td>
-            <td md-cell><span ng-bind="statistics.minimum.value"></span> @ <span ng-bind="formatTimestamp(statistics.minimum.timestamp)"></span></td>
+			<td md-cell><span ng-bind="statistics.minimum.value"></span> @ <span ng-bind="formatTimestamp(statistics.minimum.timestamp)"></span></td>
 		</tr>
-		<tr md-row ng-if="statistics.maximum" class="ma-statistics-maximum">
+		<tr md-row ng-if="!isAggregated() && statistics.maximum" class="ma-statistics-maximum">
 			<td md-cell ma-tr="common.stats.max"></td>
-            <td md-cell><span ng-bind="statistics.maximum.value"></span> @ <span ng-bind="formatTimestamp(statistics.maximum.timestamp)"></span></td>
+			<td md-cell><span ng-bind="statistics.maximum.value"></span> @ <span ng-bind="formatTimestamp(statistics.maximum.timestamp)"></span></td>
 		</tr>
-		<tr md-row ng-if="statistics.average" class="ma-statistics-average">
+		<tr md-row ng-if="!isAggregated() && statistics.average" class="ma-statistics-average">
 			<td md-cell ma-tr="common.stats.avg"></td>
 			<td md-cell>{{statistics.average.value}}</td>
 		</tr>
+
+		<tr md-row ng-if="isAggregated() && statistics.minimumInPeriod" class="ma-statistics-minimum-in-period">
+			<td md-cell ma-tr="common.stats.minimumInPeriod"></td>
+			<td md-cell>{{statistics.minimumInPeriod.value}}</td>
+		</tr>
+		<tr md-row ng-if="isAggregated() && statistics.maximumInPeriod" class="ma-statistics-maximum-in-period">
+			<td md-cell ma-tr="common.stats.maximumInPeriod"></td>
+			<td md-cell>{{statistics.maximumInPeriod.value}}</td>
+		</tr>
+		<tr md-row ng-if="isAggregated() && statistics.arithmeticMean" class="ma-statistics-arithmetic-mean">
+			<td md-cell ma-tr="common.stats.arithmeticMean"></td>
+			<td md-cell>{{statistics.arithmeticMean.value}}</td>
+		</tr>
+
 		<tr md-row ng-if="statistics.integral" class="ma-statistics-integral">
 			<td md-cell ma-tr="common.stats.integral"></td>
 			<td md-cell>{{statistics.integral.value}}</td>

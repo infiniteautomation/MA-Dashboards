@@ -27,7 +27,8 @@ class WatchListPageController {
             '$scope',
             '$mdColorPicker',
             '$timeout',
-            'maUser'
+            'maUser',
+            'maUiServerInfo'
         ];
     }
 
@@ -41,7 +42,8 @@ class WatchListPageController {
             $scope,
             $mdColorPicker,
             $timeout,
-            User) {
+            User,
+            maUiServerInfo) {
 
         this.$mdMedia = $mdMedia;
         this.localStorageService = localStorageService;
@@ -53,6 +55,7 @@ class WatchListPageController {
         this.$mdColorPicker = $mdColorPicker;
         this.$timeout = $timeout;
         this.User = User;
+        this.maUiServerInfo = maUiServerInfo;
 
         this.selected = [];
         this.selectedStats = [];
@@ -510,6 +513,11 @@ class WatchListPageController {
                 ptStats.average = stats.average ? stats.average.value : NO_STATS;
                 ptStats.minimum = stats.minimum ? stats.minimum.value : NO_STATS;
                 ptStats.maximum = stats.maximum ? stats.maximum.value : NO_STATS;
+
+                ptStats.arithmeticMean = stats.arithmeticMean ? stats.arithmeticMean.value : NO_STATS;
+                ptStats.minimumInPeriod = stats.minimumInPeriod ? stats.minimumInPeriod.value : NO_STATS;
+                ptStats.maximumInPeriod = stats.maximumInPeriod ? stats.maximumInPeriod.value : NO_STATS;
+
                 ptStats.sum = stats.sum ? stats.sum.value : NO_STATS;
                 ptStats.first = stats.first ? stats.first.value : NO_STATS;
                 ptStats.last = stats.last ? stats.last.value : NO_STATS;
@@ -518,6 +526,11 @@ class WatchListPageController {
                 ptStats.averageValue = parseFloat(stats.average && stats.average.value);
                 ptStats.minimumValue = parseFloat(stats.minimum && stats.minimum.value);
                 ptStats.maximumValue = parseFloat(stats.maximum && stats.maximum.value);
+
+                ptStats.arithmeticMeanValue = parseFloat(stats.arithmeticMean && stats.arithmeticMean.value);
+                ptStats.minimumInPeriodValue = parseFloat(stats.minimumInPeriod && stats.minimumInPeriod.value);
+                ptStats.maximumInPeriodValue = parseFloat(stats.maximumInPeriod && stats.maximumInPeriod.value);
+
                 ptStats.sumValue = parseFloat(stats.sum && stats.sum.value);
                 ptStats.firstValue = parseFloat(stats.first && stats.first.value);
                 ptStats.lastValue = parseFloat(stats.last && stats.last.value);
@@ -570,6 +583,17 @@ class WatchListPageController {
                 this.rebuildChart();
             }
         });
+    }
+
+    isAggregated() {
+        const { aggregationEnabled, queryBoundary } = this.maUiServerInfo.postLoginData;
+        if (aggregationEnabled && queryBoundary > 0) {
+            const boundary = moment().subtract(queryBoundary, 'millisecond');
+            if (boundary > this.dateBar.from) {
+                return true;
+            }
+        }
+        return false;
     }
 
     showDownloadDialog($event) {
