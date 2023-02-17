@@ -29,8 +29,8 @@ import moment from 'moment-timezone';
 <ma-statistics-table statistics="statsObj"></ma-statistics-table>
  *
  */
-statisticsTable.$inject = ['$injector', 'MA_DATE_FORMATS'];
-function statisticsTable($injector, mangoDateFormats) {
+statisticsTable.$inject = ['$injector', 'MA_DATE_FORMATS', 'maUiServerInfo'];
+function statisticsTable($injector, mangoDateFormats, maUiServerInfo) {
     return {
         restrict: 'E',
         designerInfo: {
@@ -61,6 +61,21 @@ function statisticsTable($injector, mangoDateFormats) {
             return statisticsTableTemplate;
         },
         link: function($scope, $element, $attrs) {
+            $scope.isAggregated = () => {
+                const { aggregationEnabled, queryBoundary } = maUiServerInfo.postLoginData;
+                if (aggregationEnabled && queryBoundary > 0) {
+                    if ($scope.from) {
+                        const boundary = moment().subtract(queryBoundary, 'millisecond');
+                        return boundary > $scope.from;
+                    } else if ($scope.statistics) {
+                        // Try to determine isAggregated by statistics object
+                        const { first, last } = $scope.statistics;
+                        return first && first.value === undefined && last && last.value === undefined;
+                    }
+                }
+                return false;
+            }
+
             $scope.formatTimestamp = function(ts) {
                 if (ts == null) return '';
                 const m = moment(ts);
