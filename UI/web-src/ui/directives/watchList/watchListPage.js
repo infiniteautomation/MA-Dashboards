@@ -3,6 +3,7 @@
  */
 
 import angular from 'angular';
+import moment from 'moment-timezone';
 import tinycolor from 'tinycolor2';
 import downloadDialogTemplate from './downloadDialog.html';
 import watchListPageTemplate from './watchListPage.html';

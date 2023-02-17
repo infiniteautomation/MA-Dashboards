@@ -70,7 +70,7 @@ function statisticsTable($injector, mangoDateFormats, maUiServerInfo) {
                     } else if ($scope.statistics) {
                         // Try to determine isAggregated by statistics object
                         const { first, last } = $scope.statistics;
-                        return first && first.value === undefined && last && last.value === undefined;
+                        return first && first.timestamp === undefined && last && last.timestamp === undefined;
                     }
                 }
                 return false;
