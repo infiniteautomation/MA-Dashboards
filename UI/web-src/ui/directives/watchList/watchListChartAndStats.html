@@ -162,9 +162,12 @@
                     </th>
                     <th md-column md-order-by="device" ma-tr="ui.app.device" ng-if="$ctrl.columnIsSelected('deviceName')"></th>
                     <th md-column md-order-by="name" ma-tr="ui.app.name" ng-if="$ctrl.columnIsSelected('name')"></th>
-                    <th md-column md-numeric md-order-by="averageValue" ma-tr="ui.app.avg"></th>
-                    <th md-column md-numeric md-order-by="maximumValue" ma-tr="ui.app.max"></th>
-                    <th md-column md-numeric md-order-by="minimumValue" ma-tr="ui.app.min"></th>
+                    <th ng-if="!$ctrl.isAggregated()" md-column md-numeric md-order-by="averageValue" ma-tr="ui.app.avg"></th>
+                    <th ng-if="!$ctrl.isAggregated()" md-column md-numeric md-order-by="maximumValue" ma-tr="ui.app.max"></th>
+                    <th ng-if="!$ctrl.isAggregated()" md-column md-numeric md-order-by="minimumValue" ma-tr="ui.app.min"></th>
+                    <th ng-if="$ctrl.isAggregated()" md-column md-numeric md-order-by="arithmeticMean" ma-tr="ui.app.arithmeticMean"></th>
+                    <th ng-if="$ctrl.isAggregated()" md-column md-numeric md-order-by="maximumInPeriod" ma-tr="ui.app.maxInPeriod"></th>
+                    <th ng-if="$ctrl.isAggregated()" md-column md-numeric md-order-by="minimumInPeriod" ma-tr="ui.app.minInPeriod"></th>
                     <th md-column md-numeric md-order-by="sumValue" ma-tr="ui.app.sum"></th>
                     <th md-column md-numeric md-order-by="firstValue" ma-tr="ui.app.first"></th>
                     <th md-column md-numeric md-order-by="lastValue" ma-tr="ui.app.last"></th>
@@ -176,9 +179,12 @@
                     <td ng-repeat="tagKey in $ctrl.selectedTags" md-cell ng-bind="point['tags.' + tagKey]"></td>
                     <td md-cell ng-bind="point.device" ng-if="$ctrl.columnIsSelected('deviceName')"></td>
                     <td md-cell ng-bind="point.name" ng-if="$ctrl.columnIsSelected('name')"></td>
-                    <td md-cell ng-bind="point.average"></td>
-                    <td md-cell ng-bind="point.maximum"></td>
-                    <td md-cell ng-bind="point.minimum"></td>
+                    <td md-cell ng-if="!$ctrl.isAggregated()" ng-bind="point.average"></td>
+                    <td md-cell ng-if="!$ctrl.isAggregated()" ng-bind="point.maximum"></td>
+                    <td md-cell ng-if="!$ctrl.isAggregated()" ng-bind="point.minimum"></td>
+                    <td md-cell ng-if="$ctrl.isAggregated()" ng-bind="point.arithmeticMean"></td>
+                    <td md-cell ng-if="$ctrl.isAggregated()" ng-bind="point.maximumInPeriod"></td>
+                    <td md-cell ng-if="$ctrl.isAggregated()" ng-bind="point.minimumInPeriod"></td>
                     <td md-cell ng-bind="point.sum"></td>
                     <td md-cell ng-bind="point.first"></td>
                     <td md-cell ng-bind="point.last"></td>

@@ -76,7 +76,8 @@ function DateBarController($mdMedia, $stateParams, Util, MA_ROLLUP_TYPES, MA_TIM
         };
 
         const { aggregationEnabled, queryBoundary } = maUiServerInfo.postLoginData;
-        if (aggregationEnabled && queryBoundary > 0) {
+        const { nonNumeric } = this.params.data.rollupTypesFilter;
+        if (!nonNumeric && aggregationEnabled && queryBoundary > 0) {
             const boundary = moment().subtract(queryBoundary, 'millisecond');
             if (boundary > this.params.from) {
                 currentRollups = currentRollups.filter(rollup => availableRollupKeys.includes(rollup.type));
