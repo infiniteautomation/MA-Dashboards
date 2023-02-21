@@ -12,18 +12,19 @@ import jsonStoreEditorTemplate from './jsonStoreEditor.html';
  * @description Given a JSON store XID, allows editing of the JSON store's name, permissions and content
  */
 
-const $inject = Object.freeze(['maJsonStore', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate']);
+const $inject = Object.freeze(['maJsonStore', '$q', 'maDialogHelper', '$scope', '$window', 'maTranslate', 'maRevisionHistoryDialog']);
 class JsonStoreEditorController {
     static get $$ngIsClass() { return true; }
     static get $inject() { return $inject; }
     
-    constructor(maJsonStore, $q, maDialogHelper, $scope, $window, maTranslate) {
+    constructor(maJsonStore, $q, maDialogHelper, $scope, $window, maTranslate, maRevisionHistoryDialog) {
         this.maJsonStore = maJsonStore;
         this.$q = $q;
         this.maDialogHelper = maDialogHelper;
         this.$scope = $scope;
         this.$window = $window;
         this.maTranslate = maTranslate;
+        this.maRevisionHistoryDialog = maRevisionHistoryDialog;
     }
     
     $onInit() {
@@ -118,6 +119,17 @@ class JsonStoreEditorController {
                 this.setViewValue();
                 this.render();
             });
+        }, angular.noop);
+    }
+
+    showRevisionDialog(event) {
+        this.maRevisionHistoryDialog.show(event, {
+            typeName: 'JSON_DATA',
+            objectId: this.storeItem.id,
+            filterValues: val => val.context && !!val.context.jsonData
+        }).then(revision => {
+            this.storeItem.jsonData = angular.fromJson(revision.context.jsonData);
+            this.saveItem(event);
         }, angular.noop);
     }
 }

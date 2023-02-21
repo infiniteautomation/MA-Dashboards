@@ -44,5 +44,9 @@
             <md-icon>delete</md-icon>
             <span ma-tr="common.delete"></span>
         </md-button>
+        <md-button ng-click="$ctrl.showRevisionDialog($event)" class="md-raised" ng-disabled="$ctrl.storeItem.isNew()">
+            <md-icon>history</md-icon>
+            <span ma-tr="ui.app.history"></span>
+        </md-button>
     </div>
 </form>
