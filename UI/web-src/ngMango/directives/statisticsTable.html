@@ -25,21 +25,39 @@
 			<td ng-bind="statistics.last.value"></td>
 			<td ng-bind="formatTimestamp(statistics.last.timestamp)"></td>
 		</tr>
-		<tr ng-if="statistics.minimum" class="ma-statistics-minimum">
+
+		<tr ng-if="!isAggregated() && statistics.minimum" class="ma-statistics-minimum">
 			<td ma-tr="common.stats.min"></td>
 			<td ng-bind="statistics.minimum.value"></td>
 			<td ng-bind="formatTimestamp(statistics.minimum.timestamp)"></td>
 		</tr>
-		<tr ng-if="statistics.maximum" class="ma-statistics-maximum">
+		<tr ng-if="!isAggregated() && statistics.maximum" class="ma-statistics-maximum">
 			<td ma-tr="common.stats.max"></td>
 			<td ng-bind="statistics.maximum.value"></td>
 			<td ng-bind="formatTimestamp(statistics.maximum.timestamp)"></td>
 		</tr>
-		<tr ng-if="statistics.average" class="ma-statistics-average">
+		<tr ng-if="!isAggregated() && statistics.average" class="ma-statistics-average">
 			<td ma-tr="common.stats.avg"></td>
 			<td ng-bind="statistics.average.value"></td>
 			<td ng-bind="formatTimestamp(statistics.average.timestamp)"></td>
 		</tr>
+
+		<tr ng-if="isAggregated() && statistics.minimumInPeriod" class="ma-statistics-minimum-in-period">
+			<td ma-tr="common.stats.minimumInPeriod"></td>
+			<td ng-bind="statistics.minimumInPeriod.value"></td>
+			<td ng-bind="formatTimestamp(statistics.minimumInPeriod.timestamp)"></td>
+		</tr>
+		<tr ng-if="isAggregated() && statistics.maximumInPeriod" class="ma-statistics-maximum-in-period">
+			<td ma-tr="common.stats.maximumInPeriod"></td>
+			<td ng-bind="statistics.maximumInPeriod.value"></td>
+			<td ng-bind="formatTimestamp(statistics.maximumInPeriod.timestamp)"></td>
+		</tr>
+		<tr ng-if="isAggregated() && statistics.arithmeticMean" class="ma-statistics-arithmetic-mean">
+			<td ma-tr="common.stats.arithmeticMean"></td>
+			<td ng-bind="statistics.arithmeticMean.value"></td>
+			<td ng-bind="formatTimestamp(statistics.arithmeticMean.timestamp)"></td>
+		</tr>
+
 		<tr ng-if="statistics.integral" class="ma-statistics-integral">
 			<td ma-tr="common.stats.integral"></td>
 			<td ng-bind="statistics.integral.value"></td>
