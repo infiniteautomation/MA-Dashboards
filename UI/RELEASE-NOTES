@@ -1,6 +1,9 @@
 *Version 4.5.0*
 * Upgraded for Mango 4.5.0
 
+*Version 4.4.2*
+* Provide revision control on JSON store items
+
 *Version 4.4.1*
 * Fix point-value websocket unable to re-open connection if it is closed by server
 
