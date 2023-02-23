@@ -44,7 +44,7 @@
 			<td md-cell>{{statistics.arithmeticMean.value}}</td>
 		</tr>
 
-		<tr md-row ng-if="statistics.integral" class="ma-statistics-integral">
+		<tr md-row ng-if="!isAggregated() &&statistics.integral" class="ma-statistics-integral">
 			<td md-cell ma-tr="common.stats.integral"></td>
 			<td md-cell>{{statistics.integral.value}}</td>
 		</tr>

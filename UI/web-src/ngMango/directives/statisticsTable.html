@@ -58,7 +58,7 @@
 			<td ng-bind="formatTimestamp(statistics.arithmeticMean.timestamp)"></td>
 		</tr>
 
-		<tr ng-if="statistics.integral" class="ma-statistics-integral">
+		<tr ng-if="!isAggregated() && statistics.integral" class="ma-statistics-integral">
 			<td ma-tr="common.stats.integral"></td>
 			<td ng-bind="statistics.integral.value"></td>
 			<td ng-bind="formatTimestamp(statistics.integral.timestamp)"></td>
