@@ -134,11 +134,17 @@ function publisherProvider() {
                 this.enable(value);
             }
 
-            changeType(type = this.modelType) {
-                const newPublisher = this.constructor.typesByName[type].createPublisher();
+            changeType(newTypeName = this.modelType, previousType = null) {
+                const previousTypeDefaults = !previousType ? defaultProperties : previousType.createPublisher();
+                const newPublisher = this.constructor.typesByName[newTypeName].createPublisher();
 
-                // copy only a select set of properties over
-                Object.keys(defaultProperties).forEach((k) => (newPublisher[k] = this[k]));
+                // copy only a select set of properties from existing publisher to new publisher
+                Object.keys(defaultProperties).forEach(k => {
+                    // only copy the property over if it was explicitly configured by user
+                    if (this[k] !== previousTypeDefaults[k]) {
+                        newPublisher[k] = this[k];
+                    }
+                });
 
                 return newPublisher;
             }

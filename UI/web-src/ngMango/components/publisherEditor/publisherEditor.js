@@ -176,7 +176,7 @@ class PublisherEditorController {
     }
 
     typeChanged() {
-        this.publisher = this.publisher.changeType();
+        this.publisher = this.publisher.changeType(this.publisher.modelType, this.publisherType);
         this.publisherType = this.publisherTypesByName[this.publisher.modelType];
     }
 
