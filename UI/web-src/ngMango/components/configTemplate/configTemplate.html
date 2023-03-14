@@ -1,0 +1,54 @@
+<md-card flex>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline" ma-tr="configTemplate.template.header"></span>
+        </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content layout="row">
+        <ma-input-container flex="100" flex-gt-md="100">
+            <h4 ma-tr="configTemplate.template.csvFile" style="margin-bottom: 0; margin-top: 0;"></h4>
+            <md-button name="filename" class="md-raised"
+                       ng-model="$ctrl.filePath"
+                       ma-choose-file="$ctrl.fileUploaded($url, 'csvFile')"
+                       ma-choose-file-selected="$ctrl.filename"
+                       ma-choose-file-options="{mimeTypes: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel', extensions: 'xls, xlsx, xlsm', defaultStore:'EXCEL_REPORT_TEMPLATES'}">
+                <md-icon>attachment</md-icon>
+                <span ng-if="!$ctrl.filePath" ma-tr="common.chooseFile"></span>
+                <span ng-if="$ctrl.filePath">{{ $ctrl.filename }}</span>
+            </md-button>
+            <div ng-messages="$ctrl.form.filename.$error" class="ma-small-text" role="alert">
+                <div ng-message="required" ma-tr="validate.required"></div>
+                <div ng-message="validationMessage" ng-bind="$ctrl.filePath.validationMessage"></div>
+            </div>
+        </ma-input-container>
+        <ma-input-container flex="100" flex-gt-md="100">
+            <h4 ma-tr="configTemplate.template.templateFile" style="margin-bottom: 0; margin-top: 0;"></h4>
+            <md-button name="templateName" class="md-raised"
+                       ng-model="$ctrl.templatePath"
+                       ma-choose-file="$ctrl.fileUploaded($url, 'templateFile')"
+                       ma-choose-file-selected="$ctrl.templateName"
+                       ma-choose-file-options="{mimeTypes: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel', extensions: 'mustache', defaultStore:'EXCEL_REPORT_TEMPLATES'}">
+                <md-icon>attachment</md-icon>
+                <span ng-if="!$ctrl.templatePath" ma-tr="common.chooseFile"></span>
+                <span ng-if="$ctrl.templatePath">{{ $ctrl.templateName }}</span>
+            </md-button>
+            <div ng-messages="$ctrl.form.filename.$error" class="ma-small-text" role="alert">
+                <div ng-message="required" ma-tr="validate.required"></div>
+                <div ng-message="validationMessage" ng-bind="$ctrl.templatePath.validationMessage"></div>
+            </div>
+        </ma-input-container>
+    </md-card-content>
+    <md-card-content layout="row">
+        <ma-input-container flex="100" flex-gt-md="100"`>
+            <md-checkbox ng-model="$ctrl.selectImportJson" ng-change="$ctrl.updateSelectStatus($event)" ><span ma-tr="configTemplate.template.check.shouldImportJson"></span></md-checkbox>
+        </ma-input-container>
+    </md-card-content>
+
+    <md-card-actions layout="row" layout-align="start center">
+        <md-button class="md-raised md-primary" ng-click="$ctrl.uploadFiles()">
+            <md-icon>file_upload</md-icon> <span ma-tr="configTemplate.template.btn.startTemplateProcess"></span>
+        </md-button>
+        <input id="json-file-upload" type="file" accept=".json,text/*,application/json" ma-change="$ctrl.fileSelected($event)" style="display:none">
+    </md-card-actions>
+</md-card>

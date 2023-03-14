@@ -1,6 +1,7 @@
 <div layout="row" layout-align="start start">
   <ma-config-export on-export="$ctrl.jsonString = $json" flex="100" flex-gt-sm="50"></ma-config-export>
   <ma-config-import json-string="$ctrl.jsonString" flex="100" flex-gt-sm="50"></ma-config-import>
+  <ma-config-template json-string="$ctrl.jsonString" flex="100" flex-gt-sm="50"> </ma-config-template>
 </div>
 
 <md-button class="md-raised" ng-click="$ctrl.clear()"><md-icon>clear</md-icon> <span ma-tr="ui.app.clear"></span></md-button>

@@ -204,6 +204,7 @@ import fileStoreEditor from './components/fileStoreEditor/fileStoreEditor';
 import dataPointEventCountsTable from './components/dataPointEventCountsTable/dataPointEventCountsTable';
 import pointValueImport from './components/pointValueImport/pointValueImport';
 import systemSetup from './components/systemSetup/systemSetup';
+import configTemplate from "./components/configTemplate/configTemplate";
 
 import slideUp from './animations/slideUp';
 
@@ -421,7 +422,7 @@ ngMango.component('maFileStoreEditor', fileStoreEditor);
 ngMango.component('maPointEventCountsTable', dataPointEventCountsTable);
 ngMango.component('maPointValueImport', pointValueImport);
 ngMango.component('maSystemSetup', systemSetup);
-
+ngMango.component('maConfigTemplate', configTemplate);
 ngMango.animation('.ma-slide-up', slideUp);
 
 // add some additional event handlers which aren't in Angular by default
