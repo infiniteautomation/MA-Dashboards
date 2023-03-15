@@ -209,6 +209,7 @@ import slideUp from './animations/slideUp';
 
 import '../shims/exportAMD.js';
 import './ngMango.css';
+import './piMango.css';
 
 /**
  * @ngdoc overview

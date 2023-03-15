@@ -1,0 +1,146 @@
+.md-button.md-pimangolight-theme.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangolight-theme.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-accent-600);
+}
+
+.md-button.md-pimangolight-theme.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-accent.md-fab:not([disabled]):hover, .md-button.md-pimangolight-theme.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-accent.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-accent.md-fab:not([disabled]).md-focused md-icon, .md-button.md-pimangolight-theme.md-accent.md-fab:not([disabled]):hover md-icon, .md-button.md-pimangolight-theme.md-accent.md-raised:not([disabled]).md-focused md-icon, .md-button.md-pimangolight-theme.md-accent.md-raised:not([disabled]):hover md-icon {
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-hue-1.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-fab:not([disabled]):hover, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-hue-1.md-accent.md-fab:not([disabled]).md-focused md-icon, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-fab:not([disabled]):hover md-icon, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-raised:not([disabled]).md-focused md-icon, .md-button.md-pimangolight-theme.md-hue-1.md-accent.md-raised:not([disabled]):hover md-icon {
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-hue-1.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-1.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangolight-theme.md-hue-1.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-1.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-hue-2.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-2.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangolight-theme.md-hue-2.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangolight-theme.md-hue-2.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-accent);
+}
+
+md-toolbar.md-pimangolight-theme.md-hue-2:not(.md-menu-toolbar) ma-drop-down-button:not([disabled]) > div  {
+    color: var(--ma-primary-contrast);
+}
+
+md-select-menu.md-pimangolight-theme md-content md-option[selected].md-focused, md-select-menu.md-pimangolight-theme md-content md-option[selected]:focus {
+    color: var(--ma-foreground-1);
+}
+
+.md-button.md-pimangoDark-theme.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangoDark-theme.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-accent);
+}
+
+.md-button.md-pimangoDark-theme.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-accent.md-fab:not([disabled]):hover, .md-button.md-pimangoDark-theme.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-accent.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangoDark-theme.md-accent.md-fab:not([disabled]).md-focused md-icon, .md-button.md-pimangoDark-theme.md-accent.md-fab:not([disabled]):hover md-icon, .md-button.md-pimangoDark-theme.md-accent.md-raised:not([disabled]).md-focused md-icon, .md-button.md-pimangoDark-theme.md-accent.md-raised:not([disabled]):hover md-icon {
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-fab:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-fab:not([disabled]):hover, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-raised:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-fab:not([disabled]).md-focused md-icon, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-fab:not([disabled]):hover md-icon, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-raised:not([disabled]).md-focused md-icon, .md-button.md-pimangoDark-theme.md-hue-1.md-accent.md-raised:not([disabled]):hover md-icon {
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangoDark-theme.md-hue-1.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-1.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangoDark-theme.md-hue-1.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-1.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+.md-button.md-pimangoDark-theme.md-hue-2.md-primary.md-fab:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-2.md-primary.md-fab:not([disabled]):hover, .md-button.md-pimangoDark-theme.md-hue-2.md-primary.md-raised:not([disabled]).md-focused, .md-button.md-pimangoDark-theme.md-hue-2.md-primary.md-raised:not([disabled]):hover {
+    background-color: var(--ma-accent);
+}
+
+md-toolbar.md-pimangoDark-theme.md-hue-2:not(.md-menu-toolbar) ma-drop-down-button:not([disabled]) > div  {
+    color: var(--ma-primary-contrast);
+}
+
+md-select-menu.md-pimangoDark-theme md-content md-option[selected].md-focused, md-select-menu.md-pimangoDark-theme md-content md-option[selected]:focus {
+    color: var(--ma-foreground-1);
+}
+
+md-tabs.md-pimangoDark-theme .md-tab.md-active, md-tabs.md-pimangoDark-theme .md-tab.md-active md-icon, md-tabs.md-pimangoDark-theme .md-tab.md-focused, md-tabs.md-pimangoDark-theme .md-tab.md-focused md-icon {
+    color: var(--ma-primary-contrast)
+}
+
+md-content.md-pimangolight-theme .ma-ui-menu {
+    background-color: var(--ma-primary);
+    color: var(--ma-primary-contrast);
+}
+
+md-toolbar.md-pimangolight-theme:not(.md-menu-toolbar), md-toolbar.md-pimangolight-theme.md-hue-3:not(.md-menu-toolbar) {
+    background-color: var(--ma-background);
+    color: var(--ma-background-contrast);
+}
+
+md-content.md-pimangolight-theme {
+    background-color: var(--ma-background-hue-3);
+    color: var(--ma-background-hue-3-contrast);
+}
+
+md-toolbar.md-pimangoDark-theme.md-hue-3:not(.md-menu-toolbar) {
+    background-color: var(--ma-background-hue-1);
+    color: var(--ma-background-hue-1-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-primary.md-fab, .md-button.md-pimangolight-theme.md-primary.md-raised {
+    background-color: var(--ma-accent);
+    color: var(--ma-accent-contrast);
+}
+
+.md-button.md-pimangolight-theme.md-primary.md-fab[disabled], .md-button.md-pimangolight-theme.md-primary.md-raised[disabled] {
+    background-color: var(--ma-foreground-4);
+    color: var(--ma-foreground-3);
+}
+
+ma-ui-admin-home-page md-card.md-pimangolight-theme md-card-header {
+    background-color: var(--ma-background-hue-1);
+    color: var(--ma-background-hue-1-contrast);
+}
+
+.ma-ui-menu-toggle-icon md-icon.md-pimangolight-theme, .ma-ui-menu-icon.md-pimangolight-theme, .ma-ui-menu-toggle md-icon.md-pimangolight-theme {
+    color: inherit;
+}
+
+.ma-ui-menu .md-button.ma-ui-menu-link.ma-ui-menu-active.md-pimangolight-theme {
+    background-color: var(--ma-primary-300);
+}
+
+md-list.md-pimangolight-theme md-list-item.md-2-line .md-list-item-text h3, md-list.md-pimangolight-theme md-list-item.md-2-line .md-list-item-text h4,
+md-list.md-pimangolight-theme md-list-item.md-3-line .md-list-item-text h3, md-list.md-pimangolight-theme md-list-item.md-3-line .md-list-item-text h4,
+md-list.md-pimangolight-theme md-list-item.md-2-line .md-list-item-text p, md-list.md-pimangolight-theme md-list-item.md-3-line .md-list-item-text p {
+    color: white;
+}
+
+md-list.md-pimangolight-theme md-list-item.md-2-line .md-list-item-text p, md-list.md-pimangolight-theme md-list-item.md-3-line .md-list-item-text p {
+    opacity: 0.7;
+}
+
+md-list.md-pimangolight-theme md-list-item .md-button .md-secondary-container md-icon.md-pimangolight-theme {
+    color: white;
+}
+
+.main-page-area md-toolbar.md-pimangolight-theme .md-toolbar-tools .ma-ui-breadcrumb md-icon {
+    color: var(--ma-foreground-1);
+}
+
+.main-page-area md-toolbar.md-pimangolight-theme .md-toolbar-tools .ma-ui-tools ma-badge {
+    background-color: var(--ma-warn);
+}
