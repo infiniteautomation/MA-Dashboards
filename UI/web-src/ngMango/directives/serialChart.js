@@ -124,7 +124,7 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
                 processData: function (data, cfg) {
                     //Override column header from xid to combine "deviceName" and pointName
                     if ((cfg.format === "CSV" || cfg.format === "XLSX" || cfg.format === "JSON") && !cfg.ignoreThatRequest) {
-                        data.map((value) => {
+                        data.forEach((value) => {
                         Object.keys(value)
                             .filter((data) => data !== "timestamp")
                             .forEach((obj) => {
