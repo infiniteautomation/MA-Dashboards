@@ -120,7 +120,39 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
                 enabled: false,
                 libs: {autoLoad: false},
                 dateFormat: mangoDateFormats.iso,
-                fileName: 'mangoChart'
+                fileName: 'mangoChart',
+                processData: function (data, cfg) {
+                    //Override column header from xid to combine "deviceName" and pointName
+                    if ((cfg.format === "CSV" || cfg.format === "XLSX" || cfg.format === "JSON") && !cfg.ignoreThatRequest) {
+                        data.map((value) => {
+                        Object.keys(value)
+                            .filter((data) => data !== "timestamp")
+                            .forEach((obj) => {
+                            const xid = obj.replace(/_rendered/g, "");
+                            const graph = this.setup.chart.graphs.find(
+                                (item) => item.valueField === xid
+                            );
+                            if (!graph) {
+                                return;
+                            }
+                            const newFieldName = obj.includes("_rendered")
+                                ? `${graph.title.replace(/ /g, "_")}_rendered`
+                                : `${graph.title.replace(/ /g, "_")}`;
+                            value[`${newFieldName}`] = value[obj];
+                            delete value[obj];
+                            });
+                        });
+                        this[`to${cfg.format}`]({
+                        data: JSON.parse(JSON.stringify(data)),
+                        ignoreThatRequest: true,
+                        },
+                        function (output) {
+                            this.download(output, cfg.mimeType, `${cfg.fileName}.${cfg.extension}`);
+                            });
+                        throw "Invoked – Use custom handler (stop multiple download)"; // throw an Error to stop the multi-download attempt
+                    }
+                    return data.slice(1,-1);
+                }
             }
         };
     };
@@ -530,6 +562,7 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
             }
 
             maUtil.deepMerge(graph, opts);
+        
         }
         
         function checkForAxisColors() {
