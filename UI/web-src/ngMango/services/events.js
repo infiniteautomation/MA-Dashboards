@@ -8,7 +8,7 @@
 *
 * @description
 * Provides a service for retrieving, adding, and acknowledging events/alarms
-* - Used by <a ui-sref="ui.docs.ngMango.maEventsTable">`<ma-events-table>`</a>
+* - Used by <a ui-sref="ui.helps.docs.ngMango.maEventsTable">`<ma-events-table>`</a>
 *
 *
 *

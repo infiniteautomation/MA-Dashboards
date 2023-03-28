@@ -54,7 +54,7 @@ class SystemSetupController {
             if (typeof this.onSuccess === 'function') {
                 this.onSuccess({ $user: user, $password: this.password, $settings: this.settings });
             } else {
-                this.$window.location = this.$state.href('ui.settings.home', { helpOpen: true });
+                this.$window.location = this.$state.href('ui.admin.home', { helpOpen: true });
             }
         }, (error) => {
             this.disableButton = false;

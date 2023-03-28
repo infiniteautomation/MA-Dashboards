@@ -115,7 +115,7 @@
 <div layout="column" layout-gt-md="row" layout-align-gt-md="space-between center" layout-align="space-between stretch">
     <div layout layout-xs="column" flex>
         <md-card class="ma-info-card ma-hover" flex ng-if="$ctrl.maUser.current.hasRole('superadmin')">
-            <md-button class="ma-info-card-button" md-no-ink ui-sref="ui.settings.dataSources">
+            <md-button class="ma-info-card-button" md-no-ink ui-sref="ui.datacollection.dataSources">
                 <div class="ma-button-icon">
                     <md-icon>device_hub</md-icon>
                 </div>
@@ -168,7 +168,7 @@
             </md-button>
         </md-card>
         <md-card class="ma-info-card ma-hover" flex ng-if="$ctrl.maUser.current.hasRole('superadmin')">
-            <md-button class="ma-info-card-button" md-no-ink ui-sref="ui.settings.publishers">
+            <md-button class="ma-info-card-button" md-no-ink ui-sref="ui.datadistribution.publishers">
                 <div class="ma-button-icon">
                     <md-icon>publish</md-icon>
                 </div>
@@ -201,20 +201,20 @@
                 </span>
             </md-card-header>
             <div flex layout="column" layout-align="space-between stretch">
-                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.settings.modules">
+                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.system.modules">
                     <div class="ma-content">
                         <ma-point-value class="ma-button-value" point-xid="internal_mango_num_updates_available"></ma-point-value>
                         <div class="ma-value-label" ma-tr="ui.app.modules"></div>
                     </div>
                 </md-button>
-                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="{{::$ctrl.hasDashboardDesigner ? 'ui.settings.dashboardDesigner' : 'ui.settings.editPages'}}">
+                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="{{::$ctrl.hasDashboardDesigner ? 'ui.settings.dashboardDesigner' : 'ui.uiSettings.editPages'}}">
                     <div class="ma-content">
                         <div class="ma-button-value" ng-bind="$ctrl.pageCount"></div>
                         <div class="ma-value-label" ma-tr="ui.app.customPages"></div>
                     </div>
                 </md-button>
                 <md-card-content layout="column" layout-align="center stretch">
-                    <md-button class="ma-redirect md-raised md-primary" ui-sref="ui.settings.system" layout="row">
+                    <md-button class="ma-redirect md-raised md-primary" ui-sref="ui.system.system" layout="row">
                         <div ma-tr="ui.app.systemSettings" flex></div>
                         <md-icon>subdirectory_arrow_right</md-icon>
                     </md-button>
@@ -238,10 +238,10 @@
                     <md-icon>people</md-icon>
                     <span ma-tr="ui.app.users"></span>
                 </span>
-                <md-button ma-tr="ui.app.viewAll" ui-sref="ui.settings.users"></md-button>
+                <md-button ma-tr="ui.app.viewAll" ui-sref="ui.system.users"></md-button>
             </md-card-header>
             <div flex layout="column" layout-align="space-between stretch">
-                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.settings.users">
+                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.system.users">
                     <div class="ma-content">
                         <ma-point-value class="ma-button-value" point-xid="internal_mango_num_users"></ma-point-value>
                         <div class="ma-value-label" ma-tr="ui.app.users"></div>
@@ -254,7 +254,7 @@
                     </div>
                 </md-button>
                 <md-card-content layout="column" layout-align="center stretch">
-                    <md-button class="ma-redirect md-raised md-primary" layout="row" ui-sref="ui.settings.permissions">
+                    <md-button class="ma-redirect md-raised md-primary" layout="row" ui-sref="ui.system.permissions">
                         <div ma-tr="header.systemPermissions" flex></div>
                         <md-icon>subdirectory_arrow_right</md-icon>
                     </md-button>
@@ -297,7 +297,7 @@
                         <ma-point-value point-xid="internal_mango_num_event_detectors"></ma-point-value>
                         <div ma-tr="ui.app.eventDetectors"></div>
                     </md-button>
-                    <md-button class="ma-redirect md-raised md-primary" layout="row" ui-sref="ui.settings.eventHandlers">
+                    <md-button class="ma-redirect md-raised md-primary" layout="row" ui-sref="ui.datadistribution.eventHandlers">
                         <ma-point-value point-xid="internal_mango_num_event_handlers"></ma-point-value>
                         <div ma-tr="ui.app.eventHandlers" flex></div>
                         <md-icon>subdirectory_arrow_right</md-icon>
@@ -315,7 +315,7 @@
                     <md-icon>book</md-icon>
                     <span ma-tr="ui.app.reports"></span>
                 </span>
-                <md-button ma-tr="ui.app.viewAll" ui-sref="ui.settings.excelReports"></md-button>
+                <md-button ma-tr="ui.app.viewAll" ui-sref="ui.presentation.excelReports"></md-button>
             </md-card-header>
             <div flex layout="column" layout-align="space-between stretch">
                 <md-button md-no-ink class="ma-info-card-button ma-hover">
@@ -324,7 +324,7 @@
                         <div class="ma-value-label" ma-tr="ui.app.mailingLists"></div>
                     </div>
                 </md-button>
-                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.settings.excelReports">
+                <md-button md-no-ink class="ma-info-card-button ma-hover" ui-sref="ui.presentation.excelReports">
                     <div class="ma-content">
                         <ma-get-point-value point-xid="internal_mango_num_excel_report_templates" point="excelReportTemplates"></ma-get-point-value>
                         <div class="ma-button-value" ng-bind="excelReportTemplates.value ?  excelReportTemplates.value : 0"></div>

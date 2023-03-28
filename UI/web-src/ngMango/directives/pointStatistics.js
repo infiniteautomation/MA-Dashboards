@@ -16,7 +16,7 @@ import moment from 'moment-timezone';
  * - If you are interested only in the change in a value between two times you can add the optional `first-last="true"`
  *   attribute to only return the first and last values,
  then simply calculate the difference with `statsObj[1].value - statsObj[0].value`.
- * - <a ui-sref="ui.examples.statistics.getStatistics">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.statistics.getStatistics">View Demo</a>
  *
  * @param {object} point Inputs a `point` object from `<ma-point-list>`.
  * @param {object} from Sets the starting time for the time range which is used in the statistical query.

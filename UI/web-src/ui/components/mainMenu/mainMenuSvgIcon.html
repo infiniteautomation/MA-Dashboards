@@ -1,0 +1,6 @@
+<md-icon
+    ng-if="$ctrl.item.menuIcon && $ctrl.item.menuIcon.indexOf('svg') === 0 && $ctrl.item.parent.name === 'ui'"
+    md-svg-src="{{$ctrl.getCustomIcon($ctrl.item.menuIcon)}}"
+    aria-label="{{$ctrl.menuText}}"
+    class="ma-ui-menu-icon"
+></md-icon>

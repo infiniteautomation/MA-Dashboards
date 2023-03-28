@@ -14,7 +14,7 @@ import moment from 'moment-timezone';
  * - The `<ma-point-value>` directive will render the live value or update time from a point onto the page.
  * - You can supply the `display-type` attribute to get the unit converted value or data/time of the update.
  * - You can use the `point-xid` property or pass in a point from `<ma-point-list>`.
- * - <a ui-sref="ui.examples.basics.liveValues">View Demo</a> / <a ui-sref="ui.examples.basics.getPointByXid">View point-xid Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.liveValues">View Demo</a> / <a ui-sref="ui.helps.examples.basics.getPointByXid">View point-xid Demo</a>
  *
  * @param {object=} point A data point object from a watch list, point query, point drop-down, `maPoint` service, or `<ma-get-point-value>` component.
  * @param {string=} point-xid Instead of supplying a data point object, you can supply it's XID.

@@ -10,7 +10,7 @@ import angular from 'angular';
 *
 * @description
 * Provides a service for reading and writing to the JsonStore within the Mango Database.
-* - Used by <a ui-sref="ui.docs.ngMango.maJsonStore">`<ma-json-store>`</a> directive.
+* - Used by <a ui-sref="ui.helps.docs.ngMango.maJsonStore">`<ma-json-store>`</a> directive.
 * - All methods return [$resource](https://docs.angularjs.org/api/ngResource/service/$resource) objects that can call the
 *   following methods available to those objects:
 *   - `$save`

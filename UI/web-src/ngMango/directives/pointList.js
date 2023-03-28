@@ -12,7 +12,7 @@
  * - You can optionally supply the `query` attribute to filter the list of points using an object where the keys are
  the property names to filter on, or supply a RQL query string inside single quotes.
  * - All data points added to your Mango system will display by default, unless you set the `limit` property.
- * - <a ui-sref="ui.examples.basics.pointList">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.pointList">View Demo</a>
  *
  * @param {object} ng-model Variable to hold the selected data point.
  * @param {boolean=} init-point Enables auto selecting of the first data point in the list. (Defaults to `true`)

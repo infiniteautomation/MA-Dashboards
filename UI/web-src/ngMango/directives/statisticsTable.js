@@ -13,7 +13,7 @@ import moment from 'moment-timezone';
  * @description
  * `<ma-statistics-table statistics="statsObj"></ma-statistics-table>`
  * - `<ma-statistics-table>` will display a formatted data table with the values and timestamps from a `statistics` object.
- * - <a ui-sref="ui.examples.statistics.statisticsTable">View Demo</a> 
+ * - <a ui-sref="ui.helps.examples.statistics.statisticsTable">View Demo</a> 
  *
  * @param {object} statistics Input the statistics object from `<ma-point-statistics>`
  * @param {object=} point Inputs a `point` object from `<ma-point-list>`. If used statistics attribute becomes an output of the

@@ -8,7 +8,7 @@
  * @restrict 'E'
  * @scope
  *
- * @description Adds a overlay layer to a <a ui-sref="ui.docs.ngMango.maTileMap">maTileMap</a> or another maTileMapLayer.
+ * @description Adds a overlay layer to a <a ui-sref="ui.helps.docs.ngMango.maTileMap">maTileMap</a> or another maTileMapLayer.
  * Any components which can be added to a maTileMap can be added to a maTileMapLayer.
  * 
  * @param {boolean=} [enabled=false] Adds/removes the tile layer from the parent map/layer

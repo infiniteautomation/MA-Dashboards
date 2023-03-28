@@ -11,7 +11,7 @@
  * - This directive will display a pie chart for visualizing ratios.
  * - Values are provided as an array of objects.
  * - Note, you will need to set a width and height on the element.
- * - <a ui-sref="ui.examples.charts.pieChart">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.charts.pieChart">View Demo</a>
  *
  * @param {object[]} values Takes in an array of value objects to use in the pie chart. Each value object can contain the following properties:
 <ul>

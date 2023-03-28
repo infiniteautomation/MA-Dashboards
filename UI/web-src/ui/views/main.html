@@ -1,138 +1,129 @@
 <div layout="row" flex>
-  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" hide-print
-        md-is-locked-open="navLockedOpen" md-swipe-left="closeMenu()" class="navigation-menu">
-    <md-toolbar class="md-tall ma-ui-sidebar-header md-whiteframe-glow-z1">
-      <ma-now update-interval="1 MINUTES" output="currentTime"></ma-now>
-      <div flex layout="row">
-        <img ng-src="{{uiSettings.themeLogo}}" ng-attr-title="{{::serverInfo.instanceDescription}}" ng-attr-alt="{{::serverInfo.instanceDescription}}">
-        <div flex layout="column" layout-align="start end" class="ma-ui-user-datetime">
-          <span ng-bind="currentTime.format('LT')" class="ma-ui-user-time"></span>
-          <span ng-bind="currentTime.format('ddd ll')" class="ma-ui-user-date"></span>
-          <span ng-bind="currentTime.format('z')" class="ma-ui-user-date"></span>
-        </div>
-      </div>
-      <div layout>
-        <md-menu flex md-offset="0 48">
-          <div layout="row" layout-align="start center" ng-click="$mdMenu.open($event)">
-            <div flex layout="column">
-              <span><span ng-bind="User.current.username"></span> <em ng-if="User.current.name" ng-bind="'(' + User.current.name + ')'"></em></span>
-              <span class="email" ng-bind="serverInfo.instanceDescription"></span>
-            </div>
-            <md-icon>arrow_drop_down</md-icon>
-          </div>
-
-          <md-menu-content width="4" class="user-menu">
-            <md-menu-item>
-              <md-button aria-label="{{'header.userProfile'|maTr}}" ui-sref="ui.userProfile">
-                <md-icon md-menu-align-target>person</md-icon>
-                <span ma-tr="header.userProfile"></span>
-              </md-button>
-            </md-menu-item>
-            <md-menu-item ng-if="installPrompt.canPrompt()">
-                <md-button ng-click="installPrompt.prompt($event)">
-                    <md-icon>add_to_home_screen</md-icon>
-                    <span ma-tr="login.ui.installApp"></span>
+    <ma-ui-json-store-main-menu user="User.current" logo="uiSettings.themeLogo"></ma-ui-json-store-main-menu>
+    <div layout="column" tabindex="-1" flex class="main-page-area" ng-class="{'ma-ui-menu-open':navLockedOpen, 'ma-ui-menu-close': !navLockedOpen}">
+        <md-toolbar
+            class="ma-ui-main-toolbar md-primary"
+            ng-class="{'md-whiteframe-glow-z1': !(stateParams.dateBar && dateBar.expanded)}"
+            role="toolbar"
+        >
+            <div class="md-toolbar-tools ma-ui-toolbar-tools" tabindex="-1">
+                <md-button flex="none" id="menu-button" class="md-icon-button" ng-click="toggleMenu()" aria-label="Toggle Menu">
+                    <md-icon class="md-light">menu</md-icon>
                 </md-button>
-            </md-menu-item>
-            <md-menu-item>
-              <md-button aria-label="{{'header.logout'|maTr}}" ui-sref="logout">
-                <md-icon md-menu-align-target>power_settings_new</md-icon>
-                <span ma-tr="header.logout"></span>
-              </md-button>
-            </md-menu-item>
-          </md-menu-content>
-        </md-menu>
-      </div>
-    </md-toolbar>
 
-    <md-content flex role="navigation">
-      <ma-ui-json-store-menu user="User.current"></ma-ui-json-store-menu>
-    </md-content>
-  </md-sidenav>
+                <h2 class="md-toolbar-item ma-ui-breadcrumb">
+                    <span ng-repeat="crumb in crumbs track by $index" ng-class="{'hide-sm': !$last, 'hide-xs': !$last}">
+                        <span ma-tr="{{crumb.maTr}}" ng-bind="crumb.text"></span>
+                        <span ng-if="!$last">
+                            <md-icon>chevron_right</md-icon>
+                        </span>
+                    </span>
+                </h2>
 
-  <div layout="column" tabIndex="-1" flex class="main-page-area">
-    <md-toolbar class="ma-ui-main-toolbar md-primary" ng-class="{'md-whiteframe-glow-z1': !(stateParams.dateBar && dateBar.expanded)}" role="toolbar">
-      <div class="md-toolbar-tools ma-ui-toolbar-tools" tabIndex="-1">
-        <md-button flex="none" id="menu-button" class="md-icon-button" ng-click="toggleMenu()" aria-label="Toggle Menu"> <md-icon class="md-light">menu</md-icon>
-        </md-button>
+                <div flex class="md-toolbar-item ma-ui-tools" layout layout-align="end center">
+                    <ma-event-audio
+                        ng-if="User.current && !User.current.muted"
+                        audio-files="uiSettings.eventAudioFiles"
+                        read-aloud="uiSettings.eventReadAloud"
+                    ></ma-event-audio>
+                    <ma-event-notify event-levels="uiSettings.eventNotify"></ma-event-notify>
+                    <ma-ui-active-event-icons
+                        style="padding-right: 8px"
+                        ng-if="uiSettings.showUnacknowlegedEventsIcon && $mdMedia('gt-xs')"
+                    ></ma-ui-active-event-icons>
 
-        <h2 class="md-toolbar-item ma-ui-breadcrumb">
-            <span ng-repeat="crumb in crumbs track by $index" ng-class="{'hide-sm': !$last, 'hide-xs': !$last}">
-                <span ma-tr="{{crumb.maTr}}" ng-bind="crumb.text"></span>
-                <span ng-if="!$last">
-                    <md-icon>chevron_right</md-icon>
-                </span>
-            </span>
-        </h2>
+                    <div ng-if="stateParams.dateBar">
+                        <md-input-container class="date-preset">
+                            <ma-date-range-picker
+                                from="dateBar.from"
+                                to="dateBar.to"
+                                no-underline="true"
+                                preset="{{dateBar.preset}}"
+                                update-interval="{{dateBar.updateIntervalString}}"
+                                refresh="dateBar.refresh"
+                                on-change="dateBar.preset = preset"
+                            ></ma-date-range-picker>
+                        </md-input-container>
+                        <md-button
+                            class="md-icon-button"
+                            ng-click="dateBar.expanded = !dateBar.expanded"
+                            aria-label="{{'ui.app.moreDateSettings' | maTr}}"
+                            ng-class="{'md-accent': dateBar.expanded}"
+                        >
+                            <md-icon>date_range</md-icon>
+                            <md-tooltip md-autohide><span ma-tr="ui.app.expandDateBar"></span></md-tooltip>
+                        </md-button>
+                    </div>
 
-        <div flex class="md-toolbar-item ma-ui-tools" layout layout-align="end center">
-            <ma-event-audio ng-if="User.current && !User.current.muted" audio-files="uiSettings.eventAudioFiles" read-aloud="uiSettings.eventReadAloud"></ma-event-audio>
-            <ma-event-notify event-levels="uiSettings.eventNotify"></ma-event-notify>
-            <ma-ui-active-event-icons style="padding-right: 8px;" ng-if="uiSettings.showUnacknowlegedEventsIcon && $mdMedia('gt-xs')"></ma-ui-active-event-icons>
+                    <md-button ng-if="maUiServiceWorkerHelper.updateAvailable" class="md-icon-button" ng-click="maUiServiceWorkerHelper.reloadApp()">
+                        <md-icon>system_update_alt</md-icon>
+                        <md-tooltip md-autohide><span ma-tr="login.ui.uiUpdateAvailable"></span></md-tooltip>
+                    </md-button>
 
-            <div ng-if="stateParams.dateBar">
-              <md-input-container class="date-preset">
-                <ma-date-range-picker from="dateBar.from" to="dateBar.to" no-underline="true"
-                  preset="{{dateBar.preset}}" update-interval="{{dateBar.updateIntervalString}}"
-                  refresh="dateBar.refresh" on-change="dateBar.preset = preset"></ma-date-range-picker>
-              </md-input-container>
-              <md-button class="md-icon-button" ng-click="dateBar.expanded = !dateBar.expanded"
-                aria-label="{{'ui.app.moreDateSettings' | maTr}}"
-                ng-class="{'md-accent': dateBar.expanded}">
-                  <md-icon>date_range</md-icon>
-                  <md-tooltip md-autohide><span ma-tr="ui.app.expandDateBar"></span></md-tooltip>
-              </md-button>
+                    <md-button ng-if="developmentConfig.enabled" class="md-icon-button" ng-click="clearTranslations()">
+                        <md-icon>restore_page</md-icon>
+                        <md-tooltip md-autohide><span ma-tr="ui.app.clearTranslationsCache"></span></md-tooltip>
+                    </md-button>
+
+                    <div ma-template-hook="userActions"></div>
+
+                    <md-button class="md-icon-button" ng-if="$state.params.helpPage" ui-state="$state.params.helpPage">
+                        <md-icon>help</md-icon>
+                        <md-tooltip md-autohide>
+                            <span ma-tr="ui.app.viewHelpPage"></span>
+                        </md-tooltip>
+                    </md-button>
+                </div>
             </div>
+        </md-toolbar>
 
-            <md-button ng-if="maUiServiceWorkerHelper.updateAvailable" class="md-icon-button" ng-click="maUiServiceWorkerHelper.reloadApp()">
-                <md-icon>system_update_alt</md-icon>
-                <md-tooltip md-autohide><span ma-tr="login.ui.uiUpdateAvailable"></span></md-tooltip>
-            </md-button>
+        <ma-ui-date-bar on-refresh="dateBar.refresh = $event" ng-if="stateParams.dateBar" ng-show="dateBar.expanded" class="ng-hide"></ma-ui-date-bar>
 
-            <md-button ng-if="developmentConfig.enabled" class="md-icon-button" ng-click="clearTranslations()">
-                <md-icon>restore_page</md-icon>
-                <md-tooltip md-autohide><span ma-tr="ui.app.clearTranslationsCache"></span></md-tooltip>
-            </md-button>
+        <ma-ui-upgrades-banner ng-if="User.current.hasRole('superadmin')"></ma-ui-upgrades-banner>
 
-            <div ma-template-hook="userActions"></div>
+        <md-content layout="column" flex class="main-content">
+            <div
+                flex="noshrink"
+                ui-view
+                layout="column"
+                class="ma-ui-main-view"
+                ng-class="{'ma-no-padding': $state.params.noPadding}"
+                role="main"
+            ></div>
+            <ma-ui-footer flex="none" aria-role="contentinfo" layout ng-if="!$state.params.hideFooter"></ma-ui-footer>
+        </md-content>
+    </div>
 
-            <md-button class="md-icon-button" ng-if="$state.params.helpPage" ui-state="$state.params.helpPage">
-                <md-icon>help</md-icon>
-                <md-tooltip md-autohide>
-                    <span ma-tr="ui.app.viewHelpPage"></span>
-                </md-tooltip>
-            </md-button>
-          </div>
-      </div>
-    </md-toolbar>
-
-    <ma-ui-date-bar on-refresh="dateBar.refresh = $event" ng-if="stateParams.dateBar" ng-show="dateBar.expanded" class="ng-hide"></ma-ui-date-bar>
-
-    <ma-ui-upgrades-banner ng-if="User.current.hasRole('superadmin')"></ma-ui-upgrades-banner>
-
-    <md-content layout="column" flex class="main-content">
-      <div flex="noshrink" ui-view layout="column" class="ma-ui-main-view" ng-class="{'ma-no-padding': $state.params.noPadding}" role="main"></div>
-      <ma-ui-footer flex="none" aria-role="contentinfo" layout ng-if="!$state.params.hideFooter"></ma-ui-footer>
-    </md-content>
-  </div>
-
-  <md-sidenav class="ma-help-sidebar md-sidenav-right md-whiteframe-z2" md-component-id="right" hide-print md-is-locked-open="$mdMedia('gt-md') && pageOpts.helpUrl" md-is-open="pageOpts.helpUrl" md-swipe-right="closeHelp()">
-    <md-content class="md-padding">
-        <div class="ma-help-sidebar-buttons md-padding">
-            <md-button class="md-raised md-icon-button ma-small-button ma-no-margin" md-no-ink ng-href="{{pageOpts.newWindowHelpUrl}}" target="mango-help" ng-click="closeHelp()">
-                <md-icon>open_in_new</md-icon>
-                <md-tooltip md-autohide>
-                    <span ma-tr="ui.app.openHelpPageInNewWindow"></span>
-                </md-tooltip>
-            </md-button>
-            <md-button class="md-raised md-icon-button ma-small-button" md-no-ink ng-click="closeHelp()">
-                <md-icon>close</md-icon>
-                <md-tooltip md-autohide>
-                    <span ma-tr="ui.app.closeHelpPage"></span>
-                </md-tooltip>
-            </md-button>
-        </div>
-        <div ng-include="pageOpts.helpUrl" onload="scrollHelp()"></div>
-    </md-content>
-  </md-sidenav>
+    <md-sidenav
+        class="ma-help-sidebar md-sidenav-right md-whiteframe-z2"
+        md-component-id="right"
+        hide-print
+        md-is-locked-open="$mdMedia('gt-md') && pageOpts.helpUrl"
+        md-is-open="pageOpts.helpUrl"
+        md-swipe-right="closeHelp()"
+    >
+        <md-content class="md-padding">
+            <div class="ma-help-sidebar-buttons md-padding">
+                <md-button
+                    class="md-raised md-icon-button ma-small-button ma-no-margin"
+                    md-no-ink
+                    ng-href="{{pageOpts.newWindowHelpUrl}}"
+                    target="mango-help"
+                    ng-click="closeHelp()"
+                >
+                    <md-icon>open_in_new</md-icon>
+                    <md-tooltip md-autohide>
+                        <span ma-tr="ui.app.openHelpPageInNewWindow"></span>
+                    </md-tooltip>
+                </md-button>
+                <md-button class="md-raised md-icon-button ma-small-button" md-no-ink ng-click="closeHelp()">
+                    <md-icon>close</md-icon>
+                    <md-tooltip md-autohide>
+                        <span ma-tr="ui.app.closeHelpPage"></span>
+                    </md-tooltip>
+                </md-button>
+            </div>
+            <div ng-include="pageOpts.helpUrl" onload="scrollHelp()"></div>
+        </md-content>
+    </md-sidenav>
 </div>

@@ -17,7 +17,7 @@ import angular from 'angular';
 * - Note that if you do not set `myItem.editPermission` / `myItem.readPermission` permission of the item, only the Admin will have access to it.
 You can set these permissions to 'user' to allow other users to read or edit data in the JSON store. 
 The 'user' permissions group is added to created Mango users by default.
- * - <a ui-sref="ui.examples.utilities.jsonStore">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.utilities.jsonStore">View Demo</a>
  *
  * @param {string} xid Sets the `xid` used for each unique object in the JSON store.
  * @param {object} item Object used when accessing the stored data. You can also call the following methods:

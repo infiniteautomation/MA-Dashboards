@@ -1,0 +1,21 @@
+<md-button
+    class="ma-ui-menu-link"
+    ng-click="$ctrl.followLink($event)"
+    ng-class="{'ma-ui-menu-active': $ctrl.menuActive}"
+    aria-label="{{$ctrl.menuText}}"
+>
+    <a ng-href="{{$ctrl.href}}" target="{{$ctrl.target}}" class="ma-ui-menu-indent">
+        <div flex layout="column">
+            <md-icon
+                ng-if="$ctrl.item.menuIcon && $ctrl.item.menuIcon.indexOf('fa-') === 0 && $ctrl.item.parent.name === 'ui'"
+                class="ma-ui-menu-icon fa fa-fw {{$ctrl.item.menuIcon}}"
+            ></md-icon>
+            <md-icon
+                ng-if="$ctrl.item.menuIcon && $ctrl.item.menuIcon.indexOf('fa-') !== 0 && $ctrl.item.parent.name === 'ui'"
+                class="ma-ui-menu-icon"
+                >{{$ctrl.item.menuIcon}}</md-icon
+            >
+            <span class="ma-ui-menu-text">{{$ctrl.menuText}}</span>
+        </div>
+    </a>
+</md-button>
