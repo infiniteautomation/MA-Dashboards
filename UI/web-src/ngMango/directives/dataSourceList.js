@@ -10,7 +10,7 @@
  * `<ma-data-source-list ng-model="myDataSource"></ma-data-source-list>`
  * - Displays a list of Mango data sources in a drop down selector. The selected data source will be outputed to the
  *     variable specified by the `ng-model` attribute.
- * - <a ui-sref="ui.examples.basics.dataSourceAndDeviceList">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.dataSourceAndDeviceList">View Demo</a>
  *
  * @param {object} ng-model Declare a variable to hold the selected data source object.
  * @param {boolean=} auto-init Enables auto selecting of the first data source in the list (Defaults to `true`)

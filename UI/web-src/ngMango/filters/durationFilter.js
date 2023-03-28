@@ -20,7 +20,7 @@ import moment from 'moment-timezone';
  * object that defines a length of time.
  * - MomentJS duration methods can be called using the filter syntax to call functions: 
  *      - <code ng-non-bindable>67223455ms is {{67223455|maDuration:'humanize'}}</code>
- * - <a ui-sref="ui.examples.basics.filters">View Filters Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.filters">View Filters Demo</a>
  */
 function durationFilter(Util) {
     return Util.memoize(function(input, fnName) {

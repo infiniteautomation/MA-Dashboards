@@ -14,7 +14,7 @@ import gaugeChartTemplate from './gaugeChart.html';
  * - This directive will display a gauge that can be tied to a data point's live value.
  * - Note, you will need to set a width and height on the element.
  * - Options have been exposed via attributes, allowing you to set colors and ranges of multiple bands.
- * - <a ui-sref="ui.examples.singleValueDisplays.gauges">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.singleValueDisplays.gauges">View Demo</a>
  *
 
  * @param {object=} point A data point object from a watch list, point query, point drop-down, `maPoint` service, or `<ma-get-point-value>` component.

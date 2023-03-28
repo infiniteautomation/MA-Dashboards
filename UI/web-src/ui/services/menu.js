@@ -6,35 +6,39 @@ import angular from 'angular';
 
 MenuProvider.$inject = ['$stateProvider', 'MA_UI_MENU_ITEMS'];
 function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
-
     const registeredStates = {};
 
     // converts a templatePromise function on a state / view to a templateProvider by
     // adding the function (which returns a promise) to the resolve object of the state then injecting the
     // result into the provider
-    const templatePromiseToProvider = function(menuItem) {
+    const templatePromiseToProvider = function (menuItem) {
         const views = [menuItem];
         if (typeof menuItem.views === 'object') {
             views.push(...Object.values(menuItem.views));
         }
-        views.filter(v => !!v.templatePromise).forEach((view, i) => {
-            const resolveName = `template_${i}`;
-            menuItem.resolve[resolveName] = view.templatePromise;
-            delete view.templatePromise;
+        views
+            .filter((v) => !!v.templatePromise)
+            .forEach((view, i) => {
+                const resolveName = `template_${i}`;
+                menuItem.resolve[resolveName] = view.templatePromise;
+                delete view.templatePromise;
 
-            if (!view.template && !view.templateUrl && !view.templateProvider) {
-                view.templateProvider = [resolveName, t => {
-                    // check if promise returned a ES6/Webpack module instead of a template string
-                    if (typeof t === 'object' && typeof t.default === 'string') {
-                        return t.default;
-                    }
-                    return t;
-                }];
-            }
-        });
+                if (!view.template && !view.templateUrl && !view.templateProvider) {
+                    view.templateProvider = [
+                        resolveName,
+                        (t) => {
+                            // check if promise returned a ES6/Webpack module instead of a template string
+                            if (typeof t === 'object' && typeof t.default === 'string') {
+                                return t.default;
+                            }
+                            return t;
+                        }
+                    ];
+                }
+            });
     };
 
-    const resolveUserHasPermission = function(User) {
+    const resolveUserHasPermission = function (User) {
         // get the updated menuItem/state which may have properties combined from JSON store
         const menuItem = registeredStates[this.name];
         if (!menuItem) throw new Error('State/page no longer exists');
@@ -69,7 +73,10 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
         }
         // transform old style permission into an array, required for permissions retrieved from JSON store
         if (typeof menuItem.permission === 'string') {
-            menuItem.permission = menuItem.permission.split(',').map(r => r.trim()).filter(r => r.length);
+            menuItem.permission = menuItem.permission
+                .split(',')
+                .map((r) => r.trim())
+                .filter((r) => r.length);
         }
 
         // dont create all the resolve functions and templates if we are just using this for diff
@@ -92,7 +99,14 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
                 delete menuItem.templateProvider;
             }
 
-            if (!menuItem.templateUrl && !menuItem.template && !menuItem.templateProvider && !menuItem.views && !menuItem.href && !menuItem.redirectTo) {
+            if (
+                !menuItem.templateUrl &&
+                !menuItem.template &&
+                !menuItem.templateProvider &&
+                !menuItem.views &&
+                !menuItem.href &&
+                !menuItem.redirectTo
+            ) {
                 menuItem.template = '<div ui-view flex="noshrink" layout="column"></div>';
                 menuItem.abstract = true;
             }
@@ -105,7 +119,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
             }
         }
 
-        if (menuItem.name.indexOf('ui.examples.') === 0) {
+        if (menuItem && menuItem.name && menuItem.name.indexOf('ui.helps.examples.') === 0) {
             if (!menuItem.params) menuItem.params = {};
             menuItem.params.dateBar = {
                 rollupControls: true
@@ -149,10 +163,9 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
 
     MenuFactory.$inject = ['maJsonStore', 'MA_UI_MENU_XID', '$q', '$rootScope', 'maPermission', 'maUtil', 'maEventBus'];
     function MenuFactory(JsonStore, MA_UI_MENU_XID, $q, $rootScope, Permission, Util, maEventBus) {
-
         // ensure the original JSON items can't be modified
         const originalMenuItems = Object.freeze(Util.createMapObject(MA_UI_MENU_ITEMS, 'name'));
-        MA_UI_MENU_ITEMS.forEach(item => Object.freeze(item));
+        MA_UI_MENU_ITEMS.forEach((item) => Object.freeze(item));
         Object.freeze(MA_UI_MENU_ITEMS);
 
         class Menu {
@@ -225,7 +238,9 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
                 if (customMenuStore && this.firstRefresh) {
                     this.storePromise = $q.when(this.storeObject);
                 } else {
-                    this.storePromise = JsonStore.get({xid: MA_UI_MENU_XID}).$promise.then(null, error => {
+                    this.storePromise = JsonStore.get({
+                        xid: MA_UI_MENU_XID
+                    }).$promise.then(null, (error) => {
                         if (error.status === 404) {
                             return this.defaultMenuStore();
                         }
@@ -235,7 +250,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
                 }
 
                 this.firstRefresh = false;
-                return this.storePromise.then(store => {
+                return this.storePromise.then((store) => {
                     this.storeObject = store;
                     this.updateMenuItems();
                 });
@@ -284,7 +299,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
                 const newMenuItems = this.flattenMenu(menuHierarchy.children);
 
                 const different = [];
-                newMenuItems.forEach(item => {
+                newMenuItems.forEach((item) => {
                     if (!originalMenuItems[item.name]) {
                         // item is a custom menu item
                         different.push(this.cleanMenuItemForSave(item));
@@ -378,7 +393,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
             }
 
             flattenMenu(menuItems, flatMenuItems = []) {
-                menuItems.forEach(item => {
+                menuItems.forEach((item) => {
                     flatMenuItems.push(item);
                     if (item.children) {
                         this.flattenMenu(item.children, flatMenuItems);
@@ -397,7 +412,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
 
                 // turns the flat menu item array into a hierarchical structure
                 // according to the state names
-                flatMenuItems.forEach(item => {
+                flatMenuItems.forEach((item) => {
                     if (!item.name) return;
                     const path = item.name.split('.');
                     this.buildMenuHierarchy(hierarchyRoot, item, path);
@@ -473,7 +488,7 @@ function MenuProvider($stateProvider, MA_UI_MENU_ITEMS, $injector) {
             }
 
             setsEqual(a, b) {
-                return a.length === b.length && a.every(v => b.includes(v));
+                return a.length === b.length && a.every((v) => b.includes(v));
             }
 
             /**

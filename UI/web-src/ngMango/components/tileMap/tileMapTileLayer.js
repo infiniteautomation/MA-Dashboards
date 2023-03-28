@@ -8,7 +8,7 @@
  * @restrict 'E'
  * @scope
  *
- * @description Adds a tile layer to a <a ui-sref="ui.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added as
+ * @description Adds a tile layer to a <a ui-sref="ui.helps.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added as
  * attribution text.
  * 
  * @param {boolean=} [enabled=false] Adds/removes the tile layer from the parent map/layer

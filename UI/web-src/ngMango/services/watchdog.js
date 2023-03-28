@@ -31,7 +31,7 @@ function mangoWatchdog(MA_TIMEOUTS, $http, $timeout, window, maEventBus, $inject
      *
      * The watchdog service publishes events on the maEventBus under the 'maWatchdog' name space.
      *
-     * - <a ui-sref="ui.examples.utilities.watchdog">View Demo</a>
+     * - <a ui-sref="ui.helps.examples.utilities.watchdog">View Demo</a>
      */
     class MangoWatchdog {
         constructor() {

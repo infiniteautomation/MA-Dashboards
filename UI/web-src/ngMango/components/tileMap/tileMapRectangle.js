@@ -8,7 +8,7 @@
  * @restrict 'E'
  * @scope
  *
- * @description Adds a rectangle to a <a ui-sref="ui.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
+ * @description Adds a rectangle to a <a ui-sref="ui.helps.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
  * as a popup that is opened when the rectangle is clicked. Local scope variables that are available inside the rectangle popup are
  * <code>$leaflet</code>, <code>$map</code>, <code>$mapCtrl</code>, <code>$rectangle</code>, and <code>$rectangleCtrl</code>.
  * 

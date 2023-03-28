@@ -386,7 +386,7 @@ class WatchListPageController {
     }
 
     editWatchList(watchList) {
-        this.$state.go('ui.settings.watchListBuilder', {watchListXid: watchList ? watchList.xid : null});
+        this.$state.go('ui.presentation.watchListBuilder', {watchListXid: watchList ? watchList.xid : null});
     }
 
     saveSettings() {
@@ -394,7 +394,7 @@ class WatchListPageController {
         this.watchList.data.paramValues = angular.copy(this.watchListParams);
 
         if (this.watchList.isNew()) {
-            this.$state.go('ui.settings.watchListBuilder', {watchList: this.watchList});
+            this.$state.go('ui.presentation.watchListBuilder', {watchList: this.watchList});
         } else {
             this.watchList.$update().then(wl => {
                 this.chartConfig = wl.data.chartConfig;

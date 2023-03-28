@@ -8,8 +8,8 @@
 *
 * @description
 * Provides service for getting and and updating a list of points.
-* - Used by <a ui-sref="ui.docs.ngMango.maPointList">`<ma-point-list>`</a> and
-*   <a ui-sref="ui.docs.ngMango.maFilteringPointList">`<ma-filtering-point-list>`</a> directives.
+* - Used by <a ui-sref="ui.helps.docs.ngMango.maPointList">`<ma-point-list>`</a> and
+*   <a ui-sref="ui.helps.docs.ngMango.maFilteringPointList">`<ma-filtering-point-list>`</a> directives.
 * - All methods return [$resource](https://docs.angularjs.org/api/ngResource/service/$resource) objects that can call the following
 *   methods available to those objects:
 *   - `$save`
@@ -155,7 +155,7 @@ Used by `<set-point-value>` directive.
 *
 * @description
 * When called this method will flip the value of a binary data point.
-See <a ui-sref="ui.examples.settingPointValues.toggle">Toggle Binary</a> example.
+See <a ui-sref="ui.helps.examples.settingPointValues.toggle">Toggle Binary</a> example.
 */
 
 /**
@@ -165,7 +165,7 @@ See <a ui-sref="ui.examples.settingPointValues.toggle">Toggle Binary</a> example
 *
 * @description
 * This method will either call setValue internally or return the points value object.
-See how it is used with `<md-checkbox>` and `<md-switch>` in the <a ui-sref="ui.examples.settingPointValues.toggle">Toggle Binary</a> example.
+See how it is used with `<md-checkbox>` and `<md-switch>` in the <a ui-sref="ui.helps.examples.settingPointValues.toggle">Toggle Binary</a> example.
 * @param {number=} setValue If provided setValue method will be called with this value.
 * @returns {object} Returns a points value object if no parameter is provided when the method is called.
 */

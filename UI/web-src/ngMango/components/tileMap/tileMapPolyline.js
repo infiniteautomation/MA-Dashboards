@@ -8,7 +8,7 @@
  * @restrict 'E'
  * @scope
  *
- * @description Adds a polyline to a <a ui-sref="ui.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
+ * @description Adds a polyline to a <a ui-sref="ui.helps.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
  * as a popup that is opened when the polyline is clicked. Local scope variables that are available inside the polyline popup are
  * <code>$leaflet</code>, <code>$map</code>, <code>$mapCtrl</code>, <code>$polyline</code>, and <code>$polylineCtrl</code>.
  * 

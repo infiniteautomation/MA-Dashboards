@@ -42,7 +42,7 @@ function eventTypeProvider() {
     this.registerEventTypeOptions({
         typeName: 'DATA_SOURCE',
         icon: 'device_hub',
-        stateName: 'ui.settings.dataSources',
+        stateName: 'ui.datacollection.dataSources',
         stateParams() {
             return {
                 xid: this.getSource().xid

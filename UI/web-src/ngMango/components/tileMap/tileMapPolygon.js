@@ -8,7 +8,7 @@
  * @restrict 'E'
  * @scope
  *
- * @description Adds a polygon to a <a ui-sref="ui.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
+ * @description Adds a polygon to a <a ui-sref="ui.helps.docs.ngMango.maTileMap">maTileMap</a>. If content is supplied, it will be added to the map
  * as a popup that is opened when the polygon is clicked. Local scope variables that are available inside the polygon popup are
  * <code>$leaflet</code>, <code>$map</code>, <code>$mapCtrl</code>, <code>$polygon</code>, and <code>$polygonCtrl</code>.
  * 

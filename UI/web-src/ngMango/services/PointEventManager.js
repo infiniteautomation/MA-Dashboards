@@ -9,10 +9,10 @@
 * @name ngMangoServices.maPointEventManager
 *
 * @description
-* Provides an <a ui-sref="ui.docs.ngMangoServices.EventManager">EventManager</a> factory pointing to the point-value websocket
+* Provides an <a ui-sref="ui.helps.docs.ngMangoServices.EventManager">EventManager</a> factory pointing to the point-value websocket
 * endpoint at `'/rest/latest/websocket/point-value'`
-* - All methods available to <a ui-sref="ui.docs.ngMangoServices.EventManager">EventManager</a> are available.
-* - Used by <a ui-sref="ui.docs.ngMango.maGetPointValue">`<ma-get-point-value>`</a> directive.
+* - All methods available to <a ui-sref="ui.helps.docs.ngMangoServices.EventManager">EventManager</a> are available.
+* - Used by <a ui-sref="ui.helps.docs.ngMango.maGetPointValue">`<ma-get-point-value>`</a> directive.
 *
 * # Usage
 *

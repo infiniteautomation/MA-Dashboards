@@ -14,7 +14,7 @@
                 <span ng-if="$ctrl.watchList.isNew()" ma-tr="ui.app.saveAsNewWatchList"></span>
             </md-tooltip>
         </md-button>
-        <md-button class="md-raised" ui-sref="ui.settings.watchListBuilder({watchListXid: $ctrl.watchList.xid})"
+        <md-button class="md-raised" ui-sref="ui.presentation.watchListBuilder({watchListXid: $ctrl.watchList.xid})"
                 ng-if="!$ctrl.watchList.isNew()"
                 ng-disabled="!$ctrl.User.current.hasPermission($ctrl.watchList.editPermission)">
             <md-icon>edit</md-icon>

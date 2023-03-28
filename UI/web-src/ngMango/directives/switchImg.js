@@ -10,7 +10,7 @@
  * `<ma-switch-img></ma-switch-img>`
  * - `<ma-switch-img>` displays an image who's image source will be switched based on a point's value.
  * - Use default-src to set the default image that will display if no match is found or the point is disabled.
- * - <a ui-sref="ui.examples.singleValueDisplays.switchImage">View Demo</a> 
+ * - <a ui-sref="ui.helps.examples.singleValueDisplays.switchImage">View Demo</a> 
  *
  * @param {object=} point A data point object from a watch list, point query, point drop-down, `maPoint` service, or `<ma-get-point-value>` component.
  * @param {string=} point-xid Instead of supplying a data point object, you can supply it's XID.

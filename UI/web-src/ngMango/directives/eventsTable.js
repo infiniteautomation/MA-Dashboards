@@ -18,7 +18,7 @@ import moment from 'moment-timezone';
  * - The table includes the ability to filter and sort by alarm level and timestamp.
  * - Events can be acknowledged one at a time or a button is shown to acknowledge all events matching the query.
  * - Note in usage examples below raw string literals are wrapped in single quotes where as variable names / numbers / booleans are not.
- * - <a ui-sref="ui.examples.utilities.eventsTable">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.utilities.eventsTable">View Demo</a>
  *
  * @param {number=} limit Set the initial limit of the pagination.
  * @param {number[]=} point-ids Only show events for these data point IDs

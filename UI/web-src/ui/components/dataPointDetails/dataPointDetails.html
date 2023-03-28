@@ -65,7 +65,7 @@
                         
                         <label flex="35"><span ma-tr="ui.app.dataSource"></span>:</label>
                         <div flex="65">
-                            <a ng-bind="$ctrl.dataPoint.dataSourceName" ui-state="'ui.settings.dataSources'" ui-state-params="{xid: $ctrl.dataPoint.dataSourceXid}"></a>
+                            <a ng-bind="$ctrl.dataPoint.dataSourceName" ui-state="'ui.datacollection.dataSources'" ui-state-params="{xid: $ctrl.dataPoint.dataSourceXid}"></a>
                         </div>
                         
                         <label flex="35" ng-if="$ctrl.hasEditPermission()"><span ma-tr="pointEdit.detectors.eventDetectors"></span>:</label>
@@ -226,7 +226,7 @@
                     <span ma-tr="ui.eventDetectors.for" ma-tr-args="[$ctrl.dataPoint.formatLabel()]"></span>
                 </h2>
                 <span flex></span>
-                <md-button class="md-icon-button" ui-sref="ui.help.eventDetectors">
+                <md-button class="md-icon-button" ui-sref="ui.helps.help.eventDetectors">
                     <md-icon>help</md-icon>
                 </md-button>
                 <md-button class="md-icon-button" ng-click="$dialog.cancel()">

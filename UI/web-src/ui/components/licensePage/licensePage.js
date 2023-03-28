@@ -44,7 +44,7 @@ class LicensePageController {
             if (!this.developmentConfig.enabled && user.created === user.lastPasswordChange) {
                 this.$state.go('systemSetup');
             } else {
-                this.$state.go('ui.settings.home', { helpOpen: true });
+                this.$state.go('ui.admin.home', { helpOpen: true });
             }
         }, (error) => {
             this.DialogHelper.httpErrorToast(error);

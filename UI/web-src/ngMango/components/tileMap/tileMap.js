@@ -12,17 +12,17 @@
  * <a href="https://www.mapbox.com/" target="_blank">Mapbox</a> using <a href="https://leafletjs.com/" target="_blank">Leaflet</a>.
  * 
  * By default the component displays map tiles from OpenStreetMap. If a Mapbox access token is supplied via the attribute or via the
- * <a ui-sref="ui.settings.uiSettings">UI settings</a> page then the component will automatically add a Mapbox street and satellite layer.
+ * <a ui-sref="ui.uiSettings.uiSettings">UI settings</a> page then the component will automatically add a Mapbox street and satellite layer.
  * 
  * Add the following components into the element contents to add add items to the map.
  * <ul>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapTileLayer">maTileMapTileLayer</a> &mdash; adds a tile base layer</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapLayer">maTileMapLayer</a> &mdash; adds an overlay layer</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapMarker">maTileMapMarker</a> &mdash; adds a marker with an icon</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapCircle">maTileMapCircle</a> &mdash; adds circle</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapRectangle">maTileMapRectangle</a> &mdash; adds a rectangle</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapPolygon">maTileMapPolygon</a> &mdash; adds a polygon</li>
- *   <li><a ui-sref="ui.docs.ngMango.maTileMapPolyline">maTileMapPolyline</a> &mdash; adds a line</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapTileLayer">maTileMapTileLayer</a> &mdash; adds a tile base layer</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapLayer">maTileMapLayer</a> &mdash; adds an overlay layer</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapMarker">maTileMapMarker</a> &mdash; adds a marker with an icon</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapCircle">maTileMapCircle</a> &mdash; adds circle</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapRectangle">maTileMapRectangle</a> &mdash; adds a rectangle</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapPolygon">maTileMapPolygon</a> &mdash; adds a polygon</li>
+ *   <li><a ui-sref="ui.helps.docs.ngMango.maTileMapPolyline">maTileMapPolyline</a> &mdash; adds a line</li>
  * </ul>
  * 
  * Local scope variables that are available inside the content are

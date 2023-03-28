@@ -3,7 +3,7 @@
         <md-input-container flex>
             <label ma-tr="ui.app.chooseASection"></label>
             <md-select ng-model="$ctrl.section" ng-model-options="{trackBy: '$value.name'}">
-                <md-option ng-repeat="child in $ctrl.menu.menuItemsByName['ui.settings.system'].children | orderBy:['weight', 'name'] track by child.name"
+                <md-option ng-repeat="child in $ctrl.menu.menuItemsByName['ui.system.system'].children | orderBy:['weight', 'name'] track by child.name"
                     ng-value="child"><span ma-tr="{{child.menuTr}}"></span></md-option>
             </md-select>
         </md-input-container>
@@ -20,7 +20,7 @@
             </md-card-title>
             <md-card-content class="ma-no-padding">
                 <md-list class="ma-no-padding">
-                    <md-list-item ng-repeat="child in $ctrl.menu.menuItemsByName['ui.settings.system'].children | orderBy:['weight', 'name'] track by child.name"
+                    <md-list-item ng-repeat="child in $ctrl.menu.menuItemsByName['ui.system.system'].children | orderBy:['weight', 'name'] track by child.name"
                             ui-sref="{{child.name}}" md-colors="{'background': $ctrl.$state.current.name === child.name ? 'accent' : 'background-hue-1'}">
                         <p ma-tr="{{child.menuTr}}"></p>
                     </md-list-item>
