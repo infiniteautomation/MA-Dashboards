@@ -281,6 +281,9 @@ function($rootScope, $state, $timeout, $mdSidenav, $mdMedia, localStorageService
     if (uiSettings.googleAnalyticsPropertyId) {
         webAnalytics.enableGoogleAnalytics(uiSettings.googleAnalyticsPropertyId);
     }
+    if (uiSettings.googleAnalyticsG4MeasurementId) {
+        webAnalytics.enableGoogleG4Measurement(uiSettings.googleAnalyticsG4MeasurementId);
+    }
 
     $rootScope.stateParams = $stateParams;
     $rootScope.dateBar = maUiDateBar;
