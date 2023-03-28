@@ -121,7 +121,8 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
                 libs: {autoLoad: false},
                 dateFormat: mangoDateFormats.iso,
                 fileName: 'mangoChart',
-                menuReviver: function(item, li) {
+                menuReviver: function (item, li) {
+                    // This function, if "save as.." is selected, override the default XID header with a custom header that is a combination of deviceName and pointName.
                     if (item.label === "Save as ...") {
                         item.menu = ['CSV', 'XLSX', 'JSON'].map((type) => ({
                             label: type,
