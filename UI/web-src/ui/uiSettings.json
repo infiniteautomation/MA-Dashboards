@@ -1,7 +1,7 @@
 {
   "titleSuffix": "Mango",
   "logoSrc": "../img/Mango_logo_4c_inverted-01.svg",
-  "defaultTheme": "pimangolight",
+  "defaultTheme": "piMangoLight",
   "usePreferredColorScheme": false,
   "alternateTheme": "pimangoDark",
   "alternateLogo": "../img/Mango_logo_4c-01.svg",
@@ -210,7 +210,7 @@
     }
   },
   "themes": {
-    "pimangolight": {
+    "piMangoLight": {
       "primaryPalette": "pimango-primary-light",
       "primaryPaletteHues": {
         "default": "500",
