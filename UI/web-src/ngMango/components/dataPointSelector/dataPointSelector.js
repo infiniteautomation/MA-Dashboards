@@ -78,13 +78,6 @@ class DataPointSelectorController extends TableController {
             this.userCustomize({$queryBuilder: queryBuilder});
         }
     }
-
-    customizeSort(sortArray) {
-        if (!sortArray.length) {
-            sortArray.push('id');
-        }
-        return sortArray;
-    }
 }
 
 export default {

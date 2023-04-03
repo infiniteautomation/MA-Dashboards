@@ -120,7 +120,41 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
                 enabled: false,
                 libs: {autoLoad: false},
                 dateFormat: mangoDateFormats.iso,
-                fileName: 'mangoChart'
+                fileName: 'mangoChart',
+                menuReviver: function (item, li) {
+                      // This function, if "save as.." is selected, override the default XID header with a custom header that is a combination of deviceName and pointName.
+                     // https://github.com/amcharts/export#menu-item-reviver
+                    if (item.label === "Save as ...") {
+                        item.menu = ['CSV', 'XLSX', 'JSON'].map((type) => ({
+                            label: type,
+                            click: function click() {
+                                this.setup.chart.dataProvider.forEach((dataProvider) => {
+                                    Object.keys(dataProvider)
+                                        .filter((data) => data !== "timestamp")
+                                        .forEach((obj) => {
+                                            const xid = obj.replace(/_rendered/g, "");
+                                            const graph = this.setup.chart.graphs.find(
+                                                (item) => item.valueField === xid
+                                            );
+                                            if (!graph) {
+                                                return;
+                                            }
+                                            const newFieldName = obj.includes("_rendered")
+                                                ? `${graph.title}_rendered`
+                                                : graph.title;
+                                            dataProvider.timestamp = new Date(dataProvider.timestamp).toISOString();
+                                            dataProvider[`${newFieldName}`] = dataProvider[obj];
+                                            delete dataProvider[obj];
+                                        });
+                                });
+                                this[`to${type}`]({data: this.setup.chart.dataProvider}, function (data) {
+                                    this.download(data, this.defaults.formats[type].mimeType, `${this.defaults.fileName}.${this.defaults.formats[type].extension}`);
+                                });
+                            }
+                        }))
+                    }
+                    return li;
+                }
             }
         };
     };
@@ -530,6 +564,7 @@ function serialChart(MA_AMCHARTS_DATE_FORMATS, Util, mangoDateFormats, $timeout,
             }
 
             maUtil.deepMerge(graph, opts);
+        
         }
         
         function checkForAxisColors() {
