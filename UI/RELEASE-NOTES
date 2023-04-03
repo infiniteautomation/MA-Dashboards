@@ -1,3 +1,8 @@
+*Version 4.5.1*
+* Added support for google G4 tags.
+* The chart component override the column header xid to deviceName + pointName when will be export CSV, JSON, XLSX file.
+* Fix Select All not Selecting All in dataPointSelector, was remove customizeSort
+
 *Version 4.5.0*
 * Upgraded for Mango 4.5.0
 
