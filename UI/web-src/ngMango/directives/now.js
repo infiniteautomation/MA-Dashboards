@@ -11,7 +11,7 @@ import moment from 'moment-timezone';
  * @description
  * `<ma-now update-interval="1 SECONDS" output="time"></ma-now>`
  * - This directive will output the current browser time as a Moment.js date object.
- * - <a ui-sref="ui.examples.basics.clocksAndTimezones">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.clocksAndTimezones">View Demo</a>
  *
  * @param {expression} output Assignable expression to output the date.
  * @param {boolean=} browserTimezone set to the browsers timezone (guessed)

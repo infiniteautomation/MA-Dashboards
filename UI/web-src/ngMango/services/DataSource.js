@@ -8,8 +8,8 @@
 *
 * @description
 * Provides a service for getting list of data sources from the Mango system.
-* - Used by <a ui-sref="ui.docs.ngMango.maDataSourceList">`<ma-data-source-list>`</a> and
-* <a ui-sref="ui.docs.ngMango.maDataSourceQuery">`<ma-data-source-query>`</a> directives.
+* - Used by <a ui-sref="ui.helps.docs.ngMango.maDataSourceList">`<ma-data-source-list>`</a> and
+* <a ui-sref="ui.helps.docs.ngMango.maDataSourceQuery">`<ma-data-source-query>`</a> directives.
 * - All methods return [$resource](https://docs.angularjs.org/api/ngResource/service/$resource) objects that can call the
 *   following methods available to those objects:
 *   - `$save`

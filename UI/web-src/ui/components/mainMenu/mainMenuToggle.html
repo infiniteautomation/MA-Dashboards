@@ -1,0 +1,24 @@
+<div
+    ui-sref-active="ma-ui-menu-active"
+    ng-class="{'ma-ui-menu-open': $ctrl.isOpen, 'ma-ui-menu-submenu': $ctrl.item.submenu}"
+    class="ma-ui-menu-toggle"
+>
+    <a ui-sref="{{$ctrl.item.name}}" style="display: none"></a>
+    <md-button ng-click="$ctrl.toggle()" aria-label="{{$ctrl.menuText}}" class="ma-ui-menu-link" ng-class="{'ma-ui-menu-active': $ctrl.menuActive}">
+        <div flex layout="column">
+            <md-icon
+                ng-if="$ctrl.item.menuIcon && $ctrl.item.menuIcon.indexOf('fa-') === 0 && $ctrl.item.parent.name === 'ui'"
+                class="ma-ui-menu-icon fa fa-fw {{$ctrl.item.menuIcon}}"
+            >
+            </md-icon>
+            <md-icon
+                ng-if="$ctrl.item.menuIcon && $ctrl.item.menuIcon.indexOf('svg') !== 0  && $ctrl.item.menuIcon.indexOf('fa-') !== 0 && $ctrl.item.parent.name === 'ui'"
+                class="ma-ui-menu-icon"
+            >
+                {{$ctrl.item.menuIcon}}
+            </md-icon>
+            <ma-ui-main-menu-svg-icon item="$ctrl.item"></ma-ui-main-menu-svg-icon>
+            <span class="ma-ui-menu-text">{{$ctrl.menuText}}</span>
+        </div>
+    </md-button>
+</div>

@@ -12,7 +12,7 @@ import moment from 'moment-timezone';
   * `<ma-clock time="" timezone="" text=""></ma-clock>`
   * - This directive will display an analog style clock.
   * - Note, you will need to set a width and height on the element.
-  * - <a ui-sref="ui.examples.basics.clocksAndTimezones">View Demo</a>
+  * - <a ui-sref="ui.helps.examples.basics.clocksAndTimezones">View Demo</a>
   *
   * @param {string} time Takes in a timestamp. The current live time can be provided by the `<ma-now>` directive.
   *     The timestamp can be later be filtered with [momentJs](http://momentjs.com/) to display as a formatted date/time on the page.

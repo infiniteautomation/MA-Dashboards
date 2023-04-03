@@ -16,8 +16,8 @@ import noDataForPeriod from '../img/noDataForPeriod.svg';
  * -  `<ma-point-values>` is passed a `to` & `from` values from a date picker.
  * - Additionally, `rollup` & `rollup-interval` can be used to average the data
  * - You can use the `point-xid` property or pass in a point from `<ma-point-list>`.
- * - <a ui-sref="ui.examples.basics.pointValues">View <strong>to/from</strong> Demo</a> /
- *   <a ui-sref="ui.examples.basics.latestPointValues">View <strong>latest values</strong> Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.pointValues">View <strong>to/from</strong> Demo</a> /
+ *   <a ui-sref="ui.helps.examples.basics.latestPointValues">View <strong>latest values</strong> Demo</a>
  * @param {object} point Inputs a `point` object from `<ma-point-list>`
  * @param {object=} points Alternatively you can input an array of points from `<ma-point-query>`
  * @param {string=} point-xid Alternatively you can pass in the `xid` of a point to use.

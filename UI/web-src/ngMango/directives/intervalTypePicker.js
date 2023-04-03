@@ -11,7 +11,7 @@
  * - This directive generates a dropdown selector for choosing the various interval types to be used with `<ma-date-range-picker>` `update-interval` property.
  * - Also used with `<ma-point-values>` `rollup-interval` property.
  * - Note that in the example below we are also setting the interval duration using a numeric input
- * - <a ui-sref="ui.examples.charts.advancedChart">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.charts.advancedChart">View Demo</a>
  *
  * @param {object} ng-model The variable to hold the selected interval type
  * @param {expression=} ng-init If provided you can set the `ng-model` variable to one of these strings to set the default selected value (See usage example):

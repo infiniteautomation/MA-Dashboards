@@ -66,7 +66,7 @@ class SystemSettingsPageController {
     
     $onInit() {
         this.$scope.$on('$viewContentLoading', (event, viewName) => {
-            if (viewName === '@ui.settings.system') {
+            if (viewName === '@ui.system.system') {
                 if (this.settingForm) {
                     // set form back to pristine state when changing between sections
                     this.settingForm.$setPristine();

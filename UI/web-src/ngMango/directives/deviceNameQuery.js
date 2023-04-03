@@ -11,7 +11,7 @@
  * `<ma-device-name-query device-names="deviceNames" contains="'meter'"></ma-device-name-query>`
  * - Outputs an array of Mango device names.
  * - In the example below the list is filtered to those containing a specified string and the resulting array is printed to the screen.
- * - <a ui-sref="ui.examples.basics.dataSourceAndDeviceList">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.dataSourceAndDeviceList">View Demo</a>
  *
  * @param {expression} device-names Assignable expression. Outputs the device names as an array of strings.
  * @param {expression=} data-source-xid Expression which should evaluate to a string. If provided will filter device names to a specific data source by xid.

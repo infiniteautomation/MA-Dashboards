@@ -15,7 +15,7 @@ import moment from 'moment-timezone';
  * - Set the update-interval attribute to have it update automatically.
  * - You can tie the `<ma-date-range-picker>` and `<ma-date-picker>` together using the `from` and `to` attributes on
  *   the preset picker, and `ng-model` on the date pickers.
- * - <a ui-sref="ui.examples.basics.datePresets">View Demo</a>
+ * - <a ui-sref="ui.helps.examples.basics.datePresets">View Demo</a>
  * @param {string=} preset If provided the specified preset will be pre-selected in the dropdown.
  Possible options are:
 <ul>
