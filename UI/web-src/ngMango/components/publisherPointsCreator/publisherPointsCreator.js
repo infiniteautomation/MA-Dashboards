@@ -111,6 +111,8 @@ class PublisherPointsCreatorController {
 
     addPoints() {
         this.form.$setSubmitted();
+        if (this.form.$invalid) return;
+
         this.validationMessages = [];
         this.pointsToPublish.forEach(p => this.errorMap.delete(p));
 
