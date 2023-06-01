@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@infinite-automation/mangoUI",
-  "version": "4.5.1",
+  "version": "4.5.2-SNAPSHOT",
   "description": "Provides an AngularJS user interface, including the ability to create custom pages",
   "main": "index.js",
   "dependencies": {
