@@ -10,7 +10,7 @@ DialogHelperFactory.$inject = ['$injector', 'maTranslate', 'maSystemActions', '$
 function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil) {
     
     const noop = function() {};
-    
+
     class CancelledError extends Error {}
 
     let $mdDialog, $mdMedia, $mdToast;
@@ -19,7 +19,7 @@ function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil
         $mdMedia = $injector.get('$mdMedia');
         $mdToast = $injector.get('$mdToast');
     }
-    
+
     class DialogHelper {
 
         showDialog(template, locals, $event) {
@@ -35,17 +35,17 @@ function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil
                 locals: locals
             });
         }
-        
+
         showBasicDialog($event, locals) {
             return $mdDialog.show({
                 controller: function() {
                     this.result = {};
                     this.$mdDialog = $mdDialog;
-                    
+
                     this.cancel = function() {
                         this.$mdDialog.cancel();
                     };
-                    
+
                     this.ok = function() {
                         this.$mdDialog.hide(this.result);
                     };
@@ -101,166 +101,182 @@ function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil
             }
 
             return maTranslate.trAll({
-                shortText: shortTr,
-                longText: longTr,
-                placeHolderText: placeHolderTr,
-                okText: 'login.ok',
-                cancelText: 'login.cancel'
+                    shortText: shortTr,
+                    longText: longTr,
+                    placeHolderText: placeHolderTr,
+                    okText: 'login.ok',
+                    cancelText: 'login.cancel'
             }).then(({shortText, longText, placeHolderText, okText, cancelText}) => {
                 const prompt = $mdDialog.prompt()
-                    .title(shortText)
-                    .ariaLabel(shortText)
-                    .targetEvent(event)
-                    .ok(okText)
-                    .cancel(cancelText)
-                    .multiple(true);
-                
-                if (longText) {
-                    prompt.textContent(longText);
-                }
-                
-                if (placeHolderText) {
-                    prompt.placeholder(placeHolderText);
-                }
-                
-                if (initialValue != null) {
-                    prompt.initialValue(initialValue);
-                }
+                        .title(shortText)
+                        .ariaLabel(shortText)
+                        .targetEvent(event)
+                        .ok(okText)
+                        .cancel(cancelText)
+                        .multiple(true);
+
+                    if (longText) {
+                        prompt.textContent(longText);
+                    }
+
+                    if (placeHolderText) {
+                        prompt.placeholder(placeHolderText);
+                    }
+
+                    if (initialValue != null) {
+                        prompt.initialValue(initialValue);
+                    }
 
                 return $mdDialog.show(prompt).catch(e => {
-                    return $q.reject(rejectWithCancelled ? new CancelledError('Prompt cancelled') : e);
+                        return $q.reject(rejectWithCancelled ? new CancelledError('Prompt cancelled') : e);
+                    });
                 });
-            });
         }
-        
+
         isCancelled(error) {
             return error instanceof CancelledError;
         }
-        
+
         toast(translation, classes) {
             const translationArgs = Array.prototype.slice.call(arguments, 2);
             const translatableMessage = Array.isArray(translation) ? translation : [translation, ...translationArgs];
 
             return maTranslate.trAll({
-                text: translatableMessage,
-                okText: 'login.ok'
+                    text: translatableMessage,
+                    okText: 'login.ok'
             }).then(({text, okText}) => {
                 const toast = $mdToast.simple()
-                    .textContent(text)
-                    .action(okText)
-                    .actionKey('o')
-                    .highlightAction(true)
-                    .position('bottom center')
-                    .hideDelay(5000);
-                
-                if (classes) {
-                    toast.toastClass(classes);
-                }
-                
-                return $mdToast.show(toast).catch(noop);
-            });
+                        .textContent(text)
+                        .action(okText)
+                        .actionKey('o')
+                        .highlightAction(true)
+                        .position('bottom center')
+                        .hideDelay(5000);
+
+                    if (classes) {
+                        toast.toastClass(classes);
+                    }
+
+                    return $mdToast.show(toast).catch(noop);
+                });
         }
-        
+
         errorToast(translation) {
             return maTranslate.trAll({
-                text: translation,
-                okText: 'login.ok'
+                    text: translation,
+                    okText: 'login.ok'
             }).then(({text, okText}) => {
                 const toast = $mdToast.simple()
-                    .textContent(text)
-                    .action(okText)
-                    .actionKey('o')
-                    .highlightAction(true)
-                    .position('bottom center')
-                    .hideDelay(10000)
-                    .toastClass('md-warn');
+                        .textContent(text)
+                        .action(okText)
+                        .actionKey('o')
+                        .highlightAction(true)
+                        .position('bottom center')
+                        .hideDelay(10000)
+                        .toastClass('md-warn');
 
-                return $mdToast.show(toast).catch(noop);
-            });
+                    return $mdToast.show(toast).catch(noop);
+                });
         }
-        
+
         toastOptions(options) {
             return maTranslate.trAll({
-                text: options.textTr,
-                okText: 'login.ok'
+                    text: options.textTr,
+                    okText: 'login.ok'
             }).then(({text, okText}) => {
                 const toast = $mdToast.simple()
-                    .textContent(text || options.text)
-                    .action(okText)
-                    .actionKey('o')
-                    .highlightAction(true)
-                    .position('bottom center')
-                    .hideDelay(isFinite(options.hideDelay) ? options.hideDelay : 5000);
-                
-                if (options.classes) {
-                    toast.toastClass(options.classes);
-                }
-                
-                return $mdToast.show(toast).catch(noop);
-            });
+                        .textContent(text || options.text)
+                        .action(okText)
+                        .actionKey('o')
+                        .highlightAction(true)
+                        .position('bottom center')
+                        .hideDelay(isFinite(options.hideDelay) ? options.hideDelay : 5000);
+
+                    if (options.classes) {
+                        toast.toastClass(options.classes);
+                    }
+
+                    return $mdToast.show(toast).catch(noop);
+                });
         }
-        
+
         httpErrorToast(error, allowedCodes = []) {
             if (allowedCodes.includes(error.status)) {
                 return $q.resolve();
             }
 
             return maTranslate.trAll({
-                text: ['ui.app.genericRestError', error.mangoStatusText],
-                okText: 'login.ok'
+                    text: ['ui.app.genericRestError', error.mangoStatusText],
+                    okText: 'login.ok'
             }).then(({text, okText}) => {
                 const toast = $mdToast.simple()
-                    .textContent(text)
-                    .action(okText)
-                    .actionKey('o')
-                    .highlightAction(true)
-                    .position('bottom center')
-                    .toastClass('md-warn')
-                    .hideDelay(10000);
+                        .textContent(text)
+                        .action(okText)
+                        .actionKey('o')
+                        .highlightAction(true)
+                        .position('bottom center')
+                        .toastClass('md-warn')
+                        .hideDelay(10000);
 
-                return $mdToast.show(toast).catch(noop);
-            });
+                    return $mdToast.show(toast).catch(noop);
+                });
         }
 
         showConfigImportDialog(importData, $event) {
             const locals = {importData: importData};
             return this.showDialog(configImportDialogContainerTemplate, locals, $event);
         }
-        
-//        options = {
-//          event,
-//          confirmTr,
-//          actionName,
-//          actionData,
-//          descriptionTr,
-//          resultsTr
-//        }
+
+        //        options = {
+        //          event,
+        //          confirmTr,
+        //          actionName,
+        //          actionData,
+        //          descriptionTr,
+        //          resultsTr
+        //        }
         confirmSystemAction(options) {
             const description = [options.descriptionTr];
-            return this.confirm(options.event, options.confirmTr).then(() => {
-                return maSystemActions.trigger(options.actionName, options.actionData).then(triggerResult => {
-                    this.toastOptions({textTr: ['ui.app.systemAction.started', description], hideDelay: 0});
-                    return triggerResult.refreshUntilFinished();
-                }, error => {
-                    this.toastOptions({textTr: ['ui.app.systemAction.startFailed', description, error.mangoStatusText],
-                        hideDelay: 10000, classes: 'md-warn'});
-                    return $q.reject();
-                });
-            }).then(finishedResult => {
-                const results = finishedResult.results;
-                if (results.failed) {
+            const onProgess = (statusResponse) => {
+                const results = statusResponse.results || {};
+                let progress;
+                if (results.progressInfo !== undefined) progress = (results.progressInfo.position / results.progressInfo.maximum) * 100;
+                else if (results.percentComplete !== undefined) progress = results.percentComplete;
+                const progressText = progress !== undefined ? `%${progress.toFixed(2)}` : '';
+                this.toastOptions({ textTr: ['ui.app.systemAction.progress', description, progressText], hideDelay: 0 });
+            };
+            return this.confirm(options.event, options.confirmTr)
+                .then(() => {
+                    return maSystemActions.trigger(options.actionName, options.actionData).then(
+                        (triggerResult) => {
+                            this.toastOptions({ textTr: ['ui.app.systemAction.started', description], hideDelay: 0 });
+                            return triggerResult.refreshUntilFinished(200, onProgess);
+                        },
+                        (error) => {
+                            this.toastOptions({
+                                textTr: ['ui.app.systemAction.startFailed', description, error.mangoStatusText],
+                                hideDelay: 10000,
+                                classes: 'md-warn'
+                            });
+                            return $q.reject();
+                        }
+                    );
+                })
+                .then((finishedResult) => {
+                    const { results } = finishedResult;
+                    if (results.failed) {
                     let msg = results.exception ? results.exception.message : '';
-                    if (results.messages.length > 0) {
+                        if (results.messages.length > 0) {
                         results.messages.forEach(message => {
                             this.toastOptions({textTr: ['ui.app.systemAction.failed', description, message.genericMessage], hideDelay: 10000, classes: 'md-warn'});
                         })
-                    } else {
+                        } else {
                         this.toastOptions({textTr: ['ui.app.systemAction.failed', description, msg], hideDelay: 10000, classes: 'md-warn'});
-                    }
-                } else {
+                        }
+                    } else {
                     this.toastOptions({textTr: ['ui.app.systemAction.succeeded', description, [options.resultsTr, results]]});
-                }
-            }, noop);
+                    }
+                }, noop);
         }
     }
 
@@ -268,5 +284,3 @@ function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil
 }
 
 export default DialogHelperFactory;
-
-

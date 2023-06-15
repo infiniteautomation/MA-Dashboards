@@ -3,6 +3,7 @@
 * The chart component override the column header xid to deviceName + pointName when will be export CSV, JSON, XLSX file.
 * Fix Select All not Selecting All in dataPointSelector, was remove customizeSort
 * Fix bug where published point form validations not working
+* Add toast progress of the “RELOAD LINKS“ process
 
 *Version 4.5.0*
 * Upgraded for Mango 4.5.0
