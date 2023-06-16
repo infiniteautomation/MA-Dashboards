@@ -236,11 +236,19 @@ function DialogHelperFactory($injector, maTranslate, maSystemActions, $q, maUtil
 //          resultsTr
 //        }
         confirmSystemAction(options) {
-            const description = [options.descriptionTr];
+           const description = [options.descriptionTr];
+            const onProgess = (statusResponse)=>{
+                const results = statusResponse.results || {}
+                let progress;
+                if (results.progressInfo !== undefined) progress = (results.progressInfo.position / results.progressInfo.maximum * 100);
+                else if (results.percentComplete !== undefined) progress = results.percentComplete;
+                const progressText = progress !== undefined ? '%' + progress.toFixed(2) : '';
+                this.toastOptions({textTr: ['ui.app.systemAction.progress', description, progressText], hideDelay: 0});
+            }
             return this.confirm(options.event, options.confirmTr).then(() => {
                 return maSystemActions.trigger(options.actionName, options.actionData).then(triggerResult => {
                     this.toastOptions({textTr: ['ui.app.systemAction.started', description], hideDelay: 0});
-                    return triggerResult.refreshUntilFinished();
+                    return triggerResult.refreshUntilFinished(2000,onProgess);
                 }, error => {
                     this.toastOptions({textTr: ['ui.app.systemAction.startFailed', description, error.mangoStatusText],
                         hideDelay: 10000, classes: 'md-warn'});

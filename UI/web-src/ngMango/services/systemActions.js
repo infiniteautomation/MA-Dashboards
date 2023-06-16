@@ -13,21 +13,32 @@ function SystemActionsFactory($http, $q, $timeout) {
         angular.extend(this, data);
     }
     
-    SystemActionResource.prototype.refresh = function() {
+    SystemActionResource.prototype.refresh = function(onProgress) {
         return $http({
             method: 'GET',
             url: systemActionsUrl + '/status/' + encodeURIComponent(this.resourceId)
         }).then(function(response) {
+           if ( typeof onProgress === 'function' ) onProgress(response.data)
             return angular.extend(this, response.data);
+        }.bind(this),function(error){
+            return angular.extend(this, {
+                finished: true,
+                results: {
+                    failed: true,
+                    messages: [],
+                    exception: { message: error.mangoStatusText }
+                }
+            });
         }.bind(this));
+
     };
     
-    SystemActionResource.prototype.refreshUntilFinished = function(timeout) {
+    SystemActionResource.prototype.refreshUntilFinished = function(timeout,onProgress) {
         if (this.finished) return $q.resolve(this);
         return $timeout(function() {
-            return this.refresh();
+            return this.refresh(onProgress);
         }.bind(this), timeout || 1000).then(function() {
-            return this.refreshUntilFinished(timeout);
+            return this.refreshUntilFinished(timeout,onProgress);
         }.bind(this));
     };
     
@@ -40,7 +51,7 @@ function SystemActionsFactory($http, $q, $timeout) {
             url: systemActionsUrl + '/trigger/' + encodeURIComponent(name),
             data: content
         }).then(function(response) {
-            return new SystemActionResource(response.data);
+           return new SystemActionResource(response.data);
         });
     };
 
