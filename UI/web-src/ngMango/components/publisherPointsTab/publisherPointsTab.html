@@ -11,7 +11,7 @@
     <span ma-tr="ui.publisher.pageXofX" ma-tr-args="[$ctrl.total]"></span>
 </div>
 
-<ma-publisher-points-table publisher="$ctrl.publisher" ng-model="$ctrl.pointsToRemove"></ma-publisher-points-table>
+<ma-publisher-points-table ma-form-exclude publisher="$ctrl.publisher" ng-model="$ctrl.pointsToRemove"></ma-publisher-points-table>
 
 <div ng-if="$ctrl.bulkTask" class="md-padding ma-action-buttons">
     <div layout layout-align="center">
