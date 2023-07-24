@@ -1,5 +1,6 @@
 *Version 4.5.3*
 * Update jszip to v3.10.1
+* Fixed the issue where published points table was affecting publisher edit form state
 
 *Version 4.5.2*
 * Add toast progress message for system action tasks
