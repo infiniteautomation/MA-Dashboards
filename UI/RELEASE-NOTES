@@ -1,3 +1,6 @@
+*Version 4.5.3*
+* Upgraded library ejs from version 3.1.6 to 3.1.7 for Mango 4.4.
+
 *Version 4.5.2*
 * Add toast progress message for system action tasks
 
