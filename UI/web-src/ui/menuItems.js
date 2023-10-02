@@ -1638,6 +1638,16 @@ export default [
         menuTr: 'ui.app.mailingLists'
     },
     {
+        name: 'ui.settings.system.eventsExport',
+        params: {
+            helpPage: 'ui.help.eventsExport'
+        },
+        templatePromise: systemSettingsTemplate('eventsExport.html'),
+        url: '/events-export',
+        menuTr: 'systemSettings.eventsExportSettings',
+        menuHidden: true
+    },
+    {
         name: 'ui.settings.system.virtualSerialPort',
         url: '/virtual-serial-port/{xid}',
         template: '<ma-virtual-serial-port></ma-virtual-serial-port>',
@@ -1819,5 +1829,11 @@ export default [
                 templatePromise: helpTemplate('smoothness.html')
             }
         }
-    }
+    },
+    {
+        url: '/events-export',
+        name: 'ui.help.eventsExport',
+        templatePromise: helpTemplate('eventsExport.html'),
+        menuTr: 'systemSettings.eventsExportSettings'
+    },
 ];
