@@ -1,9 +1,24 @@
 <div layout="column" layout-gt-sm="row" layout-align="start end" class="ma-events-table-controls">
     <div layout="row" layout-align="start end" class="ma-events-table-csv-buttons">
-        <md-button ng-if-start="!$ctrl.hideCsvButton" class="md-icon-button ma-small-button" ng-href="{{$ctrl.csvUrl}}" download="events.csv">
-            <md-icon>file_download</md-icon>
-            <md-tooltip><span ma-tr="ui.app.downloadCSV"></span></md-tooltip>
-        </md-button>
+
+        <md-menu md-position-mode="cascade bottom" ng-if-start="!$ctrl.hideCsvButton">
+            <md-button class="md-icon-button ma-small-button" ng-click="$mdMenu.open($event)">
+                <md-icon>file_download</md-icon>
+                <md-tooltip md-autohide><span ma-tr="ui.app.downloadCSV"></span></md-tooltip>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-href="{{$ctrl.csvUrl}}" download="events.csv">
+                        <span ma-tr="ui.app.downloadCSV"></span>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-href="{{$ctrl.reducedCsvUrl}}" download="events_reduced.csv">
+                        <span ma-tr="ui.app.downloadReducedCSV"></span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
         <md-button ng-if-end ng-if="!$ctrl.fixedCsvLimit" class="md-icon-button ma-small-button" ng-click="$ctrl.configureCsv = {targetEvent: $event}">
             <md-icon>settings</md-icon>
             <md-tooltip><span ma-tr="ui.app.configureCSVDownload"></span></md-tooltip>

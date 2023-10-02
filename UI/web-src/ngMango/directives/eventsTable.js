@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Radix IoT LLC. All rights reserved.
+ * Copyright (C) 2023 Radix IoT LLC. All rights reserved.
  */
 
 import eventsTableTemplate from './eventsTable.html';
@@ -327,6 +327,7 @@ function eventsTable(Events, UserNotes, $mdMedia, $injector, mangoDateFormats, M
             const csvQuery = this.displayQuery(this.csvLimit).toString();
             const separator = csvQuery.length ? '&' : '';
             this.csvUrl = `/rest/latest/events?${csvQuery}${separator}format=csv2`;
+            this.reducedCsvUrl = `/rest/latest/events/reduced?${csvQuery}${separator}format=csv2`;
 
             this.queryResource = Events.query({rqlQuery});
 
